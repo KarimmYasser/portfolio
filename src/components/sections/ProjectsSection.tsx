@@ -1,87 +1,94 @@
-import { motion } from 'framer-motion';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { ExternalLink, Github, Eye } from 'lucide-react';
+import { motion } from "framer-motion";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { ExternalLink, Eye } from "lucide-react";
+import { SiGithub } from "react-icons/si";
 
 export default function ProjectsSection() {
   const projects = [
     {
       id: 1,
-      title: 'Immersive 3D Portfolio',
-      description: 'A stunning portfolio website built with React Three Fiber featuring interactive 3D elements, particle systems, and smooth animations.',
-      image: '/api/placeholder/600/400',
-      tags: ['React', 'Three.js', 'TypeScript', 'Framer Motion'],
+      title: "Immersive 3D Portfolio",
+      description:
+        "A stunning portfolio website built with React Three Fiber featuring interactive 3D elements, particle systems, and smooth animations.",
+      image: "/api/placeholder/600/400",
+      tags: ["React", "Three.js", "TypeScript", "Framer Motion"],
       featured: true,
       links: {
-        demo: '#',
-        github: '#'
-      }
+        demo: "#",
+        github: "#",
+      },
     },
     {
       id: 2,
-      title: 'AI-Powered Task Manager',
-      description: 'Smart task management application with AI-driven priority suggestions, natural language processing, and intelligent scheduling.',
-      image: '/api/placeholder/600/400',
-      tags: ['Next.js', 'OpenAI', 'Prisma', 'TailwindCSS'],
+      title: "AI-Powered Task Manager",
+      description:
+        "Smart task management application with AI-driven priority suggestions, natural language processing, and intelligent scheduling.",
+      image: "/api/placeholder/600/400",
+      tags: ["Next.js", "OpenAI", "Prisma", "TailwindCSS"],
       featured: true,
       links: {
-        demo: '#',
-        github: '#'
-      }
+        demo: "#",
+        github: "#",
+      },
     },
     {
       id: 3,
-      title: 'Real-time Collaboration Tool',
-      description: 'Collaborative workspace with live editing, video calls, screen sharing, and project management features.',
-      image: '/api/placeholder/600/400',
-      tags: ['React', 'Socket.io', 'WebRTC', 'Node.js'],
+      title: "Real-time Collaboration Tool",
+      description:
+        "Collaborative workspace with live editing, video calls, screen sharing, and project management features.",
+      image: "/api/placeholder/600/400",
+      tags: ["React", "Socket.io", "WebRTC", "Node.js"],
       featured: false,
       links: {
-        demo: '#',
-        github: '#'
-      }
+        demo: "#",
+        github: "#",
+      },
     },
     {
       id: 4,
-      title: 'E-commerce Platform',
-      description: 'Modern e-commerce solution with advanced filtering, payment integration, inventory management, and analytics dashboard.',
-      image: '/api/placeholder/600/400',
-      tags: ['Next.js', 'Stripe', 'MongoDB', 'Redux'],
+      title: "E-commerce Platform",
+      description:
+        "Modern e-commerce solution with advanced filtering, payment integration, inventory management, and analytics dashboard.",
+      image: "/api/placeholder/600/400",
+      tags: ["Next.js", "Stripe", "MongoDB", "Redux"],
       featured: false,
       links: {
-        demo: '#',
-        github: '#'
-      }
+        demo: "#",
+        github: "#",
+      },
     },
     {
       id: 5,
-      title: 'Data Visualization Dashboard',
-      description: 'Interactive dashboard for complex data analysis with real-time charts, filtering, and export capabilities.',
-      image: '/api/placeholder/600/400',
-      tags: ['React', 'D3.js', 'Python', 'FastAPI'],
+      title: "Data Visualization Dashboard",
+      description:
+        "Interactive dashboard for complex data analysis with real-time charts, filtering, and export capabilities.",
+      image: "/api/placeholder/600/400",
+      tags: ["React", "D3.js", "Python", "FastAPI"],
       featured: false,
       links: {
-        demo: '#',
-        github: '#'
-      }
+        demo: "#",
+        github: "#",
+      },
     },
     {
       id: 6,
-      title: 'Mobile Fitness App',
-      description: 'Cross-platform fitness tracking app with workout plans, progress tracking, and social features.',
-      image: '/api/placeholder/600/400',
-      tags: ['React Native', 'Firebase', 'TypeScript', 'Expo'],
+      title: "Mobile Fitness App",
+      description:
+        "Cross-platform fitness tracking app with workout plans, progress tracking, and social features.",
+      image: "/api/placeholder/600/400",
+      tags: ["React Native", "Firebase", "TypeScript", "Expo"],
       featured: false,
       links: {
-        demo: '#',
-        github: '#'
-      }
-    }
+        demo: "#",
+        github: "#",
+      },
+    },
   ];
 
-  const featuredProjects = projects.filter(project => project.featured);
-  const otherProjects = projects.filter(project => !project.featured);
+  const featuredProjects = projects.filter((project) => project.featured);
+  const otherProjects = projects.filter((project) => !project.featured);
 
   return (
     <section id="projects" className="py-20 relative">
@@ -121,13 +128,17 @@ export default function ProjectsSection() {
                       <ExternalLink className="h-4 w-4 mr-2" />
                       Demo
                     </Button>
-                    <Button size="sm" variant="outline" className="cyber-border">
-                      <Github className="h-4 w-4 mr-2" />
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="cyber-border"
+                    >
+                      <SiGithub className="h-4 w-4 mr-2" />
                       Code
                     </Button>
                   </div>
                 </div>
-                
+
                 <div className="p-6">
                   <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
                     {project.title}
@@ -186,27 +197,23 @@ export default function ProjectsSection() {
                     {project.description}
                   </p>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="flex flex-wrap gap-1">
                     {project.tags.map((tag) => (
-                      <Badge
-                        key={tag}
-                        variant="secondary"
-                        className="text-xs"
-                      >
+                      <Badge key={tag} variant="secondary" className="text-xs">
                         {tag}
                       </Badge>
                     ))}
                   </div>
-                  
+
                   <div className="flex space-x-2">
                     <Button size="sm" variant="ghost" className="flex-1">
                       <ExternalLink className="h-3 w-3 mr-1" />
                       Demo
                     </Button>
                     <Button size="sm" variant="ghost" className="flex-1">
-                      <Github className="h-3 w-3 mr-1" />
+                      <SiGithub className="h-3 w-3 mr-1" />
                       Code
                     </Button>
                   </div>
@@ -228,7 +235,7 @@ export default function ProjectsSection() {
             Want to see more of my work or discuss a project?
           </p>
           <Button size="lg" className="cyber-glow">
-            <Github className="h-4 w-4 mr-2" />
+            <SiGithub className="h-4 w-4 mr-2" />
             View All on GitHub
           </Button>
         </motion.div>

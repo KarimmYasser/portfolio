@@ -24,7 +24,7 @@ This template includes ready-to-edit sections (Hero, About, Skills, Projects, Ex
 - Framer Motion
 - Three.js, @react-three/fiber, @react-three/drei
 - React Router
-- Icons: lucide-react
+- Icons: lucide-react (UI), react-icons (Simple Icons for brands)
 - Utilities present in deps (optional): TanStack Query, Recharts, Embla Carousel, date-fns, etc.
 
 ## Project Structure

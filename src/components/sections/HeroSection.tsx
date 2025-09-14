@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { ArrowDown, Github, Linkedin, Mail, Download } from 'lucide-react';
+import { ArrowDown, Mail, Download } from 'lucide-react';
+import { SiGithub, SiLinkedin } from 'react-icons/si';
 
 export default function HeroSection() {
   const scrollToProjects = () => {
@@ -99,10 +100,10 @@ export default function HeroSection() {
             className="flex justify-center space-x-6"
           >
             <Button variant="ghost" size="sm" className="cyber-glow">
-              <Github className="h-5 w-5" />
+              <SiGithub className="h-5 w-5" />
             </Button>
             <Button variant="ghost" size="sm" className="cyber-glow">
-              <Linkedin className="h-5 w-5" />
+              <SiLinkedin className="h-5 w-5" />
             </Button>
             <Button variant="ghost" size="sm" className="cyber-glow">
               <Mail className="h-5 w-5" />

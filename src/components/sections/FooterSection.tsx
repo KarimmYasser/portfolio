@@ -1,34 +1,35 @@
-import { motion } from 'framer-motion';
-import { Heart, Github, Linkedin, Twitter, Mail, ArrowUp } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { motion } from "framer-motion";
+import { Heart, Mail, ArrowUp } from "lucide-react";
+import { SiGithub, SiLinkedin, SiX } from "react-icons/si";
+import { Button } from "@/components/ui/button";
 
 export default function FooterSection() {
   const currentYear = new Date().getFullYear();
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const socialLinks = [
-    { icon: Github, href: 'https://github.com', label: 'GitHub' },
-    { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
-    { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
-    { icon: Mail, href: 'mailto:alex.chen@example.com', label: 'Email' }
+    { icon: SiGithub, href: "https://github.com", label: "GitHub" },
+    { icon: SiLinkedin, href: "https://linkedin.com", label: "LinkedIn" },
+    { icon: SiX, href: "https://twitter.com", label: "Twitter" },
+    { icon: Mail, href: "mailto:alex.chen@example.com", label: "Email" },
   ];
 
   const navLinks = [
-    { label: 'Home', href: '#home' },
-    { label: 'About', href: '#about' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Experience', href: '#experience' },
-    { label: 'Contact', href: '#contact' }
+    { label: "Home", href: "#home" },
+    { label: "About", href: "#about" },
+    { label: "Skills", href: "#skills" },
+    { label: "Projects", href: "#projects" },
+    { label: "Experience", href: "#experience" },
+    { label: "Contact", href: "#contact" },
   ];
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -36,7 +37,7 @@ export default function FooterSection() {
     <footer className="relative py-20 mt-20">
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent"></div>
-      
+
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* Main Footer Content */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
@@ -53,11 +54,11 @@ export default function FooterSection() {
                 &lt;DevPortfolio /&gt;
               </h3>
               <p className="text-muted-foreground leading-relaxed max-w-md">
-                Crafting digital experiences that blend creativity with cutting-edge technology. 
-                Let's build something amazing together.
+                Crafting digital experiences that blend creativity with
+                cutting-edge technology. Let's build something amazing together.
               </p>
             </div>
-            
+
             <div className="flex space-x-4">
               {socialLinks.map((social, index) => (
                 <motion.a

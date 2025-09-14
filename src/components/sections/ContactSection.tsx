@@ -1,27 +1,19 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/hooks/use-toast';
-import { 
-  Mail, 
-  Github, 
-  Linkedin, 
-  Twitter, 
-  MapPin, 
-  Phone,
-  Send,
-  Download
-} from 'lucide-react';
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+import { Mail, MapPin, Phone, Send, Download } from "lucide-react";
+import { SiGithub, SiLinkedin, SiX } from "react-icons/si";
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -29,49 +21,49 @@ export default function ContactSection() {
   const contactInfo = [
     {
       icon: Mail,
-      label: 'Email',
-      value: 'alex.chen@example.com',
-      href: 'mailto:alex.chen@example.com'
+      label: "Email",
+      value: "alex.chen@example.com",
+      href: "mailto:alex.chen@example.com",
     },
     {
       icon: Phone,
-      label: 'Phone',
-      value: '+1 (555) 123-4567',
-      href: 'tel:+15551234567'
+      label: "Phone",
+      value: "+1 (555) 123-4567",
+      href: "tel:+15551234567",
     },
     {
       icon: MapPin,
-      label: 'Location',
-      value: 'San Francisco, CA',
-      href: '#'
-    }
+      label: "Location",
+      value: "San Francisco, CA",
+      href: "#",
+    },
   ];
 
   const socialLinks = [
     {
-      icon: Github,
-      label: 'GitHub',
-      href: 'https://github.com',
-      color: 'hover:text-gray-600'
+      icon: SiGithub,
+      label: "GitHub",
+      href: "https://github.com",
+      color: "hover:text-gray-600",
     },
     {
-      icon: Linkedin,
-      label: 'LinkedIn',
-      href: 'https://linkedin.com',
-      color: 'hover:text-blue-600'
+      icon: SiLinkedin,
+      label: "LinkedIn",
+      href: "https://linkedin.com",
+      color: "hover:text-blue-600",
     },
     {
-      icon: Twitter,
-      label: 'Twitter',
-      href: 'https://twitter.com',
-      color: 'hover:text-blue-400'
+      icon: SiX,
+      label: "Twitter",
+      href: "https://twitter.com",
+      color: "hover:text-blue-400",
     },
     {
       icon: Mail,
-      label: 'Email',
-      href: 'mailto:alex.chen@example.com',
-      color: 'hover:text-red-500'
-    }
+      label: "Email",
+      href: "mailto:alex.chen@example.com",
+      color: "hover:text-red-500",
+    },
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -80,17 +72,17 @@ export default function ContactSection() {
 
     try {
       // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       // Here you would typically send the form data to your backend or EmailJS
-      console.log('Form submitted:', formData);
-      
+      console.log("Form submitted:", formData);
+
       toast({
         title: "Message sent!",
         description: "Thank you for your message. I'll get back to you soon!",
       });
-      
-      setFormData({ name: '', email: '', subject: '', message: '' });
+
+      setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
       toast({
         title: "Error",
@@ -102,10 +94,12 @@ export default function ContactSection() {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -123,7 +117,8 @@ export default function ContactSection() {
             Let's Work Together
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Ready to bring your digital vision to life? Let's discuss your project and create something amazing together.
+            Ready to bring your digital vision to life? Let's discuss your
+            project and create something amazing together.
           </p>
         </motion.div>
 
@@ -137,11 +132,14 @@ export default function ContactSection() {
           >
             <Card className="glass p-8 cyber-glow">
               <h3 className="text-2xl font-bold mb-6">Send a Message</h3>
-              
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium mb-2">
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-medium mb-2"
+                    >
                       Name *
                     </label>
                     <Input
@@ -156,7 +154,10 @@ export default function ContactSection() {
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-2">
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium mb-2"
+                    >
                       Email *
                     </label>
                     <Input
@@ -171,9 +172,12 @@ export default function ContactSection() {
                     />
                   </div>
                 </div>
-                
+
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium mb-2">
+                  <label
+                    htmlFor="subject"
+                    className="block text-sm font-medium mb-2"
+                  >
                     Subject *
                   </label>
                   <Input
@@ -187,9 +191,12 @@ export default function ContactSection() {
                     placeholder="Project inquiry, collaboration, etc."
                   />
                 </div>
-                
+
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium mb-2">
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium mb-2"
+                  >
                     Message *
                   </label>
                   <Textarea
@@ -203,16 +210,20 @@ export default function ContactSection() {
                     placeholder="Tell me about your project, goals, timeline, and any specific requirements..."
                   />
                 </div>
-                
-                <Button 
-                  type="submit" 
+
+                <Button
+                  type="submit"
                   disabled={isSubmitting}
                   className="w-full cyber-glow font-semibold py-3"
                 >
                   {isSubmitting ? (
                     <motion.div
                       animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      transition={{
+                        duration: 1,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
                       className="mr-2"
                     >
                       <Send className="h-4 w-4" />
@@ -220,7 +231,7 @@ export default function ContactSection() {
                   ) : (
                     <Send className="h-4 w-4 mr-2" />
                   )}
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                  {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>
               </form>
             </Card>
@@ -252,7 +263,7 @@ export default function ContactSection() {
                     </div>
                     <div>
                       <div className="font-medium">{info.label}</div>
-                      <a 
+                      <a
                         href={info.href}
                         className="text-muted-foreground hover:text-primary transition-colors"
                       >
@@ -293,7 +304,10 @@ export default function ContactSection() {
               <p className="text-muted-foreground mb-6">
                 Download my resume to learn more about my experience and skills.
               </p>
-              <Button variant="outline" className="cyber-border hover:cyber-glow">
+              <Button
+                variant="outline"
+                className="cyber-border hover:cyber-glow"
+              >
                 <Download className="h-4 w-4 mr-2" />
                 Download Resume
               </Button>
