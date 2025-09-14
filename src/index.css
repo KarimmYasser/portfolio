@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Futuristic Portfolio Design System */
+
+@layer base {
+  :root {
+    /* Base Colors */
+    --background: 0 0% 100%;
+    --foreground: 220 17% 11%;
+    
+    /* Futuristic Color Palette */
+    --cyber-blue: 203 100% 65%;
+    --cyber-purple: 269 89% 65%;
+    --cyber-pink: 320 85% 70%;
+    --cyber-green: 145 80% 55%;
+    --cyber-yellow: 48 95% 65%;
+    
+    /* Glass Morphism */
+    --glass-background: 220 14% 96%;
+    --glass-border: 220 13% 91%;
+    --glass-blur: blur(12px);
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--cyber-blue)), hsl(var(--cyber-purple)));
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--cyber-pink)), hsl(var(--cyber-yellow)));
+    --gradient-dark: linear-gradient(135deg, hsl(220 30% 5%), hsl(269 89% 15%));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--cyber-blue) / 0.1), hsl(var(--cyber-purple) / 0.1));
+    
+    /* Shadows */
+    --shadow-glow: 0 0 30px hsl(var(--cyber-blue) / 0.3);
+    --shadow-cyber: 0 8px 32px hsl(var(--cyber-blue) / 0.15);
+    --shadow-float: 0 20px 40px hsl(220 30% 5% / 0.1);
+    
+    /* Component Colors */
+    --card: var(--glass-background);
+    --card-foreground: 220 17% 11%;
+    --popover: var(--glass-background);
+    --popover-foreground: 220 17% 11%;
+    --primary: var(--cyber-blue);
+    --primary-foreground: 0 0% 100%;
+    --secondary: var(--glass-background);
+    --secondary-foreground: 220 17% 11%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 13% 46%;
+    --accent: var(--cyber-purple);
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: var(--glass-border);
+    --input: var(--glass-border);
+    --ring: var(--cyber-blue);
+    --radius: 0.75rem;
+    
+    /* Animation Properties */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .dark {
+    /* Dark Mode Base */
+    --background: 220 30% 5%;
+    --foreground: 220 14% 96%;
+    
+    /* Dark Glass Morphism */
+    --glass-background: 220 25% 8%;
+    --glass-border: 220 20% 15%;
+    
+    /* Dark Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--cyber-blue) / 0.15), hsl(var(--cyber-purple) / 0.15));
+    
+    /* Dark Shadows */
+    --shadow-glow: 0 0 40px hsl(var(--cyber-blue) / 0.4);
+    --shadow-cyber: 0 8px 32px hsl(var(--cyber-blue) / 0.25);
+    --shadow-float: 0 20px 40px hsl(220 30% 5% / 0.3);
+    
+    /* Dark Component Colors */
+    --card: var(--glass-background);
+    --card-foreground: 220 14% 96%;
+    --popover: var(--glass-background);
+    --popover-foreground: 220 14% 96%;
+    --secondary: var(--glass-background);
+    --secondary-foreground: 220 14% 96%;
+    --muted: 220 25% 8%;
+    --muted-foreground: 220 13% 65%;
+    --border: var(--glass-border);
+    --input: var(--glass-border);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-inter overflow-x-hidden;
+    scroll-behavior: smooth;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Glass Morphism Components */
+  .glass {
+    background: hsl(var(--glass-background) / 0.8);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid hsl(var(--glass-border) / 0.5);
+  }
+  
+  .glass-strong {
+    background: hsl(var(--glass-background) / 0.95);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid hsl(var(--glass-border) / 0.8);
+  }
+  
+  /* Gradient Text */
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .gradient-text-secondary {
+    background: var(--gradient-secondary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* Cyber Glow Effects */
+  .cyber-glow {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .cyber-border {
+    border: 1px solid hsl(var(--cyber-blue) / 0.5);
+    box-shadow: 0 0 20px hsl(var(--cyber-blue) / 0.2);
+  }
+  
+  /* Floating Animation */
+  .float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+  
+  /* Pulse Animation */
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite alternate;
+  }
+  
+  @keyframes pulse-glow {
+    from { box-shadow: 0 0 20px hsl(var(--cyber-blue) / 0.2); }
+    to { box-shadow: 0 0 30px hsl(var(--cyber-blue) / 0.4); }
+  }
+  
+  /* Smooth Transitions */
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+  
+  .transition-spring {
+    transition: var(--transition-spring);
+  }
+  
+  /* Custom Scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+    border-radius: 4px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: hsl(var(--cyber-blue) / 0.6);
+    border-radius: 4px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--cyber-blue) / 0.8);
+  }
+}
