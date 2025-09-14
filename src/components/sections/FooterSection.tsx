@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Heart, Mail, ArrowUp } from "lucide-react";
 import { SiGithub, SiLinkedin, SiX } from "react-icons/si";
 import { Button } from "@/components/ui/button";
+import { content } from "@/content";
 
 export default function FooterSection() {
   const currentYear = new Date().getFullYear();
@@ -10,21 +11,20 @@ export default function FooterSection() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const socialLinks = [
-    { icon: SiGithub, href: "https://github.com", label: "GitHub" },
-    { icon: SiLinkedin, href: "https://linkedin.com", label: "LinkedIn" },
-    { icon: SiX, href: "https://twitter.com", label: "Twitter" },
-    { icon: Mail, href: "mailto:alex.chen@example.com", label: "Email" },
-  ];
+  const socialLinks = content.socials.map((s) => ({
+    icon:
+      s.icon === "github"
+        ? SiGithub
+        : s.icon === "linkedin"
+        ? SiLinkedin
+        : s.icon === "x"
+        ? SiX
+        : Mail,
+    href: s.href,
+    label: s.label,
+  }));
 
-  const navLinks = [
-    { label: "Home", href: "#home" },
-    { label: "About", href: "#about" },
-    { label: "Skills", href: "#skills" },
-    { label: "Projects", href: "#projects" },
-    { label: "Experience", href: "#experience" },
-    { label: "Contact", href: "#contact" },
-  ];
+  const navLinks = content.nav.items;
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -51,11 +51,10 @@ export default function FooterSection() {
           >
             <div className="mb-6">
               <h3 className="font-mono font-bold text-2xl gradient-text mb-4">
-                &lt;DevPortfolio /&gt;
+                {content.footer.brand}
               </h3>
               <p className="text-muted-foreground leading-relaxed max-w-md">
-                Crafting digital experiences that blend creativity with
-                cutting-edge technology. Let's build something amazing together.
+                {content.footer.tagline}
               </p>
             </div>
 
@@ -86,7 +85,9 @@ export default function FooterSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h4 className="font-semibold text-lg mb-4">Navigation</h4>
+            <h4 className="font-semibold text-lg mb-4">
+              {content.footer.navHeading}
+            </h4>
             <nav className="space-y-2">
               {navLinks.map((link) => (
                 <button
@@ -107,11 +108,13 @@ export default function FooterSection() {
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            <h4 className="font-semibold text-lg mb-4">Get in Touch</h4>
+            <h4 className="font-semibold text-lg mb-4">
+              {content.footer.contactHeading}
+            </h4>
             <div className="space-y-2 text-muted-foreground">
-              <p>alex.chen@example.com</p>
-              <p>+1 (555) 123-4567</p>
-              <p>San Francisco, CA</p>
+              <p>{content.meta.email}</p>
+              <p>{content.meta.phone}</p>
+              <p>{content.meta.location}</p>
             </div>
           </motion.div>
         </div>
@@ -134,14 +137,17 @@ export default function FooterSection() {
           className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0"
         >
           <div className="flex items-center space-x-2 text-muted-foreground">
-            <span>© {currentYear} Alex Chen. Made with</span>
+            <span>
+              {content.footer.rights
+                .replace("{year}", String(currentYear))
+                .replace("♥", "")}
+            </span>
             <Heart className="h-4 w-4 text-red-500 fill-current" />
-            <span>and lots of coffee</span>
           </div>
 
           <div className="flex items-center space-x-4">
             <span className="text-sm text-muted-foreground">
-              Built with React, Three.js & TailwindCSS
+              {content.footer.builtWith}
             </span>
             <Button
               onClick={scrollToTop}

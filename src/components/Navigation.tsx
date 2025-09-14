@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { Moon, Sun, Menu, X, Globe } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Moon, Sun, Menu, X, Globe } from "lucide-react";
+import { content } from "@/content";
 
 interface NavigationProps {
   isDark: boolean;
@@ -11,36 +12,29 @@ interface NavigationProps {
 export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [language, setLanguage] = useState('EN');
+  const [language, setLanguage] = useState("EN");
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navItems = [
-    { label: 'Home', href: '#home' },
-    { label: 'About', href: '#about' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Experience', href: '#experience' },
-    { label: 'Contact', href: '#contact' }
-  ];
+  const navItems = content.nav.items;
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
     setIsMobileMenuOpen(false);
   };
 
   const toggleLanguage = () => {
-    setLanguage(language === 'EN' ? 'ES' : 'EN');
+    setLanguage(language === "EN" ? "ES" : "EN");
   };
 
   return (
@@ -49,7 +43,7 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'glass py-4' : 'py-6'
+          isScrolled ? "glass py-4" : "py-6"
         }`}
       >
         <div className="container mx-auto px-4 lg:px-8">
@@ -60,7 +54,7 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
               animate={{ opacity: 1, x: 0 }}
               className="font-mono font-bold text-xl gradient-text"
             >
-              &lt;DevPortfolio /&gt;
+              {content.footer.brand}
             </motion.div>
 
             {/* Desktop Navigation */}
@@ -99,7 +93,11 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
                 onClick={toggleTheme}
                 className="cyber-glow"
               >
-                {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+                {isDark ? (
+                  <Sun className="h-4 w-4" />
+                ) : (
+                  <Moon className="h-4 w-4" />
+                )}
               </Button>
 
               {/* Mobile Menu Toggle */}
@@ -109,7 +107,11 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="md:hidden"
               >
-                {isMobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+                {isMobileMenuOpen ? (
+                  <X className="h-4 w-4" />
+                ) : (
+                  <Menu className="h-4 w-4" />
+                )}
               </Button>
             </div>
           </div>
@@ -118,12 +120,12 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
 
       {/* Mobile Menu */}
       <motion.div
-        initial={{ opacity: 0, x: '100%' }}
+        initial={{ opacity: 0, x: "100%" }}
         animate={{
           opacity: isMobileMenuOpen ? 1 : 0,
-          x: isMobileMenuOpen ? 0 : '100%',
+          x: isMobileMenuOpen ? 0 : "100%",
         }}
-        transition={{ type: 'spring', damping: 25, stiffness: 500 }}
+        transition={{ type: "spring", damping: 25, stiffness: 500 }}
         className="fixed top-0 right-0 h-full w-80 glass-strong z-40 md:hidden"
       >
         <div className="pt-20 px-6">
@@ -142,7 +144,7 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
               {item.label}
             </motion.button>
           ))}
-          
+
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{

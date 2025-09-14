@@ -4,88 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Eye } from "lucide-react";
 import { SiGithub } from "react-icons/si";
+import { content } from "@/content";
 
 export default function ProjectsSection() {
-  const projects = [
-    {
-      id: 1,
-      title: "Immersive 3D Portfolio",
-      description:
-        "A stunning portfolio website built with React Three Fiber featuring interactive 3D elements, particle systems, and smooth animations.",
-      image: "/api/placeholder/600/400",
-      tags: ["React", "Three.js", "TypeScript", "Framer Motion"],
-      featured: true,
-      links: {
-        demo: "#",
-        github: "#",
-      },
-    },
-    {
-      id: 2,
-      title: "AI-Powered Task Manager",
-      description:
-        "Smart task management application with AI-driven priority suggestions, natural language processing, and intelligent scheduling.",
-      image: "/api/placeholder/600/400",
-      tags: ["Next.js", "OpenAI", "Prisma", "TailwindCSS"],
-      featured: true,
-      links: {
-        demo: "#",
-        github: "#",
-      },
-    },
-    {
-      id: 3,
-      title: "Real-time Collaboration Tool",
-      description:
-        "Collaborative workspace with live editing, video calls, screen sharing, and project management features.",
-      image: "/api/placeholder/600/400",
-      tags: ["React", "Socket.io", "WebRTC", "Node.js"],
-      featured: false,
-      links: {
-        demo: "#",
-        github: "#",
-      },
-    },
-    {
-      id: 4,
-      title: "E-commerce Platform",
-      description:
-        "Modern e-commerce solution with advanced filtering, payment integration, inventory management, and analytics dashboard.",
-      image: "/api/placeholder/600/400",
-      tags: ["Next.js", "Stripe", "MongoDB", "Redux"],
-      featured: false,
-      links: {
-        demo: "#",
-        github: "#",
-      },
-    },
-    {
-      id: 5,
-      title: "Data Visualization Dashboard",
-      description:
-        "Interactive dashboard for complex data analysis with real-time charts, filtering, and export capabilities.",
-      image: "/api/placeholder/600/400",
-      tags: ["React", "D3.js", "Python", "FastAPI"],
-      featured: false,
-      links: {
-        demo: "#",
-        github: "#",
-      },
-    },
-    {
-      id: 6,
-      title: "Mobile Fitness App",
-      description:
-        "Cross-platform fitness tracking app with workout plans, progress tracking, and social features.",
-      image: "/api/placeholder/600/400",
-      tags: ["React Native", "Firebase", "TypeScript", "Expo"],
-      featured: false,
-      links: {
-        demo: "#",
-        github: "#",
-      },
-    },
-  ];
+  const projects = content.projects.items;
 
   const featuredProjects = projects.filter((project) => project.featured);
   const otherProjects = projects.filter((project) => !project.featured);
@@ -101,10 +23,10 @@ export default function ProjectsSection() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-6xl font-bold mb-6 gradient-text">
-            Featured Projects
+            {content.projects.heading}
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            A showcase of my latest work and creative explorations
+            {content.projects.subheading}
           </p>
         </motion.div>
 
@@ -172,7 +94,7 @@ export default function ProjectsSection() {
           className="mb-12"
         >
           <h3 className="text-3xl font-bold text-center mb-12 gradient-text">
-            More Projects
+            {content.projects.moreHeading}
           </h3>
         </motion.div>
 
@@ -236,7 +158,7 @@ export default function ProjectsSection() {
           </p>
           <Button size="lg" className="cyber-glow">
             <SiGithub className="h-4 w-4 mr-2" />
-            View All on GitHub
+            {content.projects.ctaAllGithub}
           </Button>
         </motion.div>
       </div>

@@ -123,6 +123,12 @@ Replace demo content with your own:
 
 Note on contact form: it currently simulates submission and shows a toast. If you want email delivery, integrate a service (e.g., EmailJS, backend API) and wire it up in `ContactSection.tsx`. The project already includes `@emailjs/browser` but it isn’t configured by default.
 
+### Centralized content and localization
+
+- All user-facing strings and data live in `src/content/en.ts`. Edit this file to update your name, headings, descriptions, projects, experience timeline, contact info, and footer text.
+- To add another language, copy `src/content/en.ts` to `src/content/<locale>.ts` (e.g., `es.ts`), adjust strings, and update `src/content/index.ts` to export the new locale.
+- Components import from `@/content`, so no UI changes are needed when content updates.
+
 ## Available Scripts (package.json)
 
 - `dev` – Start Vite dev server

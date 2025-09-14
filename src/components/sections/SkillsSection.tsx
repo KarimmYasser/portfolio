@@ -1,71 +1,45 @@
-import { motion } from 'framer-motion';
-import { Card } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
-import { 
-  Code2, 
-  Palette, 
-  Database, 
-  Cloud, 
-  Smartphone, 
+import { motion } from "framer-motion";
+import { Card } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import {
+  Code2,
+  Palette,
+  Database,
+  Cloud,
+  Smartphone,
   Globe,
   Zap,
-  Brain
-} from 'lucide-react';
+  Brain,
+} from "lucide-react";
+import { content } from "@/content";
 
 export default function SkillsSection() {
-  const skillCategories = [
-    {
-      icon: Code2,
-      title: 'Frontend Development',
-      color: 'cyber-blue',
-      skills: [
-        { name: 'React/Next.js', level: 95 },
-        { name: 'TypeScript', level: 90 },
-        { name: 'Three.js/WebGL', level: 85 },
-        { name: 'TailwindCSS', level: 92 }
-      ]
-    },
-    {
-      icon: Database,
-      title: 'Backend Development',
-      color: 'cyber-purple',
-      skills: [
-        { name: 'Node.js', level: 88 },
-        { name: 'Python', level: 82 },
-        { name: 'GraphQL', level: 85 },
-        { name: 'PostgreSQL', level: 80 }
-      ]
-    },
-    {
-      icon: Cloud,
-      title: 'DevOps & Cloud',
-      color: 'cyber-green',
-      skills: [
-        { name: 'AWS/Vercel', level: 78 },
-        { name: 'Docker', level: 75 },
-        { name: 'CI/CD', level: 80 },
-        { name: 'Monitoring', level: 72 }
-      ]
-    },
-    {
-      icon: Palette,
-      title: 'Design & UX',
-      color: 'cyber-pink',
-      skills: [
-        { name: 'UI/UX Design', level: 85 },
-        { name: 'Figma', level: 88 },
-        { name: 'Prototyping', level: 82 },
-        { name: 'Animation', level: 90 }
-      ]
-    }
-  ];
+  const skillCategories = content.skills.categories.map((c) => ({
+    icon:
+      c.icon === "code2"
+        ? Code2
+        : c.icon === "database"
+        ? Database
+        : c.icon === "cloud"
+        ? Cloud
+        : Palette,
+    title: c.title,
+    color: c.color,
+    skills: c.skills,
+  }));
 
-  const tools = [
-    { icon: Globe, name: 'Web Development', description: 'Modern web apps with React, Next.js, and cutting-edge technologies' },
-    { icon: Smartphone, name: 'Mobile Development', description: 'Cross-platform mobile apps with React Native and Progressive Web Apps' },
-    { icon: Zap, name: 'Performance Optimization', description: 'Lightning-fast applications with optimized code and best practices' },
-    { icon: Brain, name: 'AI Integration', description: 'Intelligent features using machine learning and AI APIs' }
-  ];
+  const tools = content.skills.tools.map((t) => ({
+    icon:
+      t.icon === "globe"
+        ? Globe
+        : t.icon === "smartphone"
+        ? Smartphone
+        : t.icon === "zap"
+        ? Zap
+        : Brain,
+    name: t.name,
+    description: t.description,
+  }));
 
   return (
     <section id="skills" className="py-20 relative">
@@ -78,10 +52,10 @@ export default function SkillsSection() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-6xl font-bold mb-6 gradient-text">
-            Skills & Expertise
+            {content.skills.heading}
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            A comprehensive toolkit for bringing digital visions to life
+            {content.skills.subheading}
           </p>
         </motion.div>
 
@@ -97,7 +71,9 @@ export default function SkillsSection() {
             >
               <Card className="glass p-8 hover:cyber-glow transition-all duration-300 h-full">
                 <div className="flex items-center mb-6">
-                  <div className={`w-12 h-12 rounded-lg bg-gradient-to-br from-${category.color} to-${category.color} flex items-center justify-center mr-4`}>
+                  <div
+                    className={`w-12 h-12 rounded-lg bg-gradient-to-br from-${category.color} to-${category.color} flex items-center justify-center mr-4`}
+                  >
                     <category.icon className="h-6 w-6 text-white" />
                   </div>
                   <h3 className="text-xl font-bold">{category.title}</h3>
@@ -109,18 +85,20 @@ export default function SkillsSection() {
                       key={skill.name}
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.5, delay: categoryIndex * 0.1 + skillIndex * 0.05 }}
+                      transition={{
+                        duration: 0.5,
+                        delay: categoryIndex * 0.1 + skillIndex * 0.05,
+                      }}
                       viewport={{ once: true }}
                       className="space-y-2"
                     >
                       <div className="flex justify-between items-center">
                         <span className="font-medium">{skill.name}</span>
-                        <span className="text-sm text-muted-foreground">{skill.level}%</span>
+                        <span className="text-sm text-muted-foreground">
+                          {skill.level}%
+                        </span>
                       </div>
-                      <Progress 
-                        value={skill.level} 
-                        className="h-2 bg-muted"
-                      />
+                      <Progress value={skill.level} className="h-2 bg-muted" />
                     </motion.div>
                   ))}
                 </div>
@@ -138,7 +116,7 @@ export default function SkillsSection() {
           className="text-center mb-12"
         >
           <h3 className="text-3xl font-bold mb-6 gradient-text">
-            What I Can Do For You
+            {content.skills.toolsHeading}
           </h3>
         </motion.div>
 

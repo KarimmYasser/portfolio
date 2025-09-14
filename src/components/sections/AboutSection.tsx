@@ -1,36 +1,23 @@
-import { motion } from 'framer-motion';
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Code, Heart, Zap, Target } from 'lucide-react';
+import { motion } from "framer-motion";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Code, Heart, Zap, Target } from "lucide-react";
+import { content } from "@/content";
 
 export default function AboutSection() {
-  const values = [
-    {
-      icon: Code,
-      title: 'Clean Code',
-      description: 'Writing maintainable, scalable, and elegant code is my passion.'
-    },
-    {
-      icon: Heart,
-      title: 'User-Centric',
-      description: 'Every project starts with understanding the user\'s needs and goals.'
-    },
-    {
-      icon: Zap,
-      title: 'Innovation',
-      description: 'Always exploring new technologies and pushing creative boundaries.'
-    },
-    {
-      icon: Target,
-      title: 'Problem Solving',
-      description: 'Breaking down complex challenges into simple, effective solutions.'
-    }
-  ];
-
-  const technologies = [
-    'React', 'TypeScript', 'Three.js', 'Next.js', 'Node.js', 'Python',
-    'TailwindCSS', 'Framer Motion', 'GraphQL', 'AWS', 'Docker', 'MongoDB'
-  ];
+  const values = content.about.values.map((v) => ({
+    icon:
+      v.icon === "code"
+        ? Code
+        : v.icon === "heart"
+        ? Heart
+        : v.icon === "zap"
+        ? Zap
+        : Target,
+    title: v.title,
+    description: v.description,
+  }));
+  const technologies = content.about.technologies;
 
   return (
     <section id="about" className="py-20 relative">
@@ -43,10 +30,10 @@ export default function AboutSection() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-6xl font-bold mb-6 gradient-text">
-            About Me
+            {content.about.heading}
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            A passionate developer who loves creating digital experiences that matter
+            {content.about.subheading}
           </p>
         </motion.div>
 
@@ -62,24 +49,25 @@ export default function AboutSection() {
               <div className="mb-6">
                 <div className="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-cyber-blue to-cyber-purple p-1">
                   <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
-                    <span className="text-4xl font-bold gradient-text">AC</span>
+                    <span className="text-4xl font-bold gradient-text">
+                      {content.about.avatarInitials}
+                    </span>
                   </div>
                 </div>
-                <h3 className="text-2xl font-bold text-center mb-4">Alex Chen</h3>
+                <h3 className="text-2xl font-bold text-center mb-4">
+                  {content.about.name}
+                </h3>
                 <p className="text-center text-cyber-blue font-mono mb-6">
-                  Full Stack Developer & Creative Technologist
+                  {content.about.role}
                 </p>
               </div>
-              
+
               <p className="text-muted-foreground leading-relaxed mb-6">
-                With over 5 years of experience in web development, I specialize in creating 
-                immersive digital experiences that push the boundaries of what's possible on the web. 
-                I'm passionate about clean code, innovative design, and technologies that make a real impact.
+                {content.about.bio1}
               </p>
-              
+
               <p className="text-muted-foreground leading-relaxed">
-                When I'm not coding, you'll find me exploring new frameworks, contributing to open source, 
-                or experimenting with creative coding projects that blend art and technology.
+                {content.about.bio2}
               </p>
             </Card>
           </motion.div>
@@ -108,8 +96,12 @@ export default function AboutSection() {
                       </div>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-lg mb-2">{value.title}</h4>
-                      <p className="text-muted-foreground">{value.description}</p>
+                      <h4 className="font-semibold text-lg mb-2">
+                        {value.title}
+                      </h4>
+                      <p className="text-muted-foreground">
+                        {value.description}
+                      </p>
                     </div>
                   </div>
                 </Card>
@@ -138,8 +130,8 @@ export default function AboutSection() {
                 transition={{ duration: 0.4, delay: index * 0.05 }}
                 viewport={{ once: true }}
               >
-                <Badge 
-                  variant="secondary" 
+                <Badge
+                  variant="secondary"
                   className="px-4 py-2 text-sm font-medium cyber-border hover:cyber-glow transition-all duration-300"
                 >
                   {tech}

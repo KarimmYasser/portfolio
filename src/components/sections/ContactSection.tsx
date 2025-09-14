@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, MapPin, Phone, Send, Download } from "lucide-react";
 import { SiGithub, SiLinkedin, SiX } from "react-icons/si";
+import { content } from "@/content";
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -22,49 +23,36 @@ export default function ContactSection() {
     {
       icon: Mail,
       label: "Email",
-      value: "alex.chen@example.com",
-      href: "mailto:alex.chen@example.com",
+      value: content.meta.email,
+      href: `mailto:${content.meta.email}`,
     },
     {
       icon: Phone,
       label: "Phone",
-      value: "+1 (555) 123-4567",
-      href: "tel:+15551234567",
+      value: content.meta.phone,
+      href: `tel:${content.meta.phone.replace(/[^+\d]/g, "")}`,
     },
     {
       icon: MapPin,
       label: "Location",
-      value: "San Francisco, CA",
+      value: content.meta.location,
       href: "#",
     },
   ];
 
-  const socialLinks = [
-    {
-      icon: SiGithub,
-      label: "GitHub",
-      href: "https://github.com",
-      color: "hover:text-gray-600",
-    },
-    {
-      icon: SiLinkedin,
-      label: "LinkedIn",
-      href: "https://linkedin.com",
-      color: "hover:text-blue-600",
-    },
-    {
-      icon: SiX,
-      label: "Twitter",
-      href: "https://twitter.com",
-      color: "hover:text-blue-400",
-    },
-    {
-      icon: Mail,
-      label: "Email",
-      href: "mailto:alex.chen@example.com",
-      color: "hover:text-red-500",
-    },
-  ];
+  const socialLinks = content.socials.map((s) => ({
+    icon:
+      s.icon === "github"
+        ? SiGithub
+        : s.icon === "linkedin"
+        ? SiLinkedin
+        : s.icon === "x"
+        ? SiX
+        : Mail,
+    label: s.label,
+    href: s.href,
+    color: s.color,
+  }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -114,11 +102,10 @@ export default function ContactSection() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-6xl font-bold mb-6 gradient-text">
-            Let's Work Together
+            {content.contact.heading}
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Ready to bring your digital vision to life? Let's discuss your
-            project and create something amazing together.
+            {content.contact.subheading}
           </p>
         </motion.div>
 
@@ -131,7 +118,9 @@ export default function ContactSection() {
             viewport={{ once: true }}
           >
             <Card className="glass p-8 cyber-glow">
-              <h3 className="text-2xl font-bold mb-6">Send a Message</h3>
+              <h3 className="text-2xl font-bold mb-6">
+                {content.contact.form.submit}
+              </h3>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-4">
@@ -140,7 +129,7 @@ export default function ContactSection() {
                       htmlFor="name"
                       className="block text-sm font-medium mb-2"
                     >
-                      Name *
+                      {content.contact.form.name}
                     </label>
                     <Input
                       id="name"
@@ -158,7 +147,7 @@ export default function ContactSection() {
                       htmlFor="email"
                       className="block text-sm font-medium mb-2"
                     >
-                      Email *
+                      {content.contact.form.email}
                     </label>
                     <Input
                       id="email"
@@ -178,7 +167,7 @@ export default function ContactSection() {
                     htmlFor="subject"
                     className="block text-sm font-medium mb-2"
                   >
-                    Subject *
+                    {content.contact.form.subject}
                   </label>
                   <Input
                     id="subject"
@@ -197,7 +186,7 @@ export default function ContactSection() {
                     htmlFor="message"
                     className="block text-sm font-medium mb-2"
                   >
-                    Message *
+                    {content.contact.form.message}
                   </label>
                   <Textarea
                     id="message"
@@ -231,7 +220,9 @@ export default function ContactSection() {
                   ) : (
                     <Send className="h-4 w-4 mr-2" />
                   )}
-                  {isSubmitting ? "Sending..." : "Send Message"}
+                  {isSubmitting
+                    ? content.contact.form.submitting
+                    : content.contact.form.submit}
                 </Button>
               </form>
             </Card>
@@ -277,7 +268,9 @@ export default function ContactSection() {
 
             {/* Social Links */}
             <Card className="glass p-8">
-              <h3 className="text-xl font-bold mb-6">Connect with Me</h3>
+              <h3 className="text-xl font-bold mb-6">
+                {content.contact.socialsHeading}
+              </h3>
               <div className="grid grid-cols-2 gap-4">
                 {socialLinks.map((social, index) => (
                   <motion.a
@@ -300,28 +293,32 @@ export default function ContactSection() {
 
             {/* Resume Download */}
             <Card className="glass p-8 text-center">
-              <h3 className="text-xl font-bold mb-4">Interested in My Work?</h3>
+              <h3 className="text-xl font-bold mb-4">
+                {content.contact.resumeHeading}
+              </h3>
               <p className="text-muted-foreground mb-6">
-                Download my resume to learn more about my experience and skills.
+                {content.contact.resumeDesc}
               </p>
               <Button
                 variant="outline"
                 className="cyber-border hover:cyber-glow"
               >
                 <Download className="h-4 w-4 mr-2" />
-                Download Resume
+                {content.contact.resumeCta}
               </Button>
             </Card>
 
             {/* Quick Contact */}
             <Card className="glass p-8 text-center cyber-glow">
-              <h3 className="text-xl font-bold mb-4">Quick Chat?</h3>
+              <h3 className="text-xl font-bold mb-4">
+                {content.contact.quickChatHeading}
+              </h3>
               <p className="text-muted-foreground mb-6">
-                Prefer a quick call? I'm available for a 15-minute consultation.
+                {content.contact.quickChatDesc}
               </p>
               <Button className="cyber-glow">
                 <Phone className="h-4 w-4 mr-2" />
-                Schedule a Call
+                {content.contact.scheduleCall}
               </Button>
             </Card>
           </motion.div>

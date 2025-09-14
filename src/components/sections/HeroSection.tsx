@@ -1,25 +1,29 @@
-import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { ArrowDown, Mail, Download } from 'lucide-react';
-import { SiGithub, SiLinkedin } from 'react-icons/si';
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { ArrowDown, Mail, Download } from "lucide-react";
+import { SiGithub, SiLinkedin } from "react-icons/si";
+import { content } from "@/content";
 
 export default function HeroSection() {
   const scrollToProjects = () => {
-    const element = document.querySelector('#projects');
+    const element = document.querySelector("#projects");
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   const scrollToContact = () => {
-    const element = document.querySelector('#contact');
+    const element = document.querySelector("#contact");
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <section
+      id="home"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden"
+    >
       {/* Content */}
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="text-center max-w-4xl mx-auto">
@@ -30,7 +34,9 @@ export default function HeroSection() {
             transition={{ duration: 0.6 }}
             className="mb-6"
           >
-            <span className="text-cyber-blue font-mono text-lg">Hello, I'm</span>
+            <span className="text-cyber-blue font-mono text-lg">
+              {content.hero.greeting}
+            </span>
           </motion.div>
 
           {/* Name */}
@@ -40,7 +46,7 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-6xl md:text-8xl lg:text-9xl font-bold mb-6 gradient-text"
           >
-            Alex Chen
+            {content.hero.name}
           </motion.h1>
 
           {/* Tagline */}
@@ -50,7 +56,7 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-2xl md:text-4xl lg:text-5xl font-light mb-8 text-muted-foreground"
           >
-            Creative Developer & Digital Architect
+            {content.hero.title}
           </motion.h2>
 
           {/* Description */}
@@ -60,9 +66,7 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed"
           >
-            I craft immersive digital experiences that blend cutting-edge technology 
-            with intuitive design. Specializing in React, Three.js, and modern web 
-            technologies to bring ideas to life.
+            {content.hero.description}
           </motion.p>
 
           {/* Action Buttons */}
@@ -77,17 +81,17 @@ export default function HeroSection() {
               size="lg"
               className="cyber-glow font-semibold px-8 py-4 rounded-xl"
             >
-              See Projects
+              {content.hero.ctas.seeProjects}
               <ArrowDown className="ml-2 h-4 w-4" />
             </Button>
-            
+
             <Button
               onClick={scrollToContact}
               variant="outline"
               size="lg"
               className="cyber-border font-semibold px-8 py-4 rounded-xl"
             >
-              Get in Touch
+              {content.hero.ctas.getInTouch}
               <Mail className="ml-2 h-4 w-4" />
             </Button>
           </motion.div>
