@@ -2,9 +2,10 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Mail, Download } from "lucide-react";
 import { SiGithub, SiLinkedin } from "react-icons/si";
-import { content } from "@/content";
+import { useContent } from "@/content/ContentContext";
 
 export default function HeroSection() {
+  const { content, locale } = useContent();
   const scrollToProjects = () => {
     const element = document.querySelector("#projects");
     if (element) {
@@ -22,7 +23,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center relative overflow-hidden"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden mb-16 md:mb-24"
     >
       {/* Content */}
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
@@ -44,7 +45,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-6xl md:text-8xl lg:text-9xl font-bold mb-6 gradient-text"
+            className="text-4xl md:text-6xl lg:text-8xl font-bold mb-6 gradient-text"
           >
             {content.hero.name}
           </motion.h1>
@@ -54,7 +55,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-2xl md:text-4xl lg:text-5xl font-light mb-8 text-muted-foreground"
+            className="text-xl md:text-2xl lg:text-3xl font-light mb-8 text-muted-foreground"
           >
             {content.hero.title}
           </motion.h2>
@@ -101,7 +102,9 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.0 }}
-            className="flex justify-center space-x-6"
+            className={`flex justify-center space-x-6 ${
+              locale === "ar" ? "space-x-reverse" : ""
+            }`}
           >
             <Button variant="ghost" size="sm" className="cyber-glow">
               <SiGithub className="h-5 w-5" />

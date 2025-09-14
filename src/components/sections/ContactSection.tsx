@@ -7,9 +7,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, MapPin, Phone, Send, Download } from "lucide-react";
 import { SiGithub, SiLinkedin, SiX } from "react-icons/si";
-import { content } from "@/content";
+import { useContent } from "@/content/ContentContext";
 
 export default function ContactSection() {
+  const { content, locale } = useContent();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -101,7 +102,7 @@ export default function ContactSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 gradient-text">
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 pb-1 md:pb-2 gradient-text">
             {content.contact.heading}
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -247,7 +248,9 @@ export default function ContactSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                     viewport={{ once: true }}
-                    className="flex items-center space-x-4"
+                    className={`flex items-center space-x-4 ${
+                      locale === "ar" ? "space-x-reverse" : ""
+                    }`}
                   >
                     <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-cyber-blue to-cyber-purple flex items-center justify-center">
                       <info.icon className="h-5 w-5 text-white" />

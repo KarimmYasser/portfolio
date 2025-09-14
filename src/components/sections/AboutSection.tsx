@@ -2,9 +2,10 @@ import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Code, Heart, Zap, Target } from "lucide-react";
-import { content } from "@/content";
+import { useContent } from "@/content/ContentContext";
 
 export default function AboutSection() {
+  const { content, locale } = useContent();
   const values = content.about.values.map((v) => ({
     icon:
       v.icon === "code"
@@ -20,7 +21,7 @@ export default function AboutSection() {
   const technologies = content.about.technologies;
 
   return (
-    <section id="about" className="py-20 relative">
+    <section id="about" className="py-20 relative mt-8 md:mt-12">
       <div className="container mx-auto px-4 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -29,7 +30,7 @@ export default function AboutSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 gradient-text">
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 pb-1 md:pb-2 gradient-text">
             {content.about.heading}
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -89,7 +90,11 @@ export default function AboutSection() {
                 viewport={{ once: true }}
               >
                 <Card className="glass p-6 hover:cyber-glow transition-all duration-300 cursor-pointer">
-                  <div className="flex items-start space-x-4">
+                  <div
+                    className={`flex items-start space-x-4 ${
+                      locale === "ar" ? "space-x-reverse" : ""
+                    }`}
+                  >
                     <div className="flex-shrink-0">
                       <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-cyber-blue to-cyber-purple flex items-center justify-center">
                         <value.icon className="h-6 w-6 text-white" />
@@ -118,7 +123,7 @@ export default function AboutSection() {
           viewport={{ once: true }}
           className="text-center"
         >
-          <h3 className="text-2xl font-bold mb-8 gradient-text">
+          <h3 className="text-2xl font-bold mb-8 pb-1 md:pb-2 gradient-text">
             Technologies I Love
           </h3>
           <div className="flex flex-wrap justify-center gap-3">

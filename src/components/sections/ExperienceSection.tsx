@@ -2,9 +2,10 @@ import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CalendarDays, MapPin, Building } from "lucide-react";
-import { content } from "@/content";
+import { useContent } from "@/content/ContentContext";
 
 export default function ExperienceSection() {
+  const { content, locale } = useContent();
   const experiences = content.experience.timeline;
   const education = content.experience.education;
 
@@ -18,7 +19,7 @@ export default function ExperienceSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 gradient-text">
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 pb-1 md:pb-2 gradient-text">
             {content.experience.heading}
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -53,22 +54,26 @@ export default function ExperienceSection() {
               >
                 <Card className="glass p-6 hover:cyber-glow transition-all duration-300">
                   <div className="mb-4">
-                    <div className="flex items-center space-x-2 mb-2">
+                    <div
+                      className={`flex items-center space-x-2 mb-2 ${
+                        locale === "ar" ? "space-x-reverse" : ""
+                      }`}
+                    >
                       <Badge variant="outline" className="cyber-border text-xs">
                         {exp.type}
                       </Badge>
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <CalendarDays className="h-3 w-3 mr-1" />
+                      <div className="flex items-center text-sm text-muted-foreground space-x-1 rtl:space-x-reverse">
+                        <CalendarDays className="h-3 w-3" />
                         {exp.period}
                       </div>
                     </div>
                     <h3 className="text-xl font-bold mb-1">{exp.position}</h3>
-                    <div className="flex items-center text-cyber-blue font-medium mb-2">
-                      <Building className="h-4 w-4 mr-2" />
+                    <div className="flex items-center text-cyber-blue font-medium mb-2 space-x-2 rtl:space-x-reverse">
+                      <Building className="h-4 w-4" />
                       {exp.company}
                     </div>
-                    <div className="flex items-center text-sm text-muted-foreground mb-4">
-                      <MapPin className="h-3 w-3 mr-1" />
+                    <div className="flex items-center text-sm text-muted-foreground mb-4 space-x-1 rtl:space-x-reverse">
+                      <MapPin className="h-3 w-3" />
                       {exp.location}
                     </div>
                   </div>
@@ -85,9 +90,13 @@ export default function ExperienceSection() {
                       {exp.achievements.map((achievement, i) => (
                         <li
                           key={i}
-                          className="text-sm text-muted-foreground flex items-start"
+                          className={`text-sm text-muted-foreground flex items-start space-x-3 ${
+                            locale === "ar"
+                              ? "flex-row-reverse space-x-reverse"
+                              : ""
+                          }`}
                         >
-                          <span className="inline-block w-1 h-1 bg-cyber-blue rounded-full mt-2 mr-2 flex-shrink-0"></span>
+                          <span className="inline-block w-1 h-1 bg-cyber-blue rounded-full mt-2 px-1 flex-shrink-0"></span>
                           {achievement}
                         </li>
                       ))}
@@ -135,13 +144,17 @@ export default function ExperienceSection() {
                   <div className="text-cyber-blue font-semibold text-lg mb-2">
                     {edu.institution}
                   </div>
-                  <div className="flex items-center justify-center space-x-4 text-sm text-muted-foreground">
-                    <div className="flex items-center">
-                      <CalendarDays className="h-3 w-3 mr-1" />
+                  <div
+                    className={`flex items-center justify-center space-x-4 text-sm text-muted-foreground ${
+                      locale === "ar" ? "space-x-reverse" : ""
+                    }`}
+                  >
+                    <div className="flex items-center space-x-1 rtl:space-x-reverse">
+                      <CalendarDays className="h-3 w-3" />
                       {edu.period}
                     </div>
-                    <div className="flex items-center">
-                      <MapPin className="h-3 w-3 mr-1" />
+                    <div className="flex items-center space-x-1 rtl:space-x-reverse">
+                      <MapPin className="h-3 w-3" />
                       {edu.location}
                     </div>
                   </div>

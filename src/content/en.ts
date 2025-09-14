@@ -125,11 +125,11 @@ export type Content = {
 
 const content: Content = {
   meta: {
-    siteName: "DevPortfolio",
-    author: "Alex Chen",
-    location: "San Francisco, CA",
-    email: "alex.chen@example.com",
-    phone: "+1 (555) 123-4567",
+    siteName: "Karim's Portfolio",
+    author: "Karim Yasser",
+    location: "Cairo, Egypt",
+    email: "karimmyasserr@gmail.com",
+    phone: "+20 114 443 2284",
   },
   nav: {
     items: [
@@ -143,8 +143,8 @@ const content: Content = {
   },
   hero: {
     greeting: "Hello, I'm",
-    name: "Alex Chen",
-    title: "Creative Developer & Digital Architect",
+    name: "Karim Yasser",
+    title: "Cross Platform Developer & Computer Engineer",
     description:
       "I craft immersive digital experiences that blend cutting-edge technology with intuitive design. Specializing in React, Three.js, and modern web technologies to bring ideas to life.",
     ctas: { seeProjects: "See Projects", getInTouch: "Get in Touch" },
@@ -472,7 +472,7 @@ const content: Content = {
     socialsHeading: "Connect with Me",
   },
   footer: {
-    brand: "<DevPortfolio />",
+    brand: "<Karim Yasser/>",
     tagline:
       "Crafting digital experiences that blend creativity with cutting-edge technology. Let's build something amazing together.",
     navHeading: "Navigation",

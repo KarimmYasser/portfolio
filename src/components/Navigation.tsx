@@ -1,8 +1,14 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Moon, Sun, Menu, X, Globe } from "lucide-react";
-import { content } from "@/content";
+import { useContent } from "@/content/ContentContext";
 
 interface NavigationProps {
   isDark: boolean;
@@ -12,7 +18,7 @@ interface NavigationProps {
 export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [language, setLanguage] = useState("EN");
+  const { content, locale, setLocale } = useContent();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,9 +39,8 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
     setIsMobileMenuOpen(false);
   };
 
-  const toggleLanguage = () => {
-    setLanguage(language === "EN" ? "ES" : "EN");
-  };
+  // Language change via dropdown
+  const changeLanguage = (lang: "en" | "es" | "ar") => setLocale(lang);
 
   return (
     <>
@@ -58,7 +63,11 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
             </motion.div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div
+              className={`hidden md:flex items-center space-x-8 ${
+                locale === "ar" ? "space-x-reverse" : ""
+              }`}
+            >
               {navItems.map((item, index) => (
                 <motion.button
                   key={item.label}
@@ -74,17 +83,39 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
             </div>
 
             {/* Controls */}
-            <div className="flex items-center space-x-4">
-              {/* Language Toggle */}
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={toggleLanguage}
-                className="hidden sm:flex items-center space-x-1"
-              >
-                <Globe className="h-4 w-4" />
-                <span>{language}</span>
-              </Button>
+            <div
+              className={`flex items-center space-x-4 ${
+                locale === "ar" ? "space-x-reverse" : ""
+              }`}
+            >
+              {/* Language Dropdown (Desktop) */}
+              <div className="hidden sm:flex">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className={`items-center space-x-1 ${
+                        locale === "ar" ? "space-x-reverse" : ""
+                      }`}
+                    >
+                      <Globe className="h-4 w-4" />
+                      <span>{locale.toUpperCase()}</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="min-w-[10rem]">
+                    <DropdownMenuItem onSelect={() => changeLanguage("en")}>
+                      English
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => changeLanguage("es")}>
+                      Español
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => changeLanguage("ar")}>
+                      العربية
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
 
               {/* Theme Toggle */}
               <Button
@@ -120,13 +151,15 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
 
       {/* Mobile Menu */}
       <motion.div
-        initial={{ opacity: 0, x: "100%" }}
+        initial={{ opacity: 0, x: locale === "ar" ? "-100%" : "100%" }}
         animate={{
           opacity: isMobileMenuOpen ? 1 : 0,
-          x: isMobileMenuOpen ? 0 : "100%",
+          x: isMobileMenuOpen ? 0 : locale === "ar" ? "-100%" : "100%",
         }}
         transition={{ type: "spring", damping: 25, stiffness: 500 }}
-        className="fixed top-0 right-0 h-full w-80 glass-strong z-40 md:hidden"
+        className={`fixed top-0 ${
+          locale === "ar" ? "left-0" : "right-0"
+        } h-full w-80 glass-strong z-40 md:hidden`}
       >
         <div className="pt-20 px-6">
           {navItems.map((item, index) => (
@@ -139,7 +172,9 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
               }}
               transition={{ delay: index * 0.1 + 0.2 }}
               onClick={() => scrollToSection(item.href)}
-              className="block w-full text-left py-4 text-lg font-medium hover:text-primary transition-colors"
+              className={`block w-full ${
+                locale === "ar" ? "text-right" : "text-left"
+              } py-4 text-lg font-medium hover:text-primary transition-colors`}
             >
               {item.label}
             </motion.button>
@@ -154,15 +189,29 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
             transition={{ delay: 0.8 }}
             className="mt-8 pt-8 border-t border-border"
           >
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={toggleLanguage}
-              className="w-full justify-start mb-4"
-            >
-              <Globe className="h-4 w-4 mr-2" />
-              Language: {language}
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="w-full justify-start mb-4"
+                >
+                  <Globe className="h-4 w-4 mr-2" />
+                  Language: {locale.toUpperCase()}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="min-w-[10rem]">
+                <DropdownMenuItem onSelect={() => changeLanguage("en")}>
+                  English
+                </DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => changeLanguage("es")}>
+                  Español
+                </DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => changeLanguage("ar")}>
+                  العربية
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </motion.div>
         </div>
       </motion.div>

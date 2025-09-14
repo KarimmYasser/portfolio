@@ -4,9 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Eye } from "lucide-react";
 import { SiGithub } from "react-icons/si";
-import { content } from "@/content";
+import { useContent } from "@/content/ContentContext";
 
 export default function ProjectsSection() {
+  const { content, locale } = useContent();
   const projects = content.projects.items;
 
   const featuredProjects = projects.filter((project) => project.featured);
@@ -22,7 +23,7 @@ export default function ProjectsSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 gradient-text">
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 pb-1 md:pb-2 gradient-text">
             {content.projects.heading}
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -45,7 +46,11 @@ export default function ProjectsSection() {
                   <div className="aspect-video bg-gradient-to-br from-cyber-blue/20 to-cyber-purple/20 flex items-center justify-center">
                     <Eye className="h-12 w-12 text-cyber-blue opacity-50" />
                   </div>
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
+                  <div
+                    className={`absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4 ${
+                      locale === "ar" ? "space-x-reverse" : ""
+                    }`}
+                  >
                     <Button size="sm" className="cyber-glow">
                       <ExternalLink className="h-4 w-4 mr-2" />
                       Demo
@@ -93,7 +98,7 @@ export default function ProjectsSection() {
           viewport={{ once: true }}
           className="mb-12"
         >
-          <h3 className="text-3xl font-bold text-center mb-12 gradient-text">
+          <h3 className="text-3xl font-bold text-center mb-12 pb-1 md:pb-2 gradient-text">
             {content.projects.moreHeading}
           </h3>
         </motion.div>
@@ -129,7 +134,11 @@ export default function ProjectsSection() {
                     ))}
                   </div>
 
-                  <div className="flex space-x-2">
+                  <div
+                    className={`flex space-x-2 ${
+                      locale === "ar" ? "space-x-reverse" : ""
+                    }`}
+                  >
                     <Button size="sm" variant="ghost" className="flex-1">
                       <ExternalLink className="h-3 w-3 mr-1" />
                       Demo

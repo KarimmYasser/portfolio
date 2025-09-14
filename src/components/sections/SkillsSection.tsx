@@ -11,9 +11,17 @@ import {
   Zap,
   Brain,
 } from "lucide-react";
-import { content } from "@/content";
+import { useContent } from "@/content/ContentContext";
 
 export default function SkillsSection() {
+  const { content } = useContent();
+  // Map a single color token to a complementary gradient end token
+  const gradientToByColor: Record<string, string> = {
+    "cyber-blue": "cyber-purple",
+    "cyber-purple": "cyber-pink",
+    "cyber-green": "cyber-blue",
+    "cyber-pink": "cyber-purple",
+  };
   const skillCategories = content.skills.categories.map((c) => ({
     icon:
       c.icon === "code2"
@@ -24,7 +32,8 @@ export default function SkillsSection() {
         ? Cloud
         : Palette,
     title: c.title,
-    color: c.color,
+    fromColor: c.color,
+    toColor: gradientToByColor[c.color] ?? c.color,
     skills: c.skills,
   }));
 
@@ -51,7 +60,7 @@ export default function SkillsSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 gradient-text">
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 pb-1 md:pb-2 gradient-text">
             {content.skills.heading}
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -70,9 +79,9 @@ export default function SkillsSection() {
               viewport={{ once: true }}
             >
               <Card className="glass p-8 hover:cyber-glow transition-all duration-300 h-full">
-                <div className="flex items-center mb-6">
+                <div className="flex items-center mb-6 space-x-4 rtl:space-x-reverse">
                   <div
-                    className={`w-12 h-12 rounded-lg bg-gradient-to-br from-${category.color} to-${category.color} flex items-center justify-center mr-4`}
+                    className={`w-12 h-12 rounded-lg bg-gradient-to-br from-${category.fromColor} to-${category.toColor} flex items-center justify-center`}
                   >
                     <category.icon className="h-6 w-6 text-white" />
                   </div>

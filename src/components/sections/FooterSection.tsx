@@ -2,9 +2,10 @@ import { motion } from "framer-motion";
 import { Heart, Mail, ArrowUp } from "lucide-react";
 import { SiGithub, SiLinkedin, SiX } from "react-icons/si";
 import { Button } from "@/components/ui/button";
-import { content } from "@/content";
+import { useContent } from "@/content/ContentContext";
 
 export default function FooterSection() {
+  const { content, locale } = useContent();
   const currentYear = new Date().getFullYear();
 
   const scrollToTop = () => {
@@ -58,7 +59,11 @@ export default function FooterSection() {
               </p>
             </div>
 
-            <div className="flex space-x-4">
+            <div
+              className={`flex space-x-4 ${
+                locale === "ar" ? "space-x-reverse" : ""
+              }`}
+            >
               {socialLinks.map((social, index) => (
                 <motion.a
                   key={social.label}
@@ -85,7 +90,7 @@ export default function FooterSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h4 className="font-semibold text-lg mb-4">
+            <h4 className="font-semibold text-lg mb-4 pb-1">
               {content.footer.navHeading}
             </h4>
             <nav className="space-y-2">
@@ -93,7 +98,9 @@ export default function FooterSection() {
                 <button
                   key={link.label}
                   onClick={() => scrollToSection(link.href)}
-                  className="block text-muted-foreground hover:text-primary transition-colors text-left"
+                  className={`block text-muted-foreground hover:text-primary transition-colors ${
+                    locale === "ar" ? "text-right" : "text-left"
+                  }`}
                 >
                   {link.label}
                 </button>
@@ -108,7 +115,7 @@ export default function FooterSection() {
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            <h4 className="font-semibold text-lg mb-4">
+            <h4 className="font-semibold text-lg mb-4 pb-1">
               {content.footer.contactHeading}
             </h4>
             <div className="space-y-2 text-muted-foreground">
@@ -136,7 +143,11 @@ export default function FooterSection() {
           viewport={{ once: true }}
           className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0"
         >
-          <div className="flex items-center space-x-2 text-muted-foreground">
+          <div
+            className={`flex items-center space-x-2 text-muted-foreground ${
+              locale === "ar" ? "space-x-reverse" : ""
+            }`}
+          >
             <span>
               {content.footer.rights
                 .replace("{year}", String(currentYear))
@@ -145,7 +156,11 @@ export default function FooterSection() {
             <Heart className="h-4 w-4 text-red-500 fill-current" />
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div
+            className={`flex items-center space-x-4 ${
+              locale === "ar" ? "space-x-reverse" : ""
+            }`}
+          >
             <span className="text-sm text-muted-foreground">
               {content.footer.builtWith}
             </span>
