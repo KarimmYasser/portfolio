@@ -1,73 +1,158 @@
-# Welcome to your Lovable project
+## Portfolio Website (React · Vite · TypeScript)
 
-## Project info
+Modern, animated developer portfolio built with React, Vite, TypeScript, Tailwind CSS, shadcn/ui (Radix), Framer Motion, and a subtle Three.js background using React Three Fiber.
 
-**URL**: https://lovable.dev/projects/3867c7c9-ca12-46d8-af85-9a751194c2f8
+This template includes ready-to-edit sections (Hero, About, Skills, Projects, Experience, Contact) with theme toggling, smooth scrolling, and a polished UI kit.
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- Fast Vite + React + TypeScript setup
+- Tailwind CSS with shadcn/ui components (Radix under the hood)
+- Framer Motion animations and transitions
+- Three.js background via @react-three/fiber and @react-three/drei
+- Dark/Light theme toggle persisted to localStorage
+- Responsive navigation with smooth section scrolling
+- Prebuilt sections: Hero, About, Skills, Projects, Experience, Contact, Footer
+- Path aliases with `@/*`
 
-**Use Lovable**
+## Tech Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/3867c7c9-ca12-46d8-af85-9a751194c2f8) and start prompting.
+- React 18, TypeScript
+- Vite 5 (SWC React plugin)
+- Tailwind CSS 3, tailwind-merge, tailwindcss-animate, typography
+- shadcn/ui components powered by Radix UI
+- Framer Motion
+- Three.js, @react-three/fiber, @react-three/drei
+- React Router
+- Icons: lucide-react
+- Utilities present in deps (optional): TanStack Query, Recharts, Embla Carousel, date-fns, etc.
 
-Changes made via Lovable will be committed automatically to this repo.
+## Project Structure
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+.
+├─ public/
+│  ├─ favicon.ico
+│  ├─ robots.txt
+│  └─ placeholder.svg
+├─ src/
+│  ├─ components/
+│  │  ├─ Navigation.tsx
+│  │  ├─ ThreeBackground.tsx
+│  │  ├─ sections/
+│  │  │  ├─ AboutSection.tsx
+│  │  │  ├─ ContactSection.tsx
+│  │  │  ├─ ExperienceSection.tsx
+│  │  │  ├─ FooterSection.tsx
+│  │  │  ├─ HeroSection.tsx
+│  │  │  ├─ ProjectsSection.tsx
+│  │  │  └─ SkillsSection.tsx
+│  │  └─ ui/ (shadcn components)
+│  ├─ hooks/
+│  ├─ lib/
+│  └─ pages/
+│     ├─ Index.tsx
+│     ├─ NotFound.tsx
+│     └─ Portfolio.tsx
+├─ index.html
+├─ package.json
+├─ tailwind.config.ts
+├─ vite.config.ts
+└─ tsconfig*.json
 ```
 
-**Edit a file directly in GitHub**
+Path alias: `@/*` maps to `src/*` (see `tsconfig.json`).
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Getting Started
 
-**Use GitHub Codespaces**
+Prerequisites
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- Node.js LTS (18+ recommended)
+- A package manager: npm, pnpm, yarn, or bun (a `bun.lockb` exists, but any will work)
 
-## What technologies are used for this project?
+Install dependencies
 
-This project is built with:
+- npm: `npm install`
+- pnpm: `pnpm install`
+- yarn: `yarn`
+- bun: `bun install`
+
+Run the dev server
+
+- npm: `npm run dev`
+- pnpm: `pnpm dev`
+- yarn: `yarn dev`
+- bun: `bun run dev`
+
+Build for production
+
+- npm: `npm run build`
+- pnpm: `pnpm build`
+- yarn: `yarn build`
+- bun: `bun run build`
+
+Preview the production build
+
+- npm: `npm run preview`
+- pnpm: `pnpm preview`
+- yarn: `yarn preview`
+- bun: `bun run preview`
+
+Lint
+
+- `npm run lint` (or the equivalent command for your package manager)
+
+## Customization Guide
+
+Replace demo content with your own:
+
+- Branding/Name
+  - `src/components/sections/HeroSection.tsx` (name, headline, bio, social actions)
+  - `src/components/Navigation.tsx` (brand text, nav items)
+- Social links and contact info
+  - `src/components/sections/ContactSection.tsx` (email, phone, socials)
+  - `HeroSection.tsx` social buttons
+- Projects
+  - `src/components/sections/ProjectsSection.tsx` (project list, tags, links)
+- Resume
+  - Add your resume file to `public/` and wire the button/link in `HeroSection.tsx` / `ContactSection.tsx`
+- Theming
+  - Theme is toggled in `src/pages/Portfolio.tsx` and persisted in `localStorage` under the key `theme`
+- 3D Background
+  - Settings live in `src/components/ThreeBackground.tsx` (particle count, colors, camera)
+
+Note on contact form: it currently simulates submission and shows a toast. If you want email delivery, integrate a service (e.g., EmailJS, backend API) and wire it up in `ContactSection.tsx`. The project already includes `@emailjs/browser` but it isn’t configured by default.
+
+## Available Scripts (package.json)
+
+- `dev` – Start Vite dev server
+- `build` – Build for production
+- `build:dev` – Development-mode production build (useful for debugging prod issues)
+- `preview` – Preview the production build
+- `lint` – Run ESLint on the project
+
+## Deployment
+
+You can deploy the built `dist/` folder almost anywhere:
+
+- Vercel: Import the repo, set framework to Vite. Default build command `npm run build`, output directory `dist`.
+- Netlify: Set build command `npm run build` and publish directory `dist`.
+- GitHub Pages: Build locally and push the `dist` folder to a `gh-pages` branch (or use an action).
+
+Environment variables: Not required by default. If you add EmailJS or other APIs, create a `.env` and reference variables via `import.meta.env.VITE_*`.
+
+## Tips
+
+- Use the `@/*` path alias to keep imports clean.
+- Tailwind utilities are preconfigured; add design tokens in `tailwind.config.ts`.
+- shadcn/ui components live in `src/components/ui/`—they’re fully local and customizable.
+
+## Acknowledgements
 
 - Vite
-- TypeScript
-- React
-- shadcn-ui
+- React & TypeScript
 - Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/3867c7c9-ca12-46d8-af85-9a751194c2f8) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- shadcn/ui + Radix UI
+- Framer Motion
+- Three.js, @react-three/fiber, @react-three/drei
+- lucide-react icons
