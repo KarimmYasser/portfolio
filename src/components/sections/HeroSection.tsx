@@ -1,11 +1,18 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Mail, Download } from "lucide-react";
+import {
+  ArrowDown,
+  Mail,
+  Download,
+  Terminal as TerminalIcon,
+} from "lucide-react";
 import { SiGithub, SiLinkedin } from "react-icons/si";
 import { useContent } from "@/content/ContentContext";
+import { useTerminalOverlay } from "@/terminal/TerminalOverlayContext";
 
 export default function HeroSection() {
   const { content, locale } = useContent();
+  const { setOpen } = useTerminalOverlay();
   const scrollToProjects = () => {
     const element = document.querySelector("#projects");
     if (element) {
@@ -94,6 +101,17 @@ export default function HeroSection() {
             >
               {content.hero.ctas.getInTouch}
               <Mail className="ml-2 h-4 w-4" />
+            </Button>
+
+            <Button
+              onClick={() => setOpen(true)}
+              size="lg"
+              className="font-mono px-8 py-4 rounded-xl bg-black text-cyber-green border border-cyber-green hover:bg-black/80 hover:text-cyber-green/90 focus:outline-none focus:ring-2 focus:ring-cyber-green transition-colors flex items-center justify-center"
+            >
+              <span className="flex items-center space-x-2 rtl:space-x-reverse">
+                <span>Open in Terminal</span>
+                <TerminalIcon className="h-4 w-4" />
+              </span>
             </Button>
           </motion.div>
 

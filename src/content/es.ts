@@ -66,7 +66,7 @@ const es: Content = {
     navHeading: "Navegación",
     contactHeading: "Contacto",
     builtWith: "Construido con React, Three.js y TailwindCSS",
-    rights: "© {year} Alex Chen. Hecho con ♥ y mucho café",
+    rights: "© {year} Karim Yasser. Hecho con ♥ y mucho café",
   },
 };
 

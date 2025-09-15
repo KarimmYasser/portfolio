@@ -110,15 +110,16 @@ export default function ContactSection() {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto lg:items-stretch items-start">
           {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
+            className="h-full flex flex-col gap-8"
           >
-            <Card className="glass p-8 cyber-glow">
+            <Card className="glass p-8 cyber-glow flex-1 flex flex-col">
               <h3 className="text-2xl font-bold mb-6">
                 {content.contact.form.submit}
               </h3>
@@ -227,6 +228,31 @@ export default function ContactSection() {
                 </Button>
               </form>
             </Card>
+
+            {/* Social Links (Connect with Me) moved under Send Message */}
+            <Card className="glass p-8">
+              <h3 className="text-xl font-bold mb-6">
+                {content.contact.socialsHeading}
+              </h3>
+              <div className="grid grid-cols-2 gap-4">
+                {socialLinks.map((social, index) => (
+                  <motion.a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className={`flex items-center space-x-3 p-3 rounded-lg border border-border hover:border-primary transition-all duration-300 ${social.color}`}
+                  >
+                    <social.icon className="h-5 w-5" />
+                    <span className="font-medium">{social.label}</span>
+                  </motion.a>
+                ))}
+              </div>
+            </Card>
           </motion.div>
 
           {/* Contact Information */}
@@ -235,10 +261,10 @@ export default function ContactSection() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="space-y-8"
+            className="h-full flex flex-col gap-8"
           >
             {/* Contact Details */}
-            <Card className="glass p-8">
+            <Card className="glass p-8 flex-1">
               <h3 className="text-2xl font-bold mb-6">Get in Touch</h3>
               <div className="space-y-6">
                 {contactInfo.map((info, index) => (
@@ -265,31 +291,6 @@ export default function ContactSection() {
                       </a>
                     </div>
                   </motion.div>
-                ))}
-              </div>
-            </Card>
-
-            {/* Social Links */}
-            <Card className="glass p-8">
-              <h3 className="text-xl font-bold mb-6">
-                {content.contact.socialsHeading}
-              </h3>
-              <div className="grid grid-cols-2 gap-4">
-                {socialLinks.map((social, index) => (
-                  <motion.a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className={`flex items-center space-x-3 p-3 rounded-lg border border-border hover:border-primary transition-all duration-300 ${social.color}`}
-                  >
-                    <social.icon className="h-5 w-5" />
-                    <span className="font-medium">{social.label}</span>
-                  </motion.a>
                 ))}
               </div>
             </Card>

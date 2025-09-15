@@ -76,7 +76,7 @@ const ar: Content = {
     navHeading: "روابط",
     contactHeading: "معلومات التواصل",
     builtWith: "بُني باستخدام React و Three.js و TailwindCSS",
-    rights: "© {year} Alex Chen. صُنع بحب وكثير من القهوة",
+    rights: "© {year} Karim Yasser. صُنع بحب وكثير من القهوة",
   },
 };
 

@@ -38,15 +38,16 @@ export default function AboutSection() {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
+        <div className="grid lg:grid-cols-2 gap-12 lg:items-stretch items-start mb-20">
           {/* Avatar and Bio */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
+            className="h-full"
           >
-            <Card className="glass p-8 cyber-glow">
+            <Card className="glass p-8 cyber-glow h-full flex flex-col">
               <div className="mb-6">
                 <div className="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-cyber-blue to-cyber-purple p-1">
                   <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
@@ -79,7 +80,7 @@ export default function AboutSection() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="grid gap-6"
+            className="grid gap-6 h-full"
           >
             {values.map((value, index) => (
               <motion.div

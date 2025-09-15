@@ -252,4 +252,34 @@
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--cyber-blue) / 0.8);
   }
+
+  /* Terminal: blinking cursor */
+  .blinking-cursor {
+    display: inline-block;
+    width: 8px;
+    color: hsl(var(--cyber-green));
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink {
+    from,
+    to {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  /* Terminal cursor */
+  .blinking-cursor {
+    display: inline-block;
+    width: 1ch;
+    color: hsl(var(--cyber-green));
+    animation: blink 1s steps(2, start) infinite;
+  }
+  @keyframes blink {
+    to {
+      visibility: hidden;
+    }
+  }
 }
