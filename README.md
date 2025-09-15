@@ -14,6 +14,14 @@ This template includes ready-to-edit sections (Hero, About, Skills, Projects, Ex
 - Responsive navigation with smooth section scrolling
 - Prebuilt sections: Hero, About, Skills, Projects, Experience, Contact, Footer
 - Path aliases with `@/*`
+- Localization with runtime language switch (EN, ES, AR)
+  - Full RTL/LTR support (document.dir is updated automatically)
+- Built-in Terminal overlay
+  - Commands: `help`/`ls`, `about`, `contact`, `projects`, `skills`, `education`, `experience`, `clear`/`cls`, `exit`
+  - Tab-based autocomplete with cycling; Shift+Tab cycles backward
+  - Tab with an empty prompt cycles through ALL commands
+  - Click outside to close; Escape to close; auto-focus preserved while clicking inside
+  - Outputs are localized to the selected language
 
 ## Tech Stack
 
@@ -126,8 +134,23 @@ Note on contact form: it currently simulates submission and shows a toast. If yo
 ### Centralized content and localization
 
 - All user-facing strings and data live in `src/content/en.ts`. Edit this file to update your name, headings, descriptions, projects, experience timeline, contact info, and footer text.
-- To add another language, copy `src/content/en.ts` to `src/content/<locale>.ts` (e.g., `es.ts`), adjust strings, and update `src/content/index.ts` to export the new locale.
+- This template already includes `src/content/es.ts` (Spanish) and `src/content/ar.ts` (Arabic). Arabic triggers RTL automatically by updating `document.dir`.
+- To add another language, copy `src/content/en.ts` to `src/content/<locale>.ts` (e.g., `de.ts`), translate the strings, and export it via `src/content/index.ts`.
 - Components import from `@/content`, so no UI changes are needed when content updates.
+
+### Terminal overlay usage
+
+- Open the overlay from the “Open in Terminal” button in the Hero section.
+- Type a command and press Enter, or use the keyboard-only flow:
+  - Press Tab to autocomplete. If multiple matches exist, Tab will cycle forward, Shift+Tab cycles backward.
+  - With an empty prompt, Tab cycles through ALL available commands.
+- Special commands:
+  - `clear`/`cls` clears the terminal history
+  - `exit` closes the overlay
+- The overlay also supports:
+  - Click outside to close, Escape to close
+  - Automatic focus and focus retention on inside clicks
+  - Direction-aware UI (RTL/LTR) and localized outputs
 
 ## Available Scripts (package.json)
 
