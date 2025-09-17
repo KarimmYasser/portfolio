@@ -23,6 +23,7 @@
 
 @layer base {
   :root {
+    color-scheme: light;
     /* Base Colors */
     --background: 0 0% 100%;
     --foreground: 220 17% 11%;
@@ -99,6 +100,7 @@
   }
 
   .dark {
+    color-scheme: dark;
     /* Dark Mode Base */
     --background: 220 30% 5%;
     --foreground: 220 14% 96%;
@@ -154,6 +156,21 @@
 
   html {
     scroll-behavior: smooth;
+  }
+
+  /* Fix browser autofill colors in light/dark themes */
+  input:-webkit-autofill,
+  textarea:-webkit-autofill,
+  select:-webkit-autofill {
+    -webkit-text-fill-color: hsl(var(--foreground));
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: 0 0 0px 1000px hsl(var(--background)) inset;
+  }
+  .dark input:-webkit-autofill,
+  .dark textarea:-webkit-autofill,
+  .dark select:-webkit-autofill {
+    -webkit-text-fill-color: hsl(var(--foreground));
+    box-shadow: 0 0 0px 1000px hsl(var(--background)) inset;
   }
 
   /* Global heading paddings */
@@ -336,6 +353,32 @@
     );
   }
 
+  /* Force perfect circle and allow placement via CSS vars for precise centering */
+  .smoke-ring--center {
+    /* Override base inset so width/height work as expected */
+    inset: unset;
+    /* Position by center point and translate to center the box */
+    left: var(--smoke-center-x, 50%);
+    top: var(--smoke-center-y, 50%);
+    transform: translate(-50%, -50%);
+    /* Enforce square so the ring is a circle even in non-square containers */
+    width: var(--smoke-size, 140%);
+    height: auto;
+    aspect-ratio: 1 / 1;
+    /* Ensure no accidental constraints from opposite sides */
+    right: auto;
+    bottom: auto;
+    border-radius: 9999px;
+  }
+
+  /* Optional size helpers */
+  .smoke-ring--xl {
+    --smoke-size: 140%;
+  }
+  .smoke-ring--lg {
+    --smoke-size: 110%;
+  }
+
   .smoke-rotate {
     animation: smoke-spin 30s linear infinite;
   }
@@ -384,32 +427,31 @@
     }
   }
 
-  /* Bigger variant: adjust CSS vars */
-  .smoke-ring--big {
-    --smoke-inset: -25%;
-    --smoke-alpha: 0.08;
-    --smoke-stop: 70%;
-    --smoke-blur: 10px;
-    --smoke-mask-inner: 35%;
-    --smoke-mask-outer: 75%;
-  }
-
-  /* Extra-large variant: adjust CSS vars */
-  .smoke-ring--xl {
-    --smoke-inset: -40%;
-    --smoke-alpha: 0.1;
-    --smoke-stop: 75%;
-    --smoke-blur: 16px;
-    --smoke-mask-inner: 28%;
-    --smoke-mask-outer: 80%;
-  }
-
   @keyframes smoke-spin {
     from {
       transform: rotate(0deg) scale(1.05);
     }
     to {
       transform: rotate(360deg) scale(1.05);
+    }
+  }
+
+  /* Sheen animation used by HUD badge */
+  @keyframes sheen {
+    0% {
+      transform: translateX(-60%) skewX(-12deg);
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+    }
+    60% {
+      transform: translateX(120%) skewX(-12deg);
+      opacity: 0.6;
+    }
+    100% {
+      transform: translateX(120%) skewX(-12deg);
+      opacity: 0;
     }
   }
 

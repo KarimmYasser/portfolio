@@ -15,8 +15,9 @@ function CarModel({ lowPower }: { lowPower: boolean }) {
     box.getSize(size);
     box.getCenter(center);
     const maxSize = Math.max(size.x, size.y, size.z) || 1;
-    const target = 5.2; // larger target for a bigger presence
-    const scale = target / maxSize;
+    const target = 4.2; // base target size for presence
+    const SIZE_MULTIPLIER = 0.85; // tweak this to make the car smaller or larger
+    const scale = (target / maxSize) * SIZE_MULTIPLIER;
     return { scale, offset: center.clone().multiplyScalar(-1) };
   }, [scene]);
 
@@ -55,7 +56,7 @@ function CarModel({ lowPower }: { lowPower: boolean }) {
   return (
     <group
       ref={group}
-      position={[offset.x * scale, offset.y * scale - 0.4, offset.z * scale]}
+      position={[offset.x * scale, offset.y * scale + 0.75, offset.z * scale]}
       scale={scale}
     >
       <primitive object={scene} />
@@ -124,22 +125,84 @@ export default function CarShowcase() {
     return (
       <ContactShadows
         ref={ref}
-        position={[0, -0.6, 0]}
+        position={[0, 0, 0]}
         scale={14}
         blur={3}
         opacity={0.7}
-        far={14}
+        far={10}
         color="#000000"
       />
     );
   }
   return (
-    <div className="relative w-full h-[440px] md:h-[520px] overflow-hidden md:overflow-visible touch-pan-y">
+    <div
+      className="relative min-h-screen h-[440px] md:h-[520px] w-full overflow-visible touch-pan-y"
+      style={{ top: "15rem", position: "relative" }}
+    >
       {/* Subtle circular smoke background behind the car */}
       <div
         aria-hidden
-        className="smoke-ring smoke-ring--xl smoke-animate-strong pointer-events-none absolute -z-10"
+        className="smoke-ring smoke-ring--xl smoke-ring--center smoke-animate-strong overflow-visible pointer-events-none absolute -z-10"
+        style={{
+          ["--smoke-center-x" as any]: "0%",
+          // Align with canvas center, then nudge slightly down
+          ["--smoke-center-y" as any]: "0%",
+          // Keep diameter tighter to reduce bottom overflow needs
+          ["--smoke-size" as any]: "100%",
+        }}
       />
+      {/* Caption overlay */}
+      <div className="absolute inset-x-0 top-10 md:top-10 flex justify-center overflow-visible pointer-events-none z-10">
+        {/* HUD-style angled badge */}
+        <div className="relative pointer-events-none overflow-visible">
+          {/* angled background */}
+          <div
+            className="relative px-4 py-1.5 md:px-5 md:py-2"
+            style={{
+              background:
+                "linear-gradient(135deg, hsl(var(--glass-background) / 0.85), hsl(var(--glass-background) / 0.65))",
+              border: "1px solid hsl(var(--glass-border) / 0.7)",
+              backdropFilter: "blur(8px)",
+              clipPath:
+                "polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%)",
+            }}
+          >
+            {/* subtle scanlines */}
+            <div
+              aria-hidden
+              className="absolute inset-0 opacity-20"
+              style={{
+                background:
+                  "repeating-linear-gradient(0deg, transparent 0 2px, hsl(0 0% 100% / 0.03) 2px 4px)",
+                pointerEvents: "none",
+              }}
+            />
+            {/* sheen */}
+            <div
+              aria-hidden
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient( to right, transparent, hsl(0 0% 100% / 0.08) 20%, transparent 40% )",
+                transform: "skewX(-12deg)",
+                pointerEvents: "none",
+                animation: "sheen 3.6s ease-in-out infinite",
+              }}
+            />
+            {/* text */}
+            <div className="relative flex items-center gap-2">
+              <span className="font-mono text-xs sm:text-sm md:text-base tracking-wide">
+                <span className="font-semibold text-foreground">
+                  that's my favorite car
+                </span>
+                <span className="font-semibold text-destructive ml-2">
+                  Ferrari 458 Italia
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
       <Canvas
         className="pointer-events-none touch-pan-y"
         camera={{ position: [0, 1.2, 6.5], fov: 50 }}
@@ -171,14 +234,6 @@ export default function CarShowcase() {
           pause={lowPower}
         />
       </Canvas>
-      {/* Caption overlay */}
-      <div className="absolute inset-x-0 bottom-2 md:bottom-4 flex justify-center pointer-events-none z-10">
-        <div className="px-3 py-1 md:px-4 md:py-2">
-          <span className="gradient-text text-base md:text-lg lg:text-xl font-bold tracking-tight">
-            that's my favorite car ferrari 458 italia
-          </span>
-        </div>
-      </div>
     </div>
   );
 }

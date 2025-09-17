@@ -143,7 +143,7 @@ export default function HeroSection() {
             </motion.div>
           </div>
           {/* Right: Car Showcase */}
-          <div className="full-bleed md:max-w-3xl md:mx-auto w-screen md:w-full lg:mr-8 xl:mr-12 relative z-20">
+          <div className="full-bleed md:max-w-3xl md:mx-auto w-screen md:w-full relative z-20">
             <CarShowcase />
           </div>
         </div>

@@ -21,7 +21,7 @@ export default function AboutSection() {
   const technologies = content.about.technologies;
 
   return (
-    <section id="about" className="py-20 relative mt-8 md:mt-12">
+    <section id="about" className="py-20 relative">
       <div className="container mx-auto px-4 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

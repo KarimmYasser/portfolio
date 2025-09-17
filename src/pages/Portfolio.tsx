@@ -61,7 +61,7 @@ export default function Portfolio() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="min-h-screen full-bleed text-foreground overflow-x-visible">
       {/* Three.js Background (lazy) */}
       {
         <Suspense fallback={null}>
@@ -73,7 +73,7 @@ export default function Portfolio() {
       <Navigation isDark={isDark} toggleTheme={toggleTheme} />
 
       {/* Page Content */}
-      <main className="relative z-10">
+      <main className="relative min-w-fit z-10 overflow-visible">
         {/* Hero Section */}
         <motion.div
           initial={{ opacity: 0 }}

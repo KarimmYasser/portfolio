@@ -130,9 +130,8 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
-                      variant="ghost"
                       size="sm"
-                      className={`items-center space-x-1 cyber-border ${
+                      className={`items-center space-x-1 ${
                         locale === "ar" ? "space-x-reverse" : ""
                       }`}
                     >
@@ -159,12 +158,7 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
               </div>
 
               {/* Theme Toggle */}
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={toggleTheme}
-                className="cyber-border"
-              >
+              <Button size="sm" onClick={toggleTheme}>
                 {isDark ? (
                   <Sun className="h-4 w-4" />
                 ) : (
@@ -174,11 +168,9 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
 
               {/* Low Power Toggle */}
               <Button
-                variant="ghost"
                 size="sm"
                 onClick={() => setLowPower(!lowPower)}
                 title="Toggle Low Power Mode"
-                className="cyber-border"
                 aria-pressed={lowPower}
               >
                 <Battery className="h-4 w-4" />
@@ -215,7 +207,7 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
         transition={{ type: "spring", damping: 25, stiffness: 500 }}
         className={`fixed top-0 ${
           locale === "ar" ? "left-0" : "right-0"
-        } h-full w-80 max-w-[90vw] glass-strong z-[70] md:hidden overflow-y-auto`}
+        } h-full glass-strong overflow-y-auto`}
       >
         {/* Drawer Header */}
         <div
