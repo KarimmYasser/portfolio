@@ -4,6 +4,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Register an animatable custom color for the smoke ring */
+@property --smoke-color {
+  syntax: "<color>";
+  inherits: false;
+  /* fallback color with light-mode-like tone */
+  initial-value: hsla(220, 14%, 96%, 0.08);
+}
+
+/* Register an animatable alpha for the smoke ring intensity */
+@property --smoke-alpha {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0.1;
+}
+
 /* Futuristic Portfolio Design System */
 
 @layer base {
@@ -70,6 +85,17 @@
     /* Animation Properties */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-spring: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    /* Smoke ring defaults (light mode) */
+    --smoke-hsl: var(--foreground);
+    --smoke-alpha: 0.07;
+    --smoke-stop: 60%;
+    --smoke-inset: -10%;
+    --smoke-blur: 6px;
+    --smoke-mask-inner: 40%;
+    --smoke-mask-outer: 70%;
+    /* Computed color used by the ring (used for animation) */
+    --smoke-color: hsl(var(--smoke-hsl) / var(--smoke-alpha));
   }
 
   .dark {
@@ -104,6 +130,15 @@
     --muted-foreground: 220 13% 65%;
     --border: var(--glass-border);
     --input: var(--glass-border);
+
+    /* Smoke ring overrides (dark mode) */
+    --smoke-hsl: 220 30% 80%;
+    --smoke-alpha: 0.12;
+    --smoke-stop: 75%;
+    --smoke-inset: -10%;
+    --smoke-blur: 10px;
+    --smoke-mask-inner: 35%;
+    --smoke-mask-outer: 75%;
   }
 }
 
@@ -280,6 +315,121 @@
   @keyframes blink {
     to {
       visibility: hidden;
+    }
+  }
+
+  /* Subtle circular smoke/ring background (light & dark via CSS vars) */
+  .smoke-ring {
+    position: absolute;
+    inset: var(--smoke-inset);
+    border-radius: 9999px;
+    background: radial-gradient(
+      circle at center,
+      var(--smoke-color, hsl(var(--smoke-hsl) / var(--smoke-alpha))) 0%,
+      transparent var(--smoke-stop)
+    );
+    filter: blur(var(--smoke-blur));
+    mask-image: radial-gradient(
+      circle at center,
+      black var(--smoke-mask-inner),
+      transparent var(--smoke-mask-outer)
+    );
+  }
+
+  .smoke-rotate {
+    animation: smoke-spin 30s linear infinite;
+  }
+
+  /* Animate smoke color between cyber-blue and cyber-purple */
+  .smoke-animate {
+    animation: smoke-color-shift 8s ease-in-out infinite;
+  }
+
+  @keyframes smoke-color-shift {
+    0% {
+      --smoke-color: hsl(var(--cyber-blue) / var(--smoke-alpha));
+    }
+    50% {
+      --smoke-color: hsl(var(--cyber-purple) / var(--smoke-alpha));
+    }
+    100% {
+      --smoke-color: hsl(var(--cyber-blue) / var(--smoke-alpha));
+    }
+  }
+
+  /* Stronger variant: pulse alpha and boost color saturation/brightness */
+  .smoke-animate-strong {
+    /* Combine color cycling, alpha pulsing, and slightly faster rotation */
+    animation: smoke-color-shift 6s ease-in-out infinite,
+      smoke-alpha-pulse 3.5s ease-in-out infinite,
+      smoke-spin 24s linear infinite;
+    /* Increase perceived intensity */
+    filter: blur(var(--smoke-blur)) saturate(1.4) brightness(1.08);
+    /* Make the ring a bit denser and tighter */
+    --smoke-alpha: 0.18;
+    --smoke-stop: 78%;
+    --smoke-mask-inner: 26%;
+    --smoke-mask-outer: 82%;
+  }
+
+  @keyframes smoke-alpha-pulse {
+    0% {
+      --smoke-alpha: 0.16;
+    }
+    50% {
+      --smoke-alpha: 0.28;
+    }
+    100% {
+      --smoke-alpha: 0.16;
+    }
+  }
+
+  /* Bigger variant: adjust CSS vars */
+  .smoke-ring--big {
+    --smoke-inset: -25%;
+    --smoke-alpha: 0.08;
+    --smoke-stop: 70%;
+    --smoke-blur: 10px;
+    --smoke-mask-inner: 35%;
+    --smoke-mask-outer: 75%;
+  }
+
+  /* Extra-large variant: adjust CSS vars */
+  .smoke-ring--xl {
+    --smoke-inset: -40%;
+    --smoke-alpha: 0.1;
+    --smoke-stop: 75%;
+    --smoke-blur: 16px;
+    --smoke-mask-inner: 28%;
+    --smoke-mask-outer: 80%;
+  }
+
+  @keyframes smoke-spin {
+    from {
+      transform: rotate(0deg) scale(1.05);
+    }
+    to {
+      transform: rotate(360deg) scale(1.05);
+    }
+  }
+
+  /* Full-bleed utility: make an element span the full viewport width on mobile */
+  .full-bleed {
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw;
+  }
+
+  @media (min-width: 768px) {
+    .full-bleed {
+      left: auto;
+      right: auto;
+      margin-left: 0;
+      margin-right: 0;
+      width: auto;
     }
   }
 }

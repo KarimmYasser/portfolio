@@ -8,9 +8,23 @@ export const checkCommand = (command: string) => {
   return commands.includes(command.trim().toLowerCase());
 };
 
-export const handleCommand = (command: string, content: Content) => {
+export type TerminalEnv = {
+  setTheme: (mode: "light" | "dark" | "toggle") => void;
+  setLocale: (locale: "en" | "es" | "ar") => void;
+  goto: (hash: string) => void;
+  openProject: (id: string) => void;
+  setBackground: (on: boolean) => void;
+  setLowPower: (on: boolean) => void;
+};
+
+export const handleCommand = (
+  command: string,
+  content: Content,
+  env?: TerminalEnv
+) => {
   const cmd = command.trim().toLowerCase();
-  switch (cmd) {
+  const [primary, arg] = cmd.split(/\s+/, 2);
+  switch (primary) {
     case "help":
     case "ls":
       return (
@@ -24,6 +38,56 @@ export const handleCommand = (command: string, content: Content) => {
           ))}
         </div>
       );
+    // Power commands with side effects
+    case "theme": {
+      if (!env) break;
+      const mode = (arg as "dark" | "light" | "toggle") || "toggle";
+      env.setTheme(mode);
+      return <div className="text-cyber-green">Theme set to {mode}.</div>;
+    }
+    case "lang": {
+      if (!env) break;
+      const lang = (arg as "en" | "es" | "ar") || "en";
+      env.setLocale(lang);
+      return (
+        <div className="text-cyber-green">
+          Language set to {lang.toUpperCase()}.
+        </div>
+      );
+    }
+    case "goto": {
+      if (!env) break;
+      const target = arg || "home";
+      env.goto(`#${target}`);
+      return <div className="text-cyber-green">Jumped to {target}.</div>;
+    }
+    case "open": {
+      if (!env || !arg) break;
+      env.openProject(arg);
+      return <div className="text-cyber-green">Opening project: {arg}</div>;
+    }
+    case "bg": {
+      if (!env) break;
+      const on = arg === "on" ? true : arg === "off" ? false : undefined;
+      if (on === undefined) break;
+      env.setBackground(on);
+      return (
+        <div className="text-cyber-green">
+          Background {on ? "enabled" : "disabled"}.
+        </div>
+      );
+    }
+    case "power": {
+      if (!env) break;
+      const on = arg === "on" ? true : arg === "off" ? false : undefined;
+      if (on === undefined) break;
+      env.setLowPower(on);
+      return (
+        <div className="text-cyber-green">
+          Low power mode {on ? "ON" : "OFF"}.
+        </div>
+      );
+    }
     case "about":
       return (
         <div className="flex flex-col gap-2 text-slate-300 ">

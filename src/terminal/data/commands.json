@@ -7,6 +7,12 @@
   "education": "To list all the educations",
   "about": "To get my about",
   "contact": "To get my contact information",
+  "theme": "Set theme: theme [dark|light|toggle]",
+  "lang": "Set language: lang [en|es|ar]",
+  "goto": "Scroll to a section: goto [home|about|skills|projects|experience|contact]",
+  "open": "Focus a project card: open <project-id>",
+  "bg": "Toggle 3D background: bg [on|off]",
+  "power": "Low power mode for 3D: power [on|off]",
   "clear": "To clear the console",
   "cls": "To clear the console",
   "exit": "To exit the console"

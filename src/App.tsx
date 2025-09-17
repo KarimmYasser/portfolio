@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import { ContentProvider } from "@/content/ContentContext";
 import { TerminalOverlayProvider } from "@/terminal/TerminalOverlayContext";
+import { SceneSettingsProvider } from "@/scene/SceneSettingsContext";
 import TerminalOverlay from "@/terminal/TerminalOverlay";
 
 const queryClient = new QueryClient();
@@ -14,20 +15,22 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ContentProvider>
-      <TerminalOverlayProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-          <TerminalOverlay />
-        </TooltipProvider>
-      </TerminalOverlayProvider>
+      <SceneSettingsProvider>
+        <TerminalOverlayProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+            <TerminalOverlay />
+          </TooltipProvider>
+        </TerminalOverlayProvider>
+      </SceneSettingsProvider>
     </ContentProvider>
   </QueryClientProvider>
 );

@@ -7,8 +7,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Moon, Sun, Menu, X, Globe } from "lucide-react";
+import { Moon, Sun, Menu, X, Globe, Sparkles, Battery } from "lucide-react";
 import { useContent } from "@/content/ContentContext";
+import { useSceneSettings } from "@/scene/SceneSettingsContext";
 
 interface NavigationProps {
   isDark: boolean;
@@ -19,7 +20,10 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { content, locale, setLocale } = useContent();
+  const { showBackground, setShowBackground, lowPower, setLowPower } =
+    useSceneSettings();
   const navRef = useRef<HTMLElement | null>(null);
+  const [navHeight, setNavHeight] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,6 +33,22 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Measure the actual nav height (accounts for safe areas, content changes, wrapping)
+  useEffect(() => {
+    const el = navRef.current;
+    if (!el) return;
+    const measure = () => setNavHeight(el.offsetHeight || 0);
+    measure();
+    const RO = (window as any).ResizeObserver;
+    const ro = RO ? new RO(() => measure()) : null;
+    ro && ro.observe(el as Element);
+    window.addEventListener("resize", measure);
+    return () => {
+      ro && ro.disconnect && ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [isScrolled, isMobileMenuOpen, locale]);
 
   const navItems = content.nav.items;
 
@@ -59,12 +79,14 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
   return (
     <>
       <motion.nav
+        id="site-nav"
         ref={navRef as any}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 pt-3 pb-3 transition-all duration-300 ${
           isScrolled ? "glass py-4" : "py-6"
         }`}
+        style={{ paddingTop: "calc(env(safe-area-inset-top, 0px) + 0.5rem)" }}
       >
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between">
@@ -110,7 +132,7 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className={`items-center space-x-1 ${
+                      className={`items-center space-x-1 cyber-border ${
                         locale === "ar" ? "space-x-reverse" : ""
                       }`}
                     >
@@ -141,13 +163,25 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
                 variant="ghost"
                 size="sm"
                 onClick={toggleTheme}
-                className="cyber-glow"
+                className="cyber-border"
               >
                 {isDark ? (
                   <Sun className="h-4 w-4" />
                 ) : (
                   <Moon className="h-4 w-4" />
                 )}
+              </Button>
+
+              {/* Low Power Toggle */}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setLowPower(!lowPower)}
+                title="Toggle Low Power Mode"
+                className="cyber-border"
+                aria-pressed={lowPower}
+              >
+                <Battery className="h-4 w-4" />
               </Button>
 
               {/* Mobile Menu Toggle */}
@@ -168,8 +202,8 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
         </div>
       </motion.nav>
 
-      {/* Spacer to offset fixed header height and prevent content overlap */}
-      <div aria-hidden className={isScrolled ? "h-16" : "h-20"} />
+      {/* Spacer matches the real nav height to prevent content overlap */}
+      <div aria-hidden style={{ height: navHeight }} />
 
       {/* Mobile Menu */}
       <motion.div

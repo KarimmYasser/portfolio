@@ -41,7 +41,10 @@ export default function ProjectsSection() {
               transition={{ duration: 0.6, delay: index * 0.2 }}
               viewport={{ once: true }}
             >
-              <Card className="glass overflow-hidden hover:cyber-glow transition-all duration-300 group cursor-pointer">
+              <Card
+                data-project-id={project.id}
+                className="glass overflow-hidden hover:cyber-glow transition-all duration-300 group cursor-pointer"
+              >
                 <div className="relative overflow-hidden">
                   <div className="aspect-video overflow-hidden">
                     <img
@@ -120,7 +123,10 @@ export default function ProjectsSection() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <Card className="glass p-6 hover:cyber-glow transition-all duration-300 group cursor-pointer h-full">
+              <Card
+                data-project-id={project.id}
+                className="glass p-6 hover:cyber-glow transition-all duration-300 group cursor-pointer h-full"
+              >
                 <div className="mb-4">
                   <div className="aspect-video rounded-lg overflow-hidden mb-4">
                     <img

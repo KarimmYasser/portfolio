@@ -4,10 +4,12 @@ import { motion } from "framer-motion";
 import CmdInput from "./components/CmdInput";
 import CmdOutput from "./components/CmdOutput";
 import { useContent } from "@/content/ContentContext";
+import { useSceneSettings } from "@/scene/SceneSettingsContext";
 
 export default function TerminalOverlay() {
   const { open, setOpen } = useTerminalOverlay();
-  const { locale } = useContent();
+  const { locale, setLocale } = useContent();
+  const { showBackground, setShowBackground, lowPower, setLowPower } = useSceneSettings();
   const [items, setItems] = useState<JSX.Element[]>([]);
   const outputRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -132,6 +134,53 @@ export default function TerminalOverlay() {
                 addOutput={addOutput}
                 onExit={() => setOpen(false)}
                 inputRef={inputRef}
+                env={{
+                  setTheme: (mode) => {
+                    const root = document.documentElement;
+                    const isDark = root.classList.contains('dark');
+                    let next: 'dark' | 'light';
+                    if (mode === 'toggle') {
+                      next = isDark ? 'light' : 'dark';
+                    } else {
+                      next = mode;
+                    }
+                    if (next === 'dark') {
+                      root.classList.add('dark');
+                      localStorage.setItem('theme', 'dark');
+                    } else {
+                      root.classList.remove('dark');
+                      localStorage.setItem('theme', 'light');
+                    }
+                    window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+                  },
+                  setLocale: (lang) => setLocale(lang),
+                  goto: (hash) => {
+                    const target = document.querySelector(hash) as HTMLElement | null;
+                    const header = document.getElementById('site-nav');
+                    const headerH = (header?.offsetHeight ?? 0) + 8;
+                    if (target) {
+                      const y = target.getBoundingClientRect().top + window.scrollY - headerH;
+                      window.scrollTo({ top: y, behavior: 'smooth' });
+                    }
+                  },
+                  openProject: (id) => {
+                    const section = document.querySelector('#projects');
+                    if (section) {
+                      section.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    // slight delay to ensure cards are mounted
+                    setTimeout(() => {
+                      const card = document.querySelector(`[data-project-id="${id}"]`) as HTMLElement | null;
+                      if (card) {
+                        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        card.classList.add('ring-2', 'ring-cyber-green');
+                        setTimeout(() => card.classList.remove('ring-2', 'ring-cyber-green'), 1500);
+                      }
+                    }, 250);
+                  },
+                  setBackground: (on) => setShowBackground(on),
+                  setLowPower: (on) => setLowPower(on),
+                }}
               />
             </ul>
           </div>

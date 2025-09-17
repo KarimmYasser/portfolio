@@ -1,6 +1,6 @@
 import { useState, useMemo, type RefObject } from "react";
 import type React from "react";
-import { checkCommand, handleCommand } from "../helpers";
+import { checkCommand, handleCommand, type TerminalEnv } from "../helpers";
 import { useContent } from "@/content/ContentContext";
 import CommandData from "../data/commands.json";
 
@@ -8,10 +8,12 @@ export default function CmdInput({
   addOutput,
   onExit,
   inputRef,
+  env,
 }: {
   addOutput: (els: JSX.Element[]) => void;
   onExit: () => void;
   inputRef: RefObject<HTMLInputElement>;
+  env?: TerminalEnv;
 }) {
   const [cmd, setCmd] = useState("");
   const [cmdList, setCmdList] = useState<string[]>([]);
@@ -47,7 +49,7 @@ export default function CmdInput({
       return;
     }
 
-    const rendered = handleCommand(trimmed, content);
+    const rendered = handleCommand(trimmed, content, env);
     const parts = trimmed.split(" ");
     addOutput([
       <li
