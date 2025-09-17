@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,6 +19,7 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { content, locale, setLocale } = useContent();
+  const navRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,9 +33,11 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
   const navItems = content.nav.items;
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
+    const element = document.querySelector(href) as HTMLElement | null;
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const headerH = (navRef.current?.offsetHeight ?? 0) + 8; // small extra gap
+      const y = element.getBoundingClientRect().top + window.scrollY - headerH;
+      window.scrollTo({ top: y, behavior: "smooth" });
     }
     setIsMobileMenuOpen(false);
   };
@@ -42,9 +45,21 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
   // Language change via dropdown
   const changeLanguage = (lang: "en" | "es" | "ar") => setLocale(lang);
 
+  // Lock body scroll when mobile menu is open to prevent background content moving
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      const original = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = original;
+      };
+    }
+  }, [isMobileMenuOpen]);
+
   return (
     <>
       <motion.nav
+        ref={navRef as any}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -103,7 +118,11 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
                       <span>{locale.toUpperCase()}</span>
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="min-w-[10rem]">
+                  <DropdownMenuContent
+                    align="end"
+                    className="min-w-[10rem] z-[80]"
+                    sideOffset={6}
+                  >
                     <DropdownMenuItem onSelect={() => changeLanguage("en")}>
                       English
                     </DropdownMenuItem>
@@ -149,6 +168,9 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
         </div>
       </motion.nav>
 
+      {/* Spacer to offset fixed header height and prevent content overlap */}
+      <div aria-hidden className={isScrolled ? "h-16" : "h-20"} />
+
       {/* Mobile Menu */}
       <motion.div
         initial={{ opacity: 0, x: locale === "ar" ? "-100%" : "100%" }}
@@ -159,9 +181,28 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
         transition={{ type: "spring", damping: 25, stiffness: 500 }}
         className={`fixed top-0 ${
           locale === "ar" ? "left-0" : "right-0"
-        } h-full w-80 glass-strong z-40 md:hidden`}
+        } h-full w-80 max-w-[90vw] glass-strong z-[70] md:hidden overflow-y-auto`}
       >
-        <div className="pt-20 px-6">
+        {/* Drawer Header */}
+        <div
+          className={`sticky top-0 z-[1] flex items-center justify-between px-6 py-4 bg-background/90 backdrop-blur border-b border-border ${
+            locale === "ar" ? "flex-row-reverse" : ""
+          }`}
+          style={{ paddingTop: "calc(env(safe-area-inset-top, 0px) + 0.5rem)" }}
+        >
+          <div className="font-mono font-bold text-lg gradient-text">
+            {content.footer.brand}
+          </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Close menu"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <X className="h-5 w-5" />
+          </Button>
+        </div>
+        <div className="px-6 pt-4 pb-8">
           {navItems.map((item, index) => (
             <motion.button
               key={item.label}
@@ -189,29 +230,43 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
             transition={{ delay: 0.8 }}
             className="mt-8 pt-8 border-t border-border"
           >
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="w-full justify-start mb-4"
-                >
-                  <Globe className="h-4 w-4 mr-2" />
-                  Language: {locale.toUpperCase()}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="min-w-[10rem]">
-                <DropdownMenuItem onSelect={() => changeLanguage("en")}>
-                  English
-                </DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => changeLanguage("es")}>
-                  Español
-                </DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => changeLanguage("ar")}>
-                  العربية
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <div
+              className={`text-sm mb-3 ${
+                locale === "ar" ? "text-right" : "text-left"
+              }`}
+            >
+              <span className="inline-flex items-center gap-2 opacity-80">
+                <Globe className="h-4 w-4" />
+                <span>Language</span>
+              </span>
+            </div>
+            <div
+              className={`flex gap-2 ${
+                locale === "ar" ? "justify-end" : "justify-start"
+              }`}
+            >
+              <Button
+                variant={locale === "en" ? "default" : "outline"}
+                size="sm"
+                onClick={() => changeLanguage("en")}
+              >
+                EN
+              </Button>
+              <Button
+                variant={locale === "es" ? "default" : "outline"}
+                size="sm"
+                onClick={() => changeLanguage("es")}
+              >
+                ES
+              </Button>
+              <Button
+                variant={locale === "ar" ? "default" : "outline"}
+                size="sm"
+                onClick={() => changeLanguage("ar")}
+              >
+                AR
+              </Button>
+            </div>
           </motion.div>
         </div>
       </motion.div>
@@ -223,7 +278,7 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={() => setIsMobileMenuOpen(false)}
-          className="fixed inset-0 bg-black/50 z-30 md:hidden"
+          className="fixed inset-0 bg-black/50 z-[60] md:hidden"
         />
       )}
     </>

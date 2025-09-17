@@ -6,14 +6,32 @@ import { componentTagger } from "lovable-tagger";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
-    host: "::",
+    host: true,
     port: 8080,
+    allowedHosts: true,
+  },
+  preview: {
+    host: true,
+    allowedHosts: true,
   },
   plugins: [
     react(),
-    mode === 'development' &&
-    componentTagger(),
+    mode === "development" &&
+      process.env.LOVABLE_TAGGER === "1" &&
+      componentTagger(),
   ].filter(Boolean),
+  optimizeDeps: {
+    include: [
+      "react",
+      "react-dom",
+      "react-router-dom",
+      "framer-motion",
+      "three",
+      "@react-three/fiber",
+      "@react-three/drei",
+      "lucide-react",
+    ],
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

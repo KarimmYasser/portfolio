@@ -3,9 +3,7 @@ import type { Config } from "tailwindcss";
 export default {
   darkMode: ["class"],
   content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
+    // Limit scanning to the source folder for faster startup and HMR
     "./src/**/*.{ts,tsx}",
   ],
   safelist: [

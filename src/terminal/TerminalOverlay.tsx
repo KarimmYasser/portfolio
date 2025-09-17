@@ -91,7 +91,7 @@ export default function TerminalOverlay() {
     >
       <div
         ref={cardRef}
-        className="relative w-full max-w-3xl mx-auto rounded-2xl shadow-lg p-0 border border-cyber-green bg-black/90"
+        className="relative w-[92vw] sm:w-[90vw] md:w-[85vw] lg:w-[70vw] max-w-3xl mx-auto rounded-2xl shadow-lg p-0 border border-cyber-green bg-black/90"
       >
         <div className="p-0 text-white">
           <div

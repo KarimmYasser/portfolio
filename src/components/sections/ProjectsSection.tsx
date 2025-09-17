@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Eye } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { SiGithub } from "react-icons/si";
 import { useContent } from "@/content/ContentContext";
 
@@ -43,8 +43,16 @@ export default function ProjectsSection() {
             >
               <Card className="glass overflow-hidden hover:cyber-glow transition-all duration-300 group cursor-pointer">
                 <div className="relative overflow-hidden">
-                  <div className="aspect-video bg-gradient-to-br from-cyber-blue/20 to-cyber-purple/20 flex items-center justify-center">
-                    <Eye className="h-12 w-12 text-cyber-blue opacity-50" />
+                  <div className="aspect-video overflow-hidden">
+                    <img
+                      src={
+                        (project.image && project.image.trim()) ||
+                        "/placeholder.svg"
+                      }
+                      alt={`${project.title} screenshot`}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
                   </div>
                   <div
                     className={`absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4 ${
@@ -114,8 +122,16 @@ export default function ProjectsSection() {
             >
               <Card className="glass p-6 hover:cyber-glow transition-all duration-300 group cursor-pointer h-full">
                 <div className="mb-4">
-                  <div className="aspect-video bg-gradient-to-br from-cyber-blue/10 to-cyber-purple/10 rounded-lg flex items-center justify-center mb-4">
-                    <Eye className="h-8 w-8 text-cyber-blue opacity-30" />
+                  <div className="aspect-video rounded-lg overflow-hidden mb-4">
+                    <img
+                      src={
+                        (project.image && project.image.trim()) ||
+                        "/placeholder.svg"
+                      }
+                      alt={`${project.title} thumbnail`}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
                   </div>
                   <h4 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">
                     {project.title}

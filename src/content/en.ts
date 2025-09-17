@@ -219,10 +219,10 @@ const content: Content = {
         title: "Backend & Databases",
         color: "cyber-purple",
         skills: [
-          { name: "Room", level: 90 },
+          { name: "Hive", level: 80 },
           { name: "Supabase", level: 70 },
-          { name: "MySQL/PostgreSQL", level: 80 },
-          { name: "MongoDB", level: 75 },
+          { name: "MySQL/PostgreSQL", level: 85 },
+          { name: "SQLite", level: 75 },
         ],
       },
       {
@@ -286,7 +286,7 @@ const content: Content = {
         title: "i'Supply POS App",
         description:
           "Cross-platform POS system built with Flutter and Supabase. Features inventory search, cart management, and offline-first synchronization with Hive.",
-        image: "/api/placeholder/600/400",
+        image: "/placeholder.svg",
         tags: ["Flutter", "Supabase", "Hive", "Clean Architecture"],
         featured: true,
         links: { demo: "#", github: "#" },
@@ -296,7 +296,7 @@ const content: Content = {
         title: "Zengbary App",
         description:
           "Flutter app controlling a microprocessor-based robot in real-time over HTTP.",
-        image: "/api/placeholder/600/400",
+        image: "/placeholder.svg",
         tags: ["Flutter", "Dio", "Microprocessor", "HTTP"],
         featured: true,
         links: { demo: "#", github: "#" },
@@ -306,7 +306,7 @@ const content: Content = {
         title: "Fashion Assistant",
         description:
           "AI-powered Flutter e-commerce chatbot and recommendation system using Gemini API, Bloc state management, and custom animations.",
-        image: "/api/placeholder/600/400",
+        image: "/placeholder.svg",
         tags: ["Flutter", "Gemini API", "Bloc", "AI Integration"],
         featured: false,
         links: { demo: "#", github: "#" },
@@ -316,7 +316,7 @@ const content: Content = {
         title: "Cooking Up App",
         description:
           "Recipe app with filtering, offline persistence using Hive, and interactive cooking timers for a smooth UX.",
-        image: "/api/placeholder/600/400",
+        image: "/placeholder.svg",
         tags: ["Flutter", "Hive", "Clean Architecture"],
         featured: false,
         links: { demo: "#", github: "#" },
@@ -326,7 +326,7 @@ const content: Content = {
         title: "Bricks Breaker - Assembly Game",
         description:
           "Multiplayer brick breaker game in Assembly with real-time networking over Wi-Fi and efficient graphics rendering.",
-        image: "/api/placeholder/600/400",
+        image: "/placeholder.svg",
         tags: ["Assembly", "Networking", "Game Dev"],
         featured: false,
         links: { demo: "#", github: "#" },
