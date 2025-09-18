@@ -22,9 +22,12 @@ export type Content = {
     name: string;
     title: string;
     description: string;
+    favoriteCarLabel?: string;
+    favoriteCarName?: string;
     ctas: {
       seeProjects: string;
       getInTouch: string;
+      openInTerminal: string;
     };
   };
   about: {
@@ -148,7 +151,13 @@ const content: Content = {
     title: "Software Developer & Computer Engineer",
     description:
       "Results-oriented Computer Engineer with hands-on experience in cross-platform mobile apps and web solutions. Skilled in clean architecture, software engineering fundamentals, and modern frameworks to deliver scalable, user-focused applications.",
-    ctas: { seeProjects: "See Projects", getInTouch: "Get in Touch" },
+    favoriteCarLabel: "that's my favorite car",
+    favoriteCarName: "Ferrari 458 Italia",
+    ctas: {
+      seeProjects: "See Projects",
+      getInTouch: "Get in Touch",
+      openInTerminal: "Open in Terminal",
+    },
   },
   about: {
     heading: "About Me",

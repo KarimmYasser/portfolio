@@ -44,14 +44,18 @@ export default function HeroSection() {
     >
       {/* Content */}
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center relative">
-          <div className="text-center max-w-4xl mx-auto lg:text-left z-30">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pt-4 items-center relative">
+          <div
+            className={`max-w-4xl mx-auto z-30 ${
+              locale === "ar" ? "text-right" : "text-center lg:text-left"
+            }`}
+          >
             {/* Greeting */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="mb-6"
+              className={`mb-6 ${locale === "ar" ? "text-right" : ""}`}
             >
               <span className="text-cyber-blue font-mono text-lg">
                 {content.hero.greeting}
@@ -63,7 +67,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-4xl md:text-6xl lg:text-8xl font-bold mb-6 gradient-text"
+              className="text-4xl md:text-6xl lg:text-8xl font-bold pb-6 gradient-text"
             >
               {content.hero.name}
             </motion.h1>
@@ -120,7 +124,7 @@ export default function HeroSection() {
                 className="font-mono px-8 py-4 rounded-xl bg-black text-cyber-green border border-cyber-green hover:bg-black/80 hover:text-cyber-green/90 focus:outline-none focus:ring-2 focus:ring-cyber-green transition-colors flex items-center justify-center"
               >
                 <span className="flex items-center space-x-2 rtl:space-x-reverse">
-                  <span>Open in Terminal</span>
+                  <span>{content.hero.ctas.openInTerminal}</span>
                   <TerminalIcon className="h-4 w-4" />
                 </span>
               </Button>

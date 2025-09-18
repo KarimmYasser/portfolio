@@ -228,7 +228,6 @@ export default function ThreeBackground({ className }: ThreeBackgroundProps) {
           blending={isDark ? THREE.AdditiveBlending : THREE.NormalBlending}
         />
         <FloatingOrbs isDark={isDark} />
-        {/* Model moved to Hero CarShowcase */}
       </Canvas>
     </div>
   );

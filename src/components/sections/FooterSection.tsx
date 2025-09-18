@@ -3,6 +3,7 @@ import { Heart, Mail, ArrowUp } from "lucide-react";
 import { SiGithub, SiLinkedin, SiX } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import { useContent } from "@/content/ContentContext";
+import Logo from "@/components/Logo";
 
 export default function FooterSection() {
   const { content, locale } = useContent();
@@ -51,9 +52,15 @@ export default function FooterSection() {
             className="lg:col-span-2"
           >
             <div className="mb-6">
-              <h3 className="font-mono font-bold text-2xl gradient-text mb-4">
-                {content.footer.brand}
-              </h3>
+              <div className="mb-4">
+                <a
+                  href="#home"
+                  aria-label={content.footer.brand}
+                  className="inline-flex items-center"
+                >
+                  <Logo height={32} className="drop-shadow-sm" />
+                </a>
+              </div>
               <p className="text-muted-foreground leading-relaxed max-w-md">
                 {content.footer.tagline}
               </p>

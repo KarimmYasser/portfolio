@@ -52,6 +52,20 @@
       rel="stylesheet"
     />
 
+    <script>
+      // Set initial theme before styles/scripts to avoid flash and wrong logo on reload
+      (() => {
+        try {
+          const stored = localStorage.getItem("theme");
+          const prefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)"
+          ).matches;
+          const isDark = stored ? stored === "dark" : prefersDark;
+          document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+        } catch {}
+      })();
+    </script>
+
     <style>
       body {
         font-family: "Cairo", sans-serif;

@@ -3,6 +3,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { ContactShadows, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { useSceneSettings } from "@/scene/SceneSettingsContext";
+import { useContent } from "@/content/ContentContext";
 
 function CarModel({ lowPower }: { lowPower: boolean }) {
   const { scene } = useGLTF("/asphalt_8_airborne__car_ferrari_458_italia.glb");
@@ -68,6 +69,10 @@ useGLTF.preload("/asphalt_8_airborne__car_ferrari_458_italia.glb");
 
 export default function CarShowcase() {
   const { lowPower } = useSceneSettings();
+  const { content } = useContent();
+  const favoriteLabel =
+    content.hero.favoriteCarLabel || "that's my favorite car";
+  const favoriteName = content.hero.favoriteCarName || "Ferrari 458 Italia";
   // Read theme HSL variables and build THREE colors once
   const [shadowA, shadowB] = useMemo(() => {
     const getVar = (name: string, fallback: string) => {
@@ -193,10 +198,10 @@ export default function CarShowcase() {
             <div className="relative flex items-center gap-2">
               <span className="font-mono text-xs sm:text-sm md:text-base tracking-wide">
                 <span className="font-semibold text-foreground">
-                  that's my favorite car
+                  {favoriteLabel}
                 </span>
-                <span className="font-semibold text-destructive ml-2">
-                  Ferrari 458 Italia
+                <span className="font-semibold text-destructive mx-2">
+                  {favoriteName}
                 </span>
               </span>
             </div>
@@ -211,19 +216,7 @@ export default function CarShowcase() {
       >
         <ambientLight intensity={0.25} />
         <hemisphereLight args={[0xffffff, 0x222233, 0.8]} />
-        <directionalLight
-          position={[5, 5, 5]}
-          intensity={0.8}
-          color="#ffffff"
-          castShadow
-          shadow-mapSize={[1024, 1024]}
-          shadow-camera-near={1}
-          shadow-camera-far={30}
-          shadow-camera-left={-12}
-          shadow-camera-right={12}
-          shadow-camera-top={12}
-          shadow-camera-bottom={-12}
-        />
+        <directionalLight position={[25, 25, 25]} />
         <pointLight position={[6, 6, 6]} intensity={0.6} color="#ffffff" />
         <Suspense fallback={null}>
           <CarModel lowPower={lowPower} />

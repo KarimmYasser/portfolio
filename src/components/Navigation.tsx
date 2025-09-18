@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Moon, Sun, Menu, X, Globe, Sparkles, Battery } from "lucide-react";
 import { useContent } from "@/content/ContentContext";
+import Logo from "@/components/Logo";
 import { useSceneSettings } from "@/scene/SceneSettingsContext";
 
 interface NavigationProps {
@@ -94,9 +95,15 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="font-mono font-bold text-xl gradient-text"
+              className="flex items-center"
             >
-              {content.footer.brand}
+              <a
+                href="#home"
+                aria-label={content.footer.brand}
+                className="inline-flex items-center"
+              >
+                <Logo height={28} className="drop-shadow-sm" />
+              </a>
             </motion.div>
 
             {/* Desktop Navigation */}
@@ -191,6 +198,7 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
                 onClick={() => setLowPower(!lowPower)}
                 title="Toggle Low Power Mode"
                 aria-pressed={lowPower}
+                variant={lowPower ? "default" : "outline"}
               >
                 <Battery className="h-4 w-4" />
               </Button>
@@ -226,7 +234,7 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
         transition={{ type: "spring", damping: 25, stiffness: 500 }}
         className={`fixed top-0 ${
           locale === "ar" ? "left-0" : "right-0"
-        } h-full glass-strong overflow-y-auto`}
+        } h-full w-80 max-w-[90vw] z-[70] glass-strong overflow-y-auto md:hidden`}
       >
         {/* Drawer Header */}
         <div
@@ -235,9 +243,13 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
           }`}
           style={{ paddingTop: "calc(env(safe-area-inset-top, 0px) + 0.5rem)" }}
         >
-          <div className="font-mono font-bold text-lg gradient-text">
-            {content.footer.brand}
-          </div>
+          <a
+            href="#home"
+            aria-label={content.footer.brand}
+            className="inline-flex items-center"
+          >
+            <Logo height={24} className="drop-shadow-sm" />
+          </a>
           <Button
             variant="ghost"
             size="icon"
@@ -324,6 +336,7 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
           exit={{ opacity: 0 }}
           onClick={() => setIsMobileMenuOpen(false)}
           className="fixed inset-0 bg-black/50 z-[60] md:hidden"
+          aria-hidden="true"
         />
       )}
     </>
