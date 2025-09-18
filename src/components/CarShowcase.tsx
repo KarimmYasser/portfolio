@@ -201,7 +201,10 @@ export default function CarShowcase() {
                 <span className="font-semibold text-foreground">
                   {favoriteLabel}
                 </span>
-                <span className="font-semibold text-destructive mx-2">
+                <span
+                  className="font-semibold mx-2"
+                  style={{ color: "#52b7ff" }}
+                >
                   {favoriteName}
                 </span>
               </span>
