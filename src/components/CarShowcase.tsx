@@ -24,8 +24,9 @@ function CarModel({ lowPower }: { lowPower: boolean }) {
 
   // Recolor car materials and enable mesh shadows (skip obvious non-body parts)
   useEffect(() => {
-    const desired = new THREE.Color("#9D66FF");
-    const skip = /glass|tire|tyre|wheel|rim|light|window|headlight|tail/i;
+    const desired = new THREE.Color("#52b7ff");
+    const skip =
+      /glass|tire|tyre|wheel|rim|light|chrome|licence|plate|headlight|tail|brake|glow|plastic|window/i;
     scene.traverse((child) => {
       const mesh = child as THREE.Mesh;
       if ((mesh as any).isMesh && mesh.material) {
