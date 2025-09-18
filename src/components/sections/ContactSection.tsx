@@ -16,6 +16,7 @@ export default function ContactSection() {
     email: "",
     subject: "",
     message: "",
+    website: "", // honeypot (should stay empty)
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -55,23 +56,39 @@ export default function ContactSection() {
     color: s.color,
   }));
 
+  // Resume URL: use env-provided URL or fallback to a local file in /public
+  const resumeUrl =
+    (import.meta.env.VITE_RESUME_URL as string | undefined) || "/resume.pdf";
+  const isExternalResume = /^https?:\/\//.test(resumeUrl);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      // Simulate form submission
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // POST to Vercel serverless function
+      const resp = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-      // Here you would typically send the form data to your backend or EmailJS
-      console.log("Form submitted:", formData);
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        throw new Error(err.error || "Failed to send message");
+      }
 
       toast({
         title: "Message sent!",
         description: "Thank you for your message. I'll get back to you soon!",
       });
-
-      setFormData({ name: "", email: "", subject: "", message: "" });
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+        website: "",
+      });
     } catch (error) {
       toast({
         title: "Error",
@@ -125,6 +142,16 @@ export default function ContactSection() {
               </h3>
 
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Honeypot field (hidden from users) */}
+                <input
+                  type="text"
+                  name="website"
+                  value={formData.website}
+                  onChange={handleInputChange}
+                  className="hidden"
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label
@@ -306,9 +333,18 @@ export default function ContactSection() {
               <Button
                 variant="outline"
                 className="cyber-border hover:cyber-glow"
+                asChild
               >
-                <Download className="h-4 w-4 mr-2" />
-                {content.contact.resumeCta}
+                <a
+                  href={resumeUrl}
+                  target={isExternalResume ? "_blank" : undefined}
+                  rel={isExternalResume ? "noopener noreferrer" : undefined}
+                  download={isExternalResume ? undefined : "resume.pdf"}
+                  aria-label="Download resume"
+                >
+                  <Download className="h-4 w-4 mr-2" />
+                  {content.contact.resumeCta}
+                </a>
               </Button>
             </Card>
 

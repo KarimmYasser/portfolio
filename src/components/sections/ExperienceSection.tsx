@@ -90,13 +90,13 @@ export default function ExperienceSection() {
                       {exp.achievements.map((achievement, i) => (
                         <li
                           key={i}
-                          className={`text-sm text-muted-foreground flex items-start space-x-3 ${
+                          className={`text-sm text-muted-foreground flex items-start space-x-3${
                             locale === "ar"
                               ? "flex-row-reverse space-x-reverse"
                               : ""
                           }`}
                         >
-                          <span className="inline-block w-1 h-1 bg-cyber-blue rounded-full mt-2 px-1 flex-shrink-0"></span>
+                          <span className="inline-block w-1 h-1 bg-cyber-blue rounded-full mt-2 mx-2 px-1 flex-shrink-0"></span>
                           {achievement}
                         </li>
                       ))}

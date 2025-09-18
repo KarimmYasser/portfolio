@@ -1,50 +1,51 @@
 ## Portfolio Website (React · Vite · TypeScript)
 
-Modern, animated developer portfolio built with React, Vite, TypeScript, Tailwind CSS, shadcn/ui (Radix), Framer Motion, and a subtle Three.js background using React Three Fiber.
+Modern, animated developer portfolio built with React, Vite, TypeScript, Tailwind CSS, shadcn/ui (Radix), Framer Motion, and a theme-aware Three.js background using React Three Fiber.
 
-This template includes ready-to-edit sections (Hero, About, Skills, Projects, Experience, Contact) with theme toggling, smooth scrolling, and a polished UI kit.
+This project includes ready-to-edit sections (Hero, About, Skills, Projects, Experience, Contact) with theme toggling, smooth scrolling, localization, and a polished UI kit.
 
 ## Features
 
-- Fast Vite + React + TypeScript setup
+- React 18 + Vite 5 + TypeScript
 - Tailwind CSS with shadcn/ui components (Radix under the hood)
 - Framer Motion animations and transitions
 - Three.js background via @react-three/fiber and @react-three/drei
+  - Light/Dark aware, remounts cleanly on theme switch
+  - Low-power mode and background toggle
+- Contact form wired to a Vercel Serverless Function (Resend email) with validation and honeypot
+- Resume download CTA (env-configurable URL or local /resume.pdf)
 - Dark/Light theme toggle persisted to localStorage
 - Responsive navigation with smooth section scrolling
 - Prebuilt sections: Hero, About, Skills, Projects, Experience, Contact, Footer
 - Path aliases with `@/*`
-- Localization with runtime language switch (EN, ES, AR)
-  - Full RTL/LTR support (document.dir is updated automatically)
-- Built-in Terminal overlay
-  - Commands: `help`/`ls`, `about`, `contact`, `projects`, `skills`, `education`, `experience`, `clear`/`cls`, `exit`
-  - Tab-based autocomplete with cycling; Shift+Tab cycles backward
-  - Tab with an empty prompt cycles through ALL commands
-  - Click outside to close; Escape to close; auto-focus preserved while clicking inside
-  - Outputs are localized to the selected language
+- Localization with runtime language switch (EN, ES, AR) and full RTL/LTR support
+- Built-in Terminal overlay with helpful commands
+- Projects grid: equal-height cards; content-driven Demo visibility via `hasDemo`
 
 ## Tech Stack
 
-- React 18, TypeScript
+- React 18, TypeScript 5
 - Vite 5 (SWC React plugin)
-- Tailwind CSS 3, tailwind-merge, tailwindcss-animate, typography
-- shadcn/ui components powered by Radix UI
+- Tailwind CSS 3, tailwindcss-animate
+- shadcn/ui + Radix UI
 - Framer Motion
 - Three.js, @react-three/fiber, @react-three/drei
 - React Router
-- Icons: lucide-react (UI), react-icons (Simple Icons for brands)
-- Utilities present in deps (optional): TanStack Query, Recharts, Embla Carousel, date-fns, etc.
+- Icons: lucide-react, react-icons
+- Included (optional) utilities: TanStack Query, Recharts, Embla Carousel, date-fns, etc.
 
 ## Project Structure
 
 ```
 .
 ├─ public/
+│  ├─ asphalt_8_airborne__car_ferrari_458_italia.glb
 │  ├─ favicon.ico
 │  ├─ robots.txt
 │  └─ placeholder.svg
 ├─ src/
 │  ├─ components/
+│  │  ├─ CarShowcase.tsx
 │  │  ├─ Navigation.tsx
 │  │  ├─ ThreeBackground.tsx
 │  │  ├─ sections/
@@ -56,6 +57,7 @@ This template includes ready-to-edit sections (Hero, About, Skills, Projects, Ex
 │  │  │  ├─ ProjectsSection.tsx
 │  │  │  └─ SkillsSection.tsx
 │  │  └─ ui/ (shadcn components)
+│  ├─ content/ (EN, ES, AR) + ContentContext
 │  ├─ hooks/
 │  ├─ lib/
 │  └─ pages/
@@ -76,39 +78,78 @@ Path alias: `@/*` maps to `src/*` (see `tsconfig.json`).
 Prerequisites
 
 - Node.js LTS (18+ recommended)
-- A package manager: npm, pnpm, yarn, or bun (a `bun.lockb` exists, but any will work)
+- A package manager: npm, pnpm, yarn, or bun (a `bun.lockb` exists; any will work)
 
 Install dependencies
 
-- npm: `npm install`
-- pnpm: `pnpm install`
-- yarn: `yarn`
-- bun: `bun install`
+- npm: npm install
+- pnpm: pnpm install
+- yarn: yarn
+- bun: bun install
 
 Run the dev server
 
-- npm: `npm run dev`
-- pnpm: `pnpm dev`
-- yarn: `yarn dev`
-- bun: `bun run dev`
+- npm: npm run dev
+- pnpm: pnpm dev
+- yarn: yarn dev
+- bun: bun run dev
 
 Build for production
 
-- npm: `npm run build`
-- pnpm: `pnpm build`
-- yarn: `yarn build`
-- bun: `bun run build`
+- npm: npm run build
+- pnpm: pnpm build
+- yarn: yarn build
+- bun: bun run build
 
 Preview the production build
 
-- npm: `npm run preview`
-- pnpm: `pnpm preview`
-- yarn: `yarn preview`
-- bun: `bun run preview`
+- npm: npm run preview
+- pnpm: pnpm preview
+- yarn: yarn preview
+- bun: bun run preview
 
 Lint
 
-- `npm run lint` (or the equivalent command for your package manager)
+- npm run lint (or the equivalent command for your package manager)
+
+## Theming and 3D Background
+
+Theme toggle
+
+- The theme is toggled from `Navigation` via props passed from `pages/Portfolio.tsx`.
+- Preference is stored in localStorage under the key `theme` and applied by toggling the `dark` class on `<html>`.
+
+3D background controls (SceneSettings)
+
+- The 3D scene is rendered by `src/components/ThreeBackground.tsx`.
+- Global controls live in `src/scene/SceneSettingsContext.tsx` and are exposed in the navigation:
+  - bg: show/hide the background (persisted under `scene-bg`)
+  - power: low-power mode to reduce device load (persisted under `scene-low`)
+- The scene adapts to light/dark themes:
+  - Dark mode: transparent canvas over the page background with additive blending and ACES tone mapping.
+  - Light mode: opaque white canvas, normal blending, no tone mapping, darker particle colors.
+
+Terminal commands that affect theme/scene
+
+- theme [dark|light|toggle]
+- bg [on|off]
+- power [on|off]
+- lang [en|es|ar]
+
+## Content and Localization
+
+- All user-facing content lives under `src/content/`.
+- Available locales: English (`en.ts`), Spanish (`es.ts`), Arabic (`ar.ts`).
+- The `ContentContext` sets `document.dir` automatically for RTL languages (Arabic).
+- To add a language, copy `en.ts` to `<locale>.ts`, translate, then export it from `src/content/index.ts`.
+
+Projects content
+
+- Each project item in `src/content/en.ts` supports:
+  - `featured: boolean` to control the Featured grid
+  - `hasDemo?: boolean` (optional) — set to `false` to hide the Demo button even if a link exists
+  - `links: { demo: string; github: string }` — Demo/Code links; `#` or empty disables the button
+  - Images default to `/placeholder.svg` if not set
 
 ## Customization Guide
 
@@ -118,63 +159,77 @@ Replace demo content with your own:
   - `src/components/sections/HeroSection.tsx` (name, headline, bio, social actions)
   - `src/components/Navigation.tsx` (brand text, nav items)
 - Social links and contact info
-  - `src/components/sections/ContactSection.tsx` (email, phone, socials)
-  - `HeroSection.tsx` social buttons
+  - `src/components/sections/ContactSection.tsx`
+  - Hero social buttons
 - Projects
-  - `src/components/sections/ProjectsSection.tsx` (project list, tags, links)
+  - `src/components/sections/ProjectsSection.tsx` (equal-height cards; Demo button hidden when `hasDemo: false`)
 - Resume
-  - Add your resume file to `public/` and wire the button/link in `HeroSection.tsx` / `ContactSection.tsx`
-- Theming
-  - Theme is toggled in `src/pages/Portfolio.tsx` and persisted in `localStorage` under the key `theme`
-- 3D Background
-  - Settings live in `src/components/ThreeBackground.tsx` (particle count, colors, camera)
+  - Add your resume file to `public/` as `resume.pdf`, or set `VITE_RESUME_URL` to an external link. The Contact “Resume” button will download/open accordingly.
+- 3D Background look
+  - Tweak `ThreeBackground.tsx` (particle count/colors, orbs, camera)
+- Section “cloud” backdrop
+  - `.section-cloud` is implemented in `src/index.css` as a subtle, theme-aware radial backdrop (lower alpha in light mode). Apply it to section wrappers if you want the effect.
+- Smoke ring visuals
+  - `.smoke-ring` utilities in `src/index.css` create a circular, uncropped ring that adapts to theme via CSS variables.
+- Glass surfaces
+  - `.glass` and `.glass-strong` apply frosted-glass UI surfaces using theme tokens and blur.
 
-Note on contact form: it currently simulates submission and shows a toast. If you want email delivery, integrate a service (e.g., EmailJS, backend API) and wire it up in `ContactSection.tsx`. The project already includes `@emailjs/browser` but it isn’t configured by default.
+Contact form (email delivery)
 
-### Centralized content and localization
+- Implemented via a Vercel Serverless Function at `api/contact.ts` using the Resend API.
+- Includes basic validation and a hidden honeypot field (`website`) to deter bots.
+- Configure the environment variables below, deploy to Vercel, and the form will deliver messages to your inbox.
 
-- All user-facing strings and data live in `src/content/en.ts`. Edit this file to update your name, headings, descriptions, projects, experience timeline, contact info, and footer text.
-- This template already includes `src/content/es.ts` (Spanish) and `src/content/ar.ts` (Arabic). Arabic triggers RTL automatically by updating `document.dir`.
-- To add another language, copy `src/content/en.ts` to `src/content/<locale>.ts` (e.g., `de.ts`), translate the strings, and export it via `src/content/index.ts`.
-- Components import from `@/content`, so no UI changes are needed when content updates.
+Environment variables (email)
 
-### Terminal overlay usage
-
-- Open the overlay from the “Open in Terminal” button in the Hero section.
-- Type a command and press Enter, or use the keyboard-only flow:
-  - Press Tab to autocomplete. If multiple matches exist, Tab will cycle forward, Shift+Tab cycles backward.
-  - With an empty prompt, Tab cycles through ALL available commands.
-- Special commands:
-  - `clear`/`cls` clears the terminal history
-  - `exit` closes the overlay
-- The overlay also supports:
-  - Click outside to close, Escape to close
-  - Automatic focus and focus retention on inside clicks
-  - Direction-aware UI (RTL/LTR) and localized outputs
+- Server-only (do NOT prefix with VITE\_):
+  - `RESEND_API_KEY` — your Resend API key
+  - `CONTACT_TO_EMAIL` — destination inbox (e.g., you@example.com)
+  - `CONTACT_FROM_EMAIL` — verified Resend sender (e.g., "Portfolio <noreply@yourdomain.com>")
+- Optional public:
+  - `VITE_RESUME_URL` — resume link used by the Resume buttons (falls back to `/resume.pdf`)
 
 ## Available Scripts (package.json)
 
-- `dev` – Start Vite dev server
-- `build` – Build for production
-- `build:dev` – Development-mode production build (useful for debugging prod issues)
-- `preview` – Preview the production build
-- `lint` – Run ESLint on the project
+- dev – Start Vite dev server
+- build – Build for production
+- build:dev – Development-mode production build (debug prod issues)
+- preview – Preview the production build
+- lint – Run ESLint
 
 ## Deployment
 
-You can deploy the built `dist/` folder almost anywhere:
+### Vercel (recommended, with serverless contact API)
 
-- Vercel: Import the repo, set framework to Vite. Default build command `npm run build`, output directory `dist`.
-- Netlify: Set build command `npm run build` and publish directory `dist`.
-- GitHub Pages: Build locally and push the `dist` folder to a `gh-pages` branch (or use an action).
+1. Connect your GitHub repo in Vercel → New Project → Import.
+2. Framework preset: Vite (auto-detected). Build: `npm run build`. Output: `dist`.
+3. Add Environment Variables (Project → Settings → Environment Variables):
+   - `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL`
+   - Optional `VITE_RESUME_URL`
+4. Deploy. Your contact endpoint will be available at `/api/contact`.
 
-Environment variables: Not required by default. If you add EmailJS or other APIs, create a `.env` and reference variables via `import.meta.env.VITE_*`.
+Local development with API
 
-## Tips
+- Start Vercel Dev (serves functions on port 3000):
+  - `vercel dev`
+- Start Vite (port 8080):
+  - `npm run dev`
+- Vite proxies `/api` to `http://localhost:3000` (see `vite.config.ts`), so submitting the form locally calls the function.
 
-- Use the `@/*` path alias to keep imports clean.
-- Tailwind utilities are preconfigured; add design tokens in `tailwind.config.ts`.
-- shadcn/ui components live in `src/components/ui/`—they’re fully local and customizable.
+Other platforms
+
+- Netlify: You can port the function to Netlify Functions (`netlify/functions/contact.ts`) and adjust the fetch URL.
+- GitHub Pages: Static only — API must be hosted elsewhere (e.g., Vercel/Netlify/Azure Function) and the form should post to that absolute URL.
+
+## Troubleshooting
+
+- Theme switch feels slow: enable Low Power mode from the navbar or via `power on` in the terminal.
+- 3D background not visible: ensure Background is turned on in the navbar or via `bg on`.
+- Colors look off in light mode: verify `:root --background` in `src/index.css` is `0 0% 100%` (white) and that the page `<html>` doesn’t have residual `dark` class.
+- Inputs show odd colors when autofilled: color-scheme and `-webkit-autofill` rules are included in `src/index.css`.
+- `/api/contact` returns 404 during local dev: ensure `vercel dev` is running; Vite proxies `/api` to `http://localhost:3000`.
+- `/api/contact` returns 405 on GET: that’s expected (only POST is allowed).
+- Emails not arriving: verify `CONTACT_FROM_EMAIL` is a verified sender in Resend, check Vercel function logs, and confirm env vars exist in the deployed environment.
 
 ## Acknowledgements
 

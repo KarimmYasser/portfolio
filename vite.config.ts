@@ -9,6 +9,14 @@ export default defineConfig(({ mode }) => ({
     host: true,
     port: 8080,
     allowedHosts: true,
+    proxy: {
+      // When testing serverless functions locally with `vercel dev` (default on port 3000),
+      // proxy /api requests from Vite dev server to Vercel.
+      "/api": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+      },
+    },
   },
   preview: {
     host: true,

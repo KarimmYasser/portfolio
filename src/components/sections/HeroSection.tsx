@@ -14,6 +14,15 @@ import CarShowcase from "@/components/CarShowcase";
 export default function HeroSection() {
   const { content, locale } = useContent();
   const { setOpen } = useTerminalOverlay();
+  // Social links sourced from localized content with safe fallbacks
+  const socials = content.socials || [];
+  const githubUrl = socials.find((s) => s.icon === "github")?.href;
+  const linkedinUrl = socials.find((s) => s.icon === "linkedin")?.href;
+  const emailUrl =
+    socials.find((s) => s.icon === "mail")?.href ||
+    (content.meta?.email ? `mailto:${content.meta.email}` : undefined);
+  // Resume URL can come from env or public file fallback
+  const resumeUrl = (import.meta as any).env?.VITE_RESUME_URL ?? "/resume.pdf";
   const scrollToProjects = () => {
     const element = document.querySelector("#projects");
     if (element) {
@@ -36,7 +45,7 @@ export default function HeroSection() {
       {/* Content */}
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center relative">
-          <div className="text-center max-w-4xl mx-auto lg:text-left">
+          <div className="text-center max-w-4xl mx-auto lg:text-left z-30">
             {/* Greeting */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -128,17 +137,53 @@ export default function HeroSection() {
                 locale === "ar" ? "space-x-reverse" : ""
               }`}
             >
-              <Button variant="ghost" size="sm" className="cyber-glow">
-                <SiGithub className="h-5 w-5" />
+              <Button
+                variant="ghost"
+                size="sm"
+                className="cyber-glow"
+                asChild
+                disabled={!githubUrl}
+              >
+                <a
+                  href={githubUrl || undefined}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                >
+                  <SiGithub className="h-5 w-5" />
+                </a>
               </Button>
-              <Button variant="ghost" size="sm" className="cyber-glow">
-                <SiLinkedin className="h-5 w-5" />
+              <Button
+                variant="ghost"
+                size="sm"
+                className="cyber-glow"
+                asChild
+                disabled={!linkedinUrl}
+              >
+                <a
+                  href={linkedinUrl || undefined}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                >
+                  <SiLinkedin className="h-5 w-5" />
+                </a>
               </Button>
-              <Button variant="ghost" size="sm" className="cyber-glow">
-                <Mail className="h-5 w-5" />
+              <Button
+                variant="ghost"
+                size="sm"
+                className="cyber-glow"
+                asChild
+                disabled={!emailUrl}
+              >
+                <a href={emailUrl || undefined} aria-label="Email">
+                  <Mail className="h-5 w-5" />
+                </a>
               </Button>
-              <Button variant="ghost" size="sm" className="cyber-glow">
-                <Download className="h-5 w-5" />
+              <Button variant="ghost" size="sm" className="cyber-glow" asChild>
+                <a href={resumeUrl} download aria-label="Download Resume">
+                  <Download className="h-5 w-5" />
+                </a>
               </Button>
             </motion.div>
           </div>

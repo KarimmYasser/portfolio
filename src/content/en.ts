@@ -62,6 +62,7 @@ export type Content = {
       image: string;
       tags: string[];
       featured: boolean;
+      hasDemo?: boolean;
       links: { demo: string; github: string };
     }[];
   };
@@ -290,6 +291,7 @@ const content: Content = {
         tags: ["Flutter", "Supabase", "Hive", "Clean Architecture"],
         featured: true,
         links: { demo: "#", github: "#" },
+        hasDemo: false,
       },
       {
         id: 2,
@@ -300,6 +302,7 @@ const content: Content = {
         tags: ["Flutter", "Dio", "Microprocessor", "HTTP"],
         featured: true,
         links: { demo: "#", github: "#" },
+        hasDemo: false,
       },
       {
         id: 3,
@@ -310,6 +313,7 @@ const content: Content = {
         tags: ["Flutter", "Gemini API", "Bloc", "AI Integration"],
         featured: false,
         links: { demo: "#", github: "#" },
+        hasDemo: false,
       },
       {
         id: 4,
@@ -320,6 +324,7 @@ const content: Content = {
         tags: ["Flutter", "Hive", "Clean Architecture"],
         featured: false,
         links: { demo: "#", github: "#" },
+        hasDemo: false,
       },
       {
         id: 5,
@@ -330,6 +335,7 @@ const content: Content = {
         tags: ["Assembly", "Networking", "Game Dev"],
         featured: false,
         links: { demo: "#", github: "#" },
+        hasDemo: false,
       },
     ],
   },
@@ -412,7 +418,7 @@ const content: Content = {
         description:
           "Specialized in software engineering, data structures, algorithms, operating systems, and microprocessors.",
         projects: [
-          "Operating System Scheduler Simulation",
+          "Operating System Scheduler in C",
           "Search Engine with Spring Boot backend",
           "Microprocessor-controlled robot system (Zengbary App)",
         ],

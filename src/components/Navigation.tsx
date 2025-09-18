@@ -158,12 +158,31 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
               </div>
 
               {/* Theme Toggle */}
-              <Button size="sm" onClick={toggleTheme}>
+              <Button
+                size="sm"
+                onClick={toggleTheme}
+                title={isDark ? "Light mode" : "Dark mode"}
+              >
                 {isDark ? (
                   <Sun className="h-4 w-4" />
                 ) : (
                   <Moon className="h-4 w-4" />
                 )}
+              </Button>
+
+              {/* Background Toggle */}
+              <Button
+                size="sm"
+                onClick={() => setShowBackground(!showBackground)}
+                title={
+                  showBackground
+                    ? "Turn off 3D background"
+                    : "Turn on 3D background"
+                }
+                aria-pressed={showBackground}
+                variant={showBackground ? "default" : "outline"}
+              >
+                <Sparkles className="h-4 w-4" />
               </Button>
 
               {/* Low Power Toggle */}

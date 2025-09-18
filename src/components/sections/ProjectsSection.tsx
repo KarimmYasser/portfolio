@@ -32,7 +32,7 @@ export default function ProjectsSection() {
         </motion.div>
 
         {/* Featured Projects */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-16">
+        <div className="grid lg:grid-cols-2 items-stretch gap-8 mb-16">
           {featuredProjects.map((project, index) => (
             <motion.div
               key={project.id}
@@ -40,10 +40,11 @@ export default function ProjectsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
               viewport={{ once: true }}
+              className="h-full"
             >
               <Card
                 data-project-id={project.id}
-                className="glass overflow-hidden hover:cyber-glow transition-all duration-300 group cursor-pointer"
+                className="glass overflow-hidden hover:cyber-glow transition-all duration-300 group cursor-pointer h-full flex flex-col"
               >
                 <div className="relative overflow-hidden">
                   <div className="aspect-video overflow-hidden">
@@ -62,29 +63,64 @@ export default function ProjectsSection() {
                       locale === "ar" ? "space-x-reverse" : ""
                     }`}
                   >
-                    <Button size="sm" className="cyber-glow">
-                      <ExternalLink className="h-4 w-4 mr-2" />
-                      Demo
-                    </Button>
+                    {project.hasDemo !== false && (
+                      <Button
+                        size="sm"
+                        className="cyber-glow"
+                        asChild
+                        disabled={
+                          !project.links.demo || project.links.demo === "#"
+                        }
+                      >
+                        <a
+                          href={
+                            project.links.demo && project.links.demo !== "#"
+                              ? project.links.demo
+                              : undefined
+                          }
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="Open demo"
+                        >
+                          <ExternalLink className="h-4 w-4 mr-2" />
+                          Demo
+                        </a>
+                      </Button>
+                    )}
                     <Button
                       size="sm"
                       variant="outline"
                       className="cyber-border"
+                      asChild
+                      disabled={
+                        !project.links.github || project.links.github === "#"
+                      }
                     >
-                      <SiGithub className="h-4 w-4 mr-2" />
-                      Code
+                      <a
+                        href={
+                          project.links.github && project.links.github !== "#"
+                            ? project.links.github
+                            : undefined
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="View code on GitHub"
+                      >
+                        <SiGithub className="h-4 w-4 mr-2" />
+                        Code
+                      </a>
                     </Button>
                   </div>
                 </div>
 
-                <div className="p-6">
+                <div className="p-6 flex flex-col grow">
                   <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
                     {project.title}
                   </h3>
                   <p className="text-muted-foreground mb-4 leading-relaxed">
                     {project.description}
                   </p>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="mt-auto flex flex-wrap gap-2">
                     {project.tags.map((tag) => (
                       <Badge
                         key={tag}
@@ -114,7 +150,7 @@ export default function ProjectsSection() {
           </h3>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 items-stretch gap-6">
           {otherProjects.map((project, index) => (
             <motion.div
               key={project.id}
@@ -125,10 +161,10 @@ export default function ProjectsSection() {
             >
               <Card
                 data-project-id={project.id}
-                className="glass p-6 hover:cyber-glow transition-all duration-300 group cursor-pointer h-full"
+                className="glass overflow-hidden hover:cyber-glow transition-all duration-300 group cursor-pointer h-full flex flex-col"
               >
-                <div className="mb-4">
-                  <div className="aspect-video rounded-lg overflow-hidden mb-4">
+                <div className="relative overflow-hidden">
+                  <div className="aspect-video overflow-hidden">
                     <img
                       src={
                         (project.image && project.image.trim()) ||
@@ -139,36 +175,83 @@ export default function ProjectsSection() {
                       loading="lazy"
                     />
                   </div>
+                </div>
+
+                <div className="p-6 flex flex-col grow">
                   <h4 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">
                     {project.title}
                   </h4>
                   <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
                     {project.description}
                   </p>
-                </div>
 
-                <div className="space-y-4">
-                  <div className="flex flex-wrap gap-1">
-                    {project.tags.map((tag) => (
-                      <Badge key={tag} variant="secondary" className="text-xs">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
+                  <div className="mt-auto">
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.tags.map((tag) => (
+                        <Badge
+                          key={tag}
+                          variant="secondary"
+                          className="text-xs cyber-border"
+                        >
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
 
-                  <div
-                    className={`flex space-x-2 ${
-                      locale === "ar" ? "space-x-reverse" : ""
-                    }`}
-                  >
-                    <Button size="sm" variant="ghost" className="flex-1">
-                      <ExternalLink className="h-3 w-3 mr-1" />
-                      Demo
-                    </Button>
-                    <Button size="sm" variant="ghost" className="flex-1">
-                      <SiGithub className="h-3 w-3 mr-1" />
-                      Code
-                    </Button>
+                    <div
+                      className={`flex space-x-2 ${
+                        locale === "ar" ? "space-x-reverse" : ""
+                      }`}
+                    >
+                      {project.hasDemo !== false && (
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="flex-1"
+                          asChild
+                          disabled={
+                            !project.links.demo || project.links.demo === "#"
+                          }
+                        >
+                          <a
+                            href={
+                              project.links.demo && project.links.demo !== "#"
+                                ? project.links.demo
+                                : undefined
+                            }
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Open demo"
+                          >
+                            <ExternalLink className="h-3 w-3 mr-1" />
+                            Demo
+                          </a>
+                        </Button>
+                      )}
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="flex-1"
+                        asChild
+                        disabled={
+                          !project.links.github || project.links.github === "#"
+                        }
+                      >
+                        <a
+                          href={
+                            project.links.github && project.links.github !== "#"
+                              ? project.links.github
+                              : undefined
+                          }
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="View code on GitHub"
+                        >
+                          <SiGithub className="h-3 w-3 mr-1" />
+                          Code
+                        </a>
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </Card>
