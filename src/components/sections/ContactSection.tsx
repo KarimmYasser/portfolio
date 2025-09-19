@@ -34,12 +34,6 @@ export default function ContactSection() {
       value: content.meta.phone,
       href: `tel:${content.meta.phone.replace(/[^+\d]/g, "")}`,
     },
-    {
-      icon: MapPin,
-      label: "Location",
-      value: content.meta.location,
-      href: "#",
-    },
   ];
 
   const socialLinks = content.socials.map((s) => ({
@@ -136,12 +130,15 @@ export default function ContactSection() {
             viewport={{ once: true }}
             className="h-full flex flex-col gap-8"
           >
-            <Card className="glass p-8 cyber-glow flex-1 flex flex-col">
+            <Card className="glass p-8 cyber-glow flex-1 flex flex-col h-full justify-between">
               <h3 className="text-2xl font-bold mb-6">
                 {content.contact.form.submit}
               </h3>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-6 flex flex-col flex-1 justify-between"
+              >
                 {/* Honeypot field (hidden from users) */}
                 <input
                   type="text"
@@ -210,7 +207,7 @@ export default function ContactSection() {
                   />
                 </div>
 
-                <div>
+                <div className="flex-1 flex flex-col">
                   <label
                     htmlFor="message"
                     className="block text-sm font-medium mb-2"
@@ -224,7 +221,7 @@ export default function ContactSection() {
                     rows={6}
                     value={formData.message}
                     onChange={handleInputChange}
-                    className="cyber-border focus:cyber-glow resize-none"
+                    className="cyber-border focus:cyber-glow resize-none flex-1"
                     placeholder="Tell me about your project, goals, timeline, and any specific requirements..."
                   />
                 </div>
@@ -232,7 +229,7 @@ export default function ContactSection() {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full cyber-glow font-semibold py-3"
+                  className="w-full cyber-glow font-semibold py-3 mt-4"
                 >
                   {isSubmitting ? (
                     <motion.div
@@ -255,31 +252,6 @@ export default function ContactSection() {
                 </Button>
               </form>
             </Card>
-
-            {/* Social Links (Connect with Me) moved under Send Message */}
-            <Card className="glass p-8">
-              <h3 className="text-xl font-bold mb-6">
-                {content.contact.socialsHeading}
-              </h3>
-              <div className="grid grid-cols-2 gap-4">
-                {socialLinks.map((social, index) => (
-                  <motion.a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className={`flex items-center space-x-3 p-3 rounded-lg border border-border hover:border-primary transition-all duration-300 ${social.color}`}
-                  >
-                    <social.icon className="h-5 w-5" />
-                    <span className="font-medium">{social.label}</span>
-                  </motion.a>
-                ))}
-              </div>
-            </Card>
           </motion.div>
 
           {/* Contact Information */}
@@ -288,7 +260,7 @@ export default function ContactSection() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="h-full flex flex-col gap-8"
+            className="h-full flex flex-col gap-4"
           >
             {/* Contact Details */}
             <Card className="glass p-8 flex-1">
@@ -322,6 +294,31 @@ export default function ContactSection() {
               </div>
             </Card>
 
+            {/* Social Links (Connect with Me) moved under Send Message */}
+            <Card className="glass p-8">
+              <h3 className="text-xl font-bold mb-6">
+                {content.contact.socialsHeading}
+              </h3>
+              <div className="grid grid-cols-2 gap-4">
+                {socialLinks.map((social, index) => (
+                  <motion.a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className={`flex items-center space-x-3 p-3 rounded-lg border border-border hover:border-primary transition-all duration-300 ${social.color}`}
+                  >
+                    <social.icon className="h-5 w-5" />
+                    <span className="font-medium">{social.label}</span>
+                  </motion.a>
+                ))}
+              </div>
+            </Card>
+
             {/* Resume Download */}
             <Card className="glass p-8 text-center">
               <h3 className="text-xl font-bold mb-4">
@@ -345,20 +342,6 @@ export default function ContactSection() {
                   <Download className="h-4 w-4 mr-2" />
                   {content.contact.resumeCta}
                 </a>
-              </Button>
-            </Card>
-
-            {/* Quick Contact */}
-            <Card className="glass p-8 text-center cyber-glow">
-              <h3 className="text-xl font-bold mb-4">
-                {content.contact.quickChatHeading}
-              </h3>
-              <p className="text-muted-foreground mb-6">
-                {content.contact.quickChatDesc}
-              </p>
-              <Button className="cyber-glow">
-                <Phone className="h-4 w-4 mr-2" />
-                {content.contact.scheduleCall}
               </Button>
             </Card>
           </motion.div>

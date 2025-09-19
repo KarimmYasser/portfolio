@@ -19,9 +19,11 @@ export default async function handler(req: any, res: any) {
   const FROM_EMAIL = process.env.CONTACT_FROM_EMAIL;
 
   if (!RESEND_API_KEY || !TO_EMAIL || !FROM_EMAIL) {
-    return res
-      .status(500)
-      .json({ error: "Server not configured: missing env" });
+    return res.status(500).json({
+      ok: false,
+      code: "CONFIG_MISSING",
+      error: "Server not configured: missing env",
+    });
   }
 
   try {
@@ -48,11 +50,26 @@ export default async function handler(req: any, res: any) {
     }
 
     if (!isValidEmail(email)) {
-      return res.status(400).json({ error: "Invalid email" });
+      return res
+        .status(400)
+        .json({ ok: false, code: "INVALID_EMAIL", error: "Invalid email" });
     }
 
     if (subject.trim().length < 3 || message.trim().length < 10) {
-      return res.status(400).json({ error: "Subject or message too short" });
+      return res.status(400).json({
+        ok: false,
+        code: "CONTENT_TOO_SHORT",
+        error: "Subject or message too short",
+      });
+    }
+
+    // Basic upper bounds to prevent abuse
+    if (name.length > 80 || subject.length > 140 || message.length > 5000) {
+      return res.status(400).json({
+        ok: false,
+        code: "CONTENT_TOO_LONG",
+        error: "Field length limits exceeded",
+      });
     }
 
     const html = `
@@ -82,17 +99,42 @@ export default async function handler(req: any, res: any) {
         reply_to: email,
       }),
     });
-
     if (!resp.ok) {
-      const text = await resp.text();
-      console.error("Resend error:", resp.status, text);
-      return res.status(502).json({ error: "Email service failed" });
+      let bodyText: string | null = null;
+      let json: any = null;
+      try {
+        bodyText = await resp.text();
+        json = JSON.parse(bodyText);
+      } catch {
+        // ignore
+      }
+      const resendMessage: string | undefined = json?.message || json?.error;
+      const lower = (resendMessage || "").toLowerCase();
+      let code = "SERVICE_FAILURE";
+      if (lower.includes("not verified")) code = "DOMAIN_NOT_VERIFIED";
+      if (resp.status === 401 || resp.status === 403) code = "AUTH_FAILED";
+      console.error("Resend error:", resp.status, resendMessage || bodyText);
+      return res.status(502).json({
+        ok: false,
+        code,
+        error:
+          code === "DOMAIN_NOT_VERIFIED"
+            ? "Sender domain not verified. Verify domain in Resend."
+            : code === "AUTH_FAILED"
+            ? "Email service authentication failed"
+            : "Email service failed",
+        providerStatus: resp.status,
+      });
     }
 
-    return res.status(200).json({ ok: true });
+    return res.status(200).json({ ok: true, code: "SENT" });
   } catch (err) {
     console.error("/api/contact error", err);
-    return res.status(500).json({ error: "Internal Server Error" });
+    return res.status(500).json({
+      ok: false,
+      code: "INTERNAL_ERROR",
+      error: "Internal Server Error",
+    });
   }
 }
 
