@@ -10,8 +10,12 @@ export default function ProjectsSection() {
   const { content, locale } = useContent();
   const projects = content.projects.items;
 
-  const featuredProjects = projects.filter((project) => project.featured);
-  const otherProjects = projects.filter((project) => !project.featured);
+  const featuredProjects = projects.filter(
+    (project) => project.featured && !project.hidden
+  );
+  const otherProjects = projects.filter(
+    (project) => !project.featured && !project.hidden
+  );
 
   return (
     <section id="projects" className="py-20 relative">
@@ -87,29 +91,31 @@ export default function ProjectsSection() {
                         </a>
                       </Button>
                     )}
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="cyber-border"
-                      asChild
-                      disabled={
-                        !project.links.github || project.links.github === "#"
-                      }
-                    >
-                      <a
-                        href={
-                          project.links.github && project.links.github !== "#"
-                            ? project.links.github
-                            : undefined
+                    {project.hasGithubRepo !== false && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="cyber-border"
+                        asChild
+                        disabled={
+                          !project.links.github || project.links.github === "#"
                         }
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="View code on GitHub"
                       >
-                        <SiGithub className="h-4 w-4 mr-2" />
-                        Code
-                      </a>
-                    </Button>
+                        <a
+                          href={
+                            project.links.github && project.links.github !== "#"
+                              ? project.links.github
+                              : undefined
+                          }
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="View code on GitHub"
+                        >
+                          <SiGithub className="h-4 w-4 mr-2" />
+                          Code
+                        </a>
+                      </Button>
+                    )}
                   </div>
                 </div>
 
@@ -228,29 +234,33 @@ export default function ProjectsSection() {
                           </a>
                         </Button>
                       )}
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        className="flex-1"
-                        asChild
-                        disabled={
-                          !project.links.github || project.links.github === "#"
-                        }
-                      >
-                        <a
-                          href={
-                            project.links.github && project.links.github !== "#"
-                              ? project.links.github
-                              : undefined
+                      {project.hasGithubRepo !== false && (
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="flex-1"
+                          asChild
+                          disabled={
+                            !project.links.github ||
+                            project.links.github === "#"
                           }
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label="View code on GitHub"
                         >
-                          <SiGithub className="h-3 w-3 mr-1" />
-                          Code
-                        </a>
-                      </Button>
+                          <a
+                            href={
+                              project.links.github &&
+                              project.links.github !== "#"
+                                ? project.links.github
+                                : undefined
+                            }
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="View code on GitHub"
+                          >
+                            <SiGithub className="h-3 w-3 mr-1" />
+                            Code
+                          </a>
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </div>

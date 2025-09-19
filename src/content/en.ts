@@ -67,6 +67,8 @@ export type Content = {
       featured: boolean;
       hasDemo?: boolean;
       links: { demo: string; github: string };
+      hasGithubRepo?: boolean;
+      hidden?: boolean; // added hidden flag
     }[];
   };
   experience: {
@@ -297,22 +299,30 @@ const content: Content = {
         title: "i'Supply POS App",
         description:
           "Cross-platform POS system built with Flutter and Supabase. Features inventory search, cart management, and offline-first synchronization with Hive.",
-        image: "/placeholder.svg",
+        image: "/pos.png",
         tags: ["Flutter", "Supabase", "Hive", "Clean Architecture"],
         featured: true,
-        links: { demo: "#", github: "#" },
+        links: {
+          demo: "#",
+          github: "https://github.com/KarimmYasser/isupply_app",
+        },
         hasDemo: false,
+        hasGithubRepo: true,
       },
       {
         id: 2,
         title: "Zengbary App",
         description:
           "Flutter app controlling a microprocessor-based robot in real-time over HTTP.",
-        image: "/placeholder.svg",
+        image: "/zengbary.jpg",
         tags: ["Flutter", "Dio", "Microprocessor", "HTTP"],
-        featured: true,
-        links: { demo: "#", github: "#" },
+        featured: false,
+        links: {
+          demo: "#",
+          github: "https://github.com/ZengebaryRobot/flutter-app",
+        },
         hasDemo: false,
+        hasGithubRepo: true,
       },
       {
         id: 3,
@@ -322,8 +332,12 @@ const content: Content = {
         image: "/placeholder.svg",
         tags: ["Flutter", "Gemini API", "Bloc", "AI Integration"],
         featured: false,
-        links: { demo: "#", github: "#" },
+        links: {
+          demo: "#",
+          github: "https://github.com/KarimmYasser/Slash-Fashion-Assistant-App",
+        },
         hasDemo: false,
+        hasGithubRepo: true,
       },
       {
         id: 4,
@@ -333,19 +347,43 @@ const content: Content = {
         image: "/placeholder.svg",
         tags: ["Flutter", "Hive", "Clean Architecture"],
         featured: false,
-        links: { demo: "#", github: "#" },
+        links: {
+          demo: "#",
+          github: "https://github.com/KarimmYasser/Cooking-up-application",
+        },
         hasDemo: false,
+        hasGithubRepo: true,
+        hidden: true,
       },
       {
         id: 5,
         title: "Bricks Breaker - Assembly Game",
         description:
           "Multiplayer brick breaker game in Assembly with real-time networking over Wi-Fi and efficient graphics rendering.",
-        image: "/placeholder.svg",
+        image: "/bricks.png",
         tags: ["Assembly", "Networking", "Game Dev"],
         featured: false,
-        links: { demo: "#", github: "#" },
+        links: {
+          demo: "#",
+          github: "https://github.com/KarimmYasser/brick-breaker-pro",
+        },
         hasDemo: false,
+        hasGithubRepo: true,
+      },
+      {
+        id: 6,
+        title: "3D Portfolio Website",
+        description:
+          "Interactive developer portfolio built with React, TypeScript, Three.js (react-three-fiber) and TailwindCSS featuring multilingual support, dynamic stars and planet background, and a terminal-style interface.",
+        image: "/home.png",
+        tags: ["React", "TypeScript", "Three.js", "TailwindCSS", "i18n"],
+        featured: true,
+        links: {
+          demo: "https://karim-yasser.vercel.app/", // TODO: replace with actual deployed URL
+          github: "#",
+        },
+        hasDemo: true,
+        hasGithubRepo: false,
       },
     ],
   },

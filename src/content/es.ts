@@ -32,7 +32,7 @@ const es: Content = {
       "Un ingeniero informático apasionado por crear aplicaciones escalables e impactantes",
     avatarInitials: "KY",
     name: base.about.name,
-  role: "Desarrollador de Software e Ingeniero Informático",
+    role: "Desarrollador de Software e Ingeniero Informático",
     bio1: "Ingeniero informático junior en la Universidad de El Cairo que crea soluciones móviles y basadas en datos centradas en el usuario. Aprendo mediante proyectos prácticos y perfecciono software fiable que aporta valor tangible.",
     bio2: "Me enfoco en Flutter, Kotlin, estructuras de datos, algoritmos, arquitectura limpia y paradigmas multiplataforma emergentes como Kotlin Multiplatform mientras me formo activamente en Ciencia de Datos (Python, SQL, MLflow, fundamentos de ML) y exploro aplicaciones prácticas de machine learning.",
     values: [
@@ -139,6 +139,8 @@ const es: Content = {
           ? "App de recetas con filtros, persistencia offline con Hive y temporizadores de cocina interactivos para una experiencia fluida."
           : p.id === 5
           ? "Juego multijugador de romper ladrillos en Assembly con red en tiempo real por Wi‑Fi y renderizado eficiente."
+          : p.id === 6
+          ? "Portafolio interactivo construido con React, TypeScript, Three.js y TailwindCSS con soporte multilingüe, fondo 3D de planetas tipo Saturno y una interfaz estilo terminal."
           : p.description,
     })),
   },
