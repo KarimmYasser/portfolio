@@ -22,6 +22,11 @@ This project includes ready-to-edit sections (Hero, About, Skills, Projects, Exp
 - Built-in Terminal overlay with helpful commands
 - Projects grid: equal-height cards; content-driven Demo visibility via `hasDemo`
 
+## Live Demo
+
+Live Deployment: https://karim-yasser.vercel.app/
+_(Replace with your actual Vercel / custom domain once deployed. If you add a custom domain, update Open Graph meta tags and this link.)_
+
 ## Tech Stack
 
 - React 18, TypeScript 5
@@ -208,6 +213,17 @@ Environment variables (email)
    - Optional `VITE_RESUME_URL`
 4. Deploy. Your contact endpoint will be available at `/api/contact`.
 
+Domain verification (Resend)
+
+- If you supply a `CONTACT_FROM_EMAIL` using your own domain (e.g. `"Portfolio <noreply@yourdomain.com>"`) you must verify that domain in the Resend dashboard → Domains before mail will actually be delivered with that From address.
+- While unverified, some providers will rewrite or drop the message; you may see the provider substitute your account email instead.
+- Use a properly formatted value with angle brackets: `"Portfolio <noreply@yourdomain.com>"`.
+- You can use a Resend test domain (like `@resend.dev`) only after adding it per Resend docs; generic public mail domains (gmail/outlook) are generally not allowed as custom From senders.
+
+Skipping Resend / using a free alternative
+
+- If you prefer not to verify a domain yet, you can swap the backend to a no-domain-required service (see Free Contact Form Alternatives below) without changing the UI.
+
 Local development with API
 
 - Start Vercel Dev (serves functions on port 3000):
@@ -220,6 +236,104 @@ Other platforms
 
 - Netlify: You can port the function to Netlify Functions (`netlify/functions/contact.ts`) and adjust the fetch URL.
 - GitHub Pages: Static only — API must be hosted elsewhere (e.g., Vercel/Netlify/Azure Function) and the form should post to that absolute URL.
+
+### Environment Variables Summary
+
+| Name                 | Required              | Scope  | Example                                | Notes                                                                |
+| -------------------- | --------------------- | ------ | -------------------------------------- | -------------------------------------------------------------------- |
+| `RESEND_API_KEY`     | Yes (if using Resend) | Server | `re_****************`                  | Never exposed client-side.                                           |
+| `CONTACT_TO_EMAIL`   | Yes (if using Resend) | Server | `you@yourdomain.com`                   | Destination inbox.                                                   |
+| `CONTACT_FROM_EMAIL` | Yes (if using Resend) | Server | `"Portfolio <noreply@yourdomain.com>"` | Must be a verified sender/domain in Resend. Angle brackets required. |
+| `VITE_RESUME_URL`    | No                    | Public | `https://cdn.example.com/resume.pdf`   | Falls back to `/resume.pdf` if unset.                                |
+
+When adding or editing server variables in Vercel, remember to redeploy (or trigger a new build) so the function environment picks them up.
+
+### Contact API Error Codes
+
+The serverless function returns JSON: `{ ok: boolean; code: string; error?: string }`.
+
+| Code                  | Meaning                                | Typical Fix                            |
+| --------------------- | -------------------------------------- | -------------------------------------- |
+| `CONFIG_MISSING`      | Required env var missing               | Add env vars in dashboard & redeploy   |
+| `INVALID_EMAIL`       | Email failed basic regex/format check  | Correct the address                    |
+| `CONTENT_TOO_SHORT`   | Message below minimum length           | Submit a more detailed message         |
+| `CONTENT_TOO_LONG`    | Message exceeded max length            | Shorten content                        |
+| `DOMAIN_NOT_VERIFIED` | Resend rejected unverified From domain | Verify domain in Resend or change From |
+| `AUTH_FAILED`         | Resend API key invalid                 | Regenerate key / set correct value     |
+| `SERVICE_FAILURE`     | Upstream provider non-200 error        | Check Vercel logs & provider status    |
+| `INTERNAL_ERROR`      | Unhandled exception                    | Inspect logs for stack trace           |
+| `SENT`                | Success                                | Toast confirmation shown               |
+
+### Testing the Contact Endpoint Locally
+
+1. Start the function runtime: `vercel dev` (port 3000).
+2. Start Vite: `npm run dev` (port 8080) — proxy will forward `/api/contact`.
+3. Use curl:
+
+```bash
+curl -X POST http://localhost:8080/api/contact \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Test","email":"tester@example.com","message":"Hello from curl!"}'
+```
+
+Expected (success): `{"ok":true,"code":"SENT"}`.
+
+Failure example (invalid email): `{"ok":false,"code":"INVALID_EMAIL","error":"Invalid email"}`.
+
+Inspect logs: `vercel dev --debug` or Vercel dashboard → Functions → Logs after deployment.
+
+### Free Contact Form Alternatives
+
+If you want a zero-config (no domain verification) path, replace the `/api/contact` call inside `ContactSection` with one of these:
+
+| Service                 | Free Tier Highlights                | Integration                          | Notes                                       |
+| ----------------------- | ----------------------------------- | ------------------------------------ | ------------------------------------------- |
+| Web3Forms               | 250 submissions/mo, spam protection | POST to their endpoint with form key | Data stored; optional redirect              |
+| Formspree               | 50 submissions/mo (free)            | POST form or fetch to endpoint       | Email confirmation required                 |
+| EmailJS                 | Client-side SDK                     | `emailjs.send` in handler            | Exposes a public key; not purely serverless |
+| Basin                   | 100 submissions/mo                  | POST/HTML form                       | Good dashboard, GDPR focus                  |
+| GetForm                 | 50 submissions/mo                   | POST form                            | Attachments on paid tiers                   |
+| Slack / Discord Webhook | Unlimited messages                  | POST JSON                            | Not email; delivers to channel              |
+
+Minimal swap example (Web3Forms):
+
+```ts
+// inside handleSubmit
+const resp = await fetch("https://api.web3forms.com/submit", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    access_key: import.meta.env.VITE_WEB3FORMS_KEY,
+    name,
+    email,
+    message,
+  }),
+});
+```
+
+Add `VITE_WEB3FORMS_KEY` as a public env var (safe—it's intended to be public). Remove or bypass the serverless function.
+
+### Localization Guide (Advanced)
+
+1. Duplicate `src/content/en.ts` → `fr.ts` (example).
+2. Translate values; keep object keys identical for type safety.
+3. Export the new locale in `src/content/index.ts` and extend the `languages` array.
+4. Provide RTL handling only if needed (the `ContentContext` already sets `dir`).
+5. For dynamic values (like years of experience), prefer computing in code so translations stay static.
+
+Validation: TypeScript will flag missing keys automatically since all locale modules share the exported type.
+
+### Performance & Low Power Tips
+
+- Use the navbar Power toggle (or terminal `power on`) to reduce Three.js activity on low-end devices.
+- Consider pausing any custom requestAnimationFrame loops when `lowPower` is true (the provided background component already minimizes its work, but extend this if you add heavier objects).
+- Keep particle counts moderate; profile with browser Performance tools if FPS dips below 50 on mid-range hardware.
+
+### Security Considerations
+
+- Never expose `RESEND_API_KEY` or other server secrets via `import.meta.env.VITE_*`.
+- Basic validation exists; if you enable a third-party form service, confirm it includes spam filtering (honeypot or reCAPTCHA) or add one.
+- Limit message length (already enforced) to mitigate abuse and log noise.
 
 ## Troubleshooting
 

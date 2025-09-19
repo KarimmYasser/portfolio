@@ -17,7 +17,7 @@ const es: Content = {
     name: base.hero.name,
     title: "Desarrollador de Software e Ingeniero Informático",
     description:
-      "Ingeniero informático orientado a resultados con experiencia práctica en apps móviles multiplataforma y soluciones web. Dominio de arquitectura limpia y fundamentos de ingeniería de software para ofrecer aplicaciones escalables y centradas en el usuario.",
+      "Ingeniero informático junior que crea soluciones móviles y basadas en datos centradas en el usuario. Aprendo mediante proyectos prácticos, mejoro software fiable que resuelve problemas reales y sigo ampliando mis habilidades más allá del aula.",
     favoriteCarLabel: "ese es mi coche favorito",
     favoriteCarName: "Ferrari 458 Italia",
     ctas: {
@@ -32,9 +32,9 @@ const es: Content = {
       "Un ingeniero informático apasionado por crear aplicaciones escalables e impactantes",
     avatarInitials: "KY",
     name: base.about.name,
-    role: "Desarrollador Flutter e Ingeniero de Software",
-    bio1: "Como estudiante de ingeniería informática en la Universidad de El Cairo con experiencia en Flutter y desarrollo web, me centro en crear apps móviles multiplataforma y soluciones backend robustas. Disfruto aplicando arquitectura limpia y fundamentos sólidos para ofrecer productos escalables y centrados en el usuario.",
-    bio2: "Además del desarrollo, estoy en aprendizaje continuo de nuevas tecnologías, profundizando en algoritmos y estructuras de datos y explorando cómo aplicarlos a problemas reales.",
+  role: "Desarrollador de Software e Ingeniero Informático",
+    bio1: "Ingeniero informático junior en la Universidad de El Cairo que crea soluciones móviles y basadas en datos centradas en el usuario. Aprendo mediante proyectos prácticos y perfecciono software fiable que aporta valor tangible.",
+    bio2: "Me enfoco en Flutter, Kotlin, estructuras de datos, algoritmos, arquitectura limpia y paradigmas multiplataforma emergentes como Kotlin Multiplatform mientras me formo activamente en Ciencia de Datos (Python, SQL, MLflow, fundamentos de ML) y exploro aplicaciones prácticas de machine learning.",
     values: [
       {
         icon: "code",
@@ -102,9 +102,9 @@ const es: Content = {
       },
       {
         icon: "globe",
-        name: "Soluciones web",
+        name: "Datos y Persistencia",
         description:
-          "Backends robustos y aplicaciones web con sistemas basados en SQL",
+          "Diseño de capas de datos fiables: modelado SQL/NoSQL, sincronización offline y consultas eficientes",
       },
       {
         icon: "zap",
@@ -114,9 +114,9 @@ const es: Content = {
       },
       {
         icon: "brain",
-        name: "Aprendizaje y adaptabilidad",
+        name: "Ciencia de Datos y ML",
         description:
-          "Aprendo rápido nuevas tecnologías y las aplico a proyectos reales",
+          "Aplicación de Python, SQL, MLflow y técnicas de ML (clasificación, recomendaciones) con mentalidad experimental",
       },
     ],
   },
@@ -146,77 +146,142 @@ const es: Content = {
     heading: "Experiencia",
     subheading: "Mi trayectoria profesional y el impacto logrado",
     educationHeading: "Educación",
-    timeline: base.experience.timeline.map((t) => ({
-      ...t,
-      position:
-        t.position === "Flutter Developer Intern"
-          ? "Prácticas como Desarrollador Flutter"
-          : t.position === "Flutter Instructor"
-          ? "Instructor de Flutter"
-          : t.position === "Mobile App Development Trainee"
-          ? "Becario en Desarrollo de Apps Móviles"
-          : t.position === "Flutter Developer Intern"
-          ? "Prácticas como Desarrollador Flutter"
-          : t.position,
-      type:
-        t.type === "Internship"
-          ? "Prácticas"
-          : t.type === "Volunteer"
-          ? "Voluntariado"
-          : t.type === "Training"
-          ? "Formación"
-          : t.type,
-      description:
-        t.id === 1
-          ? "Trabajo en un sistema POS en Flutter tras lograr el 1.º puesto en el hackathon de la empresa."
-          : t.id === 2
-          ? "Impartí plan de estudios de Flutter: gestión de estado, APIs y UI/UX avanzada."
-          : t.id === 3
-          ? "Completé 96 horas de formación en Flutter, enfocada en desarrollo multiplataforma y arquitectura limpia."
-          : t.id === 4
-          ? "Contribuí a un chatbot e‑commerce con IA usando Flutter y APIs REST."
-          : t.description,
-      achievements:
-        t.id === 1
-          ? [
-              "Gané el 1.º lugar entre 30+ equipos en el hackathon",
-              "Contribuí a la arquitectura y funcionalidades del POS",
-              "Colaboré con backend y QA",
-            ]
-          : t.id === 2
-          ? [
-              "Formé a 30+ estudiantes con 90% de feedback positivo",
-              "85% construyó apps reales al finalizar",
-              "Materiales interactivos que aumentaron la participación un 40%",
-            ]
-          : t.id === 3
-          ? [
-              "Dominé gestión de estado avanzada con Bloc y Provider",
-              "Apliqué arquitectura limpia para mantenibilidad",
-              "Construí múltiples apps y demos de entrenamiento",
-            ]
-          : t.id === 4
-          ? [
-              "Mejoré la interacción del usuario en un 25%",
-              "Reduje tiempos de carga un 30% con caché",
-              "Entregué funcionalidades en equipo ágil",
-            ]
-          : t.achievements,
-    })),
-    education: base.experience.education.map((e) => ({
-      ...e,
-      institution: "Universidad de El Cairo - Facultad de Ingeniería",
-      degree: "Grado en Ingeniería Informática",
-      period: e.period,
-      location: "El Cairo, Egipto",
-      description:
-        "Especialización en ingeniería de software, estructuras de datos, algoritmos, sistemas operativos y microprocesadores.",
-      projects: [
-        "Planificador de sistema operativo en C",
-        "Motor de búsqueda con backend Spring Boot",
-        "Sistema de robot controlado por microprocesador (Zengbary App)",
-      ],
-    })),
+    timeline: [
+      {
+        id: 1,
+        company: "i'SUPPLY",
+        position: "Desarrollador Flutter",
+        period: "Jul 2025 - Presente",
+        location: "Maadi, El Cairo, Egipto",
+        type: "Prácticas",
+        description:
+          "Incorporado tras ganar el primer lugar en un hackathon interno; contribuyendo a un sistema POS en Flutter junto a backend y QA.",
+        achievements: [
+          "1.º lugar entre 30+ equipos en hackathon interno",
+          "Implementación de funcionalidades POS con arquitectura limpia y sincronización offline",
+          "Colaboración multidisciplinaria para rendimiento y UX",
+        ],
+        technologies: ["Flutter", "Supabase", "Hive", "Dart"],
+      },
+      {
+        id: 2,
+        company: "Iniciativa Pioneros Digital Egypt (DEPI)",
+        position: "Trainee de Ciencia de Datos",
+        period: "Jun 2025 - Presente",
+        location: "Giza, Egipto",
+        type: "Formación",
+        description:
+          "Ruta IBM Data Scientist con experiencia práctica en Python, SQL, análisis de datos, machine learning y herramientas MLOps (MLflow, Hugging Face).",
+        achievements: [
+          "Avance en módulos de Python, visualización e ingeniería de prompts",
+          "Aplicación de técnicas de ML en proyecto capstone",
+          "Integración de herramientas MLOps para seguimiento de experimentos",
+        ],
+        technologies: ["Python", "SQL", "Pandas", "Scikit-learn", "MLflow"],
+      },
+      {
+        id: 3,
+        company: "Banque Misr",
+        position: "Desarrollador Android (Kotlin)",
+        period: "Jul 2025 - Sep 2025",
+        location: "Nuevo Cairo, Egipto",
+        type: "Formación",
+        description:
+          "Programa avanzado de desarrollo Android centrado en Jetpack, Room Database y arquitectura escalable.",
+        achievements: [
+          "Módulos creados usando componentes Jetpack",
+          "Capa de persistencia con Room y estrategias offline",
+          "Patrones modernos de Kotlin para mantenibilidad",
+        ],
+        technologies: ["Kotlin", "Room", "Jetpack", "Android"],
+      },
+      {
+        id: 4,
+        company: "Informatique",
+        position: "Desarrollador Flutter (ML)",
+        period: "Jul 2025 - Ago 2025",
+        location: "Nasr City, Egipto",
+        type: "Prácticas",
+        description:
+          "Prácticas combinando Flutter con machine learning para prototipos funcionales.",
+        achievements: [
+          "Integración de funciones impulsadas por ML en flujos Flutter",
+          "Mejora de precisión mediante iteraciones",
+          "Prototipos entregados en sprints cortos",
+        ],
+        technologies: ["Flutter", "Dart", "Machine Learning"],
+      },
+      {
+        id: 5,
+        company: "IEEE Cairo University SB",
+        position: "Instructor de Flutter",
+        period: "Feb 2025 - May 2025",
+        location: "El Cairo, Egipto",
+        type: "Voluntariado",
+        description:
+          "Primera fase de formación Flutter cubriendo fundamentos de Dart, POO y widgets introductorios para 30+ estudiantes.",
+        achievements: [
+          "3 sesiones base con feedback muy positivo",
+          "Actividades prácticas que facilitaron el avance de principiantes",
+          "Ayudó a establecer confianza para continuar el aprendizaje",
+        ],
+        technologies: ["Flutter", "Dart"],
+      },
+      {
+        id: 6,
+        company: "Orange Digital Center Egypt",
+        position: "Trainee Desarrollador Flutter",
+        period: "Jan 2025 - Mar 2025",
+        location: "El Cairo, Egipto",
+        type: "Formación",
+        description:
+          "Programa práctico de Flutter cubriendo diseño UI, gestión de estado y despliegue.",
+        achievements: [
+          "Patrones Bloc y Provider aplicados en apps de ejemplo",
+          "Despliegue de builds demostrativas mostrando hitos",
+          "Principios de arquitectura limpia para escalabilidad",
+        ],
+        technologies: ["Flutter", "Bloc", "Provider"],
+      },
+      {
+        id: 7,
+        company: "Slash Hub",
+        position: "Desarrollador de Aplicaciones Móviles",
+        period: "Oct 2024 - Dec 2024",
+        location: "El Cairo, Egipto (Remoto)",
+        type: "Prácticas",
+        description:
+          "Contribución a funcionalidades de chatbot e‑commerce con IA y mejoras de rendimiento.",
+        achievements: [
+          "Mejora de interacción de usuarios en 25%",
+          "Reducción de tiempos de carga un 30% mediante caché",
+          "Entrega iterativa de funcionalidades en equipo ágil",
+        ],
+        technologies: ["Flutter", "REST APIs", "Dio"],
+      },
+    ],
+    education: [
+      {
+        institution: "Universidad de El Cairo - Facultad de Ingeniería",
+        degree: "Grado en Ingeniería Informática",
+        period: "2022 - 2027 (Previsto)",
+        location: "El Cairo, Egipto",
+        description:
+          "Especialización en ingeniería de software, estructuras de datos, algoritmos, sistemas operativos y microprocesadores.",
+        projects: [
+          "Planificador de sistema operativo en C",
+          "Motor de búsqueda con backend Spring Boot",
+          "Sistema de robot controlado por microprocesador (Zengbary App)",
+        ],
+      },
+    ],
+    certifications: [
+      "Microsoft - Aprovechar herramientas y recursos de IA para tu negocio",
+      "Microsoft - Crear una app optimizada para móvil con Power Apps",
+      "Sprints x Banque Misr - Desarrollo moderno de apps móviles con Kotlin",
+      "Microsoft - Implementar gestión de apps móviles",
+      "Sprints x Microsoft Summer Camp - Desarrollo móvil",
+    ],
   },
   contact: {
     heading: "Trabajemos juntos",

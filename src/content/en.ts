@@ -92,6 +92,7 @@ export type Content = {
       description: string;
       projects: string[];
     }[];
+    certifications: string[]; // added list of certifications
   };
   contact: {
     heading: string;
@@ -133,7 +134,7 @@ const content: Content = {
     author: "Karim Yasser",
     location: "Cairo, Egypt",
     email: "karimmyasserr@gmail.com",
-    phone: "+20 114 443 2284",
+    phone: "+20 114 443 2284", // unchanged in supplied data (mobile listed as 01144432284 -> local format). Keep international version.
   },
   nav: {
     items: [
@@ -150,7 +151,7 @@ const content: Content = {
     name: "Karim Yasser",
     title: "Software Developer & Computer Engineer",
     description:
-      "Results-oriented Computer Engineer with hands-on experience in cross-platform mobile apps and web solutions. Skilled in clean architecture, software engineering fundamentals, and modern frameworks to deliver scalable, user-focused applications.",
+      "Junior computer engineer creating user-focused mobile and data-driven solutions. I learn through hands-on projects, refine reliable software that solves real problems, and keep expanding my skills beyond the classroom.",
     favoriteCarLabel: "that's my favorite car",
     favoriteCarName: "Ferrari 458 Italia",
     ctas: {
@@ -165,9 +166,9 @@ const content: Content = {
       "A computer engineer passionate about building impactful, scalable applications",
     avatarInitials: "KY",
     name: "Karim Yasser",
-    role: "Flutter Developer & Software Engineer",
-    bio1: "As a computer engineering student at Cairo University with hands-on experience in Flutter and web development, I focus on creating cross-platform mobile apps and robust backend solutions. I enjoy applying clean architecture and strong software engineering fundamentals to deliver user-focused, scalable products.",
-    bio2: "Beyond development, I'm constantly learning new technologies, diving into algorithms and data structures, and exploring how modern frameworks can be applied to solve real-world problems.",
+    role: "Software Developer & Computer Engineer",
+    bio1: "Junior computer engineer at Cairo University creating user‑focused mobile and data‑driven solutions. I learn through hands‑on projects, refine reliable software that solves real problems, and keep expanding my skills beyond the classroom.",
+    bio2: "I focus on Flutter, Kotlin, data structures, algorithms, clean architecture, and emerging cross‑platform paradigms like Kotlin Multiplatform while actively training in Data Science (Python, SQL, MLflow, ML fundamentals) and exploring practical ML applications.",
     values: [
       {
         icon: "code",
@@ -251,8 +252,8 @@ const content: Content = {
         title: "Systems & Tools",
         color: "cyber-pink",
         skills: [
-          { name: "8086 Assembly", level: 70 },
-          { name: "Operating System Simulations", level: 75 },
+          { name: "Assembly", level: 70 },
+          { name: "Operating System Algorithms", level: 75 },
           { name: "Git/GitHub", level: 85 },
           { name: "VS Code / Android Studio", level: 90 },
         ],
@@ -267,9 +268,9 @@ const content: Content = {
       },
       {
         icon: "globe",
-        name: "Web Solutions",
+        name: "Data & Persistence",
         description:
-          "Robust backends and web applications with SQL-based systems",
+          "Designing reliable data layers: SQL/NoSQL modeling, offline sync, and performant querying",
       },
       {
         icon: "zap",
@@ -279,9 +280,9 @@ const content: Content = {
       },
       {
         icon: "brain",
-        name: "Learning & Adaptability",
+        name: "Data Science & ML",
         description:
-          "Quickly picking up new technologies and applying them to real projects",
+          "Applying Python, SQL, MLflow, and ML techniques (classification, recommendations) with an experimentation mindset",
       },
     ],
   },
@@ -355,65 +356,113 @@ const content: Content = {
     timeline: [
       {
         id: 1,
-        company: "i'Supply",
-        position: "Flutter Developer Intern",
+        company: "i'SUPPLY",
+        position: "Flutter Developer",
         period: "Jul 2025 - Present",
-        location: "Cairo, Egypt",
+        location: "Qesm El Maadi, Cairo, Egypt",
         type: "Internship",
         description:
-          "Working on a Flutter-based POS system after securing 1st place in the company hackathon.",
+          "Joined after winning first place in a company hackathon; contributing to a Flutter-based POS system alongside backend and QA teams.",
         achievements: [
-          "Won 1st place out of 30+ teams in hackathon",
-          "Contributed to POS app architecture and features",
-          "Collaborated with backend engineers and QA testers",
+          "Won 1st place among 30+ teams in internal hackathon",
+          "Implemented POS features with clean architecture and offline sync",
+          "Collaborated cross-functionally to refine performance and UX",
         ],
         technologies: ["Flutter", "Supabase", "Hive", "Dart"],
       },
       {
         id: 2,
-        company: "IEEE Cairo University SB",
-        position: "Flutter Instructor",
-        period: "Feb 2025 - Present",
-        location: "Cairo, Egypt",
-        type: "Volunteer",
+        company: "Digital Egypt Pioneers Initiative (DEPI)",
+        position: "Data Science Trainee",
+        period: "Jun 2025 - Present",
+        location: "Giza, Egypt",
+        type: "Training",
         description:
-          "Delivered Flutter curriculum to students, covering state management, APIs, and advanced UI/UX.",
+          "IBM Data Scientist track gaining hands-on exposure to Python, SQL, data analysis, machine learning, and MLOps tools (MLflow, Hugging Face).",
         achievements: [
-          "Trained 30+ students with 90% positive feedback",
-          "85% built real-world apps by course end",
-          "Created interactive materials boosting engagement by 40%",
+          "Progressed through Python, visualization, and prompt engineering modules",
+          "Applied ML techniques in a capstone project setting",
+          "Integrated MLOps tooling for experiment tracking",
         ],
-        technologies: ["Flutter", "Bloc", "Dio"],
+        technologies: ["Python", "SQL", "Pandas", "Scikit-learn", "MLflow"],
       },
       {
         id: 3,
-        company: "Orange Digital Center",
-        position: "Mobile App Development Trainee",
+        company: "Banque Misr",
+        position: "Android Developer (Kotlin)",
+        period: "Jul 2025 - Sep 2025",
+        location: "New Cairo, Cairo, Egypt",
+        type: "Training",
+        description:
+          "Advanced Android development program focusing on Jetpack, Room Database, and scalable mobile architecture.",
+        achievements: [
+          "Built sample modules leveraging Jetpack components",
+          "Implemented persistence layer with Room and offline strategies",
+          "Adopted modern Kotlin patterns for maintainability",
+        ],
+        technologies: ["Kotlin", "Room", "Jetpack", "Android"],
+      },
+      {
+        id: 4,
+        company: "Informatique",
+        position: "Flutter Developer (ML)",
+        period: "Jul 2025 - Aug 2025",
+        location: "Nasr City, Egypt",
+        type: "Internship",
+        description:
+          "Internship combining Flutter development with applied machine learning for practical solution prototypes.",
+        achievements: [
+          "Integrated basic ML-driven features into Flutter app flows",
+          "Improved solution accuracy through iterative experimentation",
+          "Delivered functioning prototypes within short sprint cycles",
+        ],
+        technologies: ["Flutter", "Dart", "Machine Learning"],
+      },
+      {
+        id: 5,
+        company: "IEEE Cairo University SB",
+        position: "Flutter Instructor",
+        period: "Feb 2025 - May 2025",
+        location: "Cairo, Egypt",
+        type: "Volunteer",
+        description:
+          "Led initial phase of Flutter training covering Dart fundamentals, OOP, and introductory widgets for 30+ students.",
+        achievements: [
+          "Delivered 3 foundational sessions with strong positive feedback",
+          "Designed hands-on activities enabling beginner progress",
+          "Helped participants establish confidence for continued learning",
+        ],
+        technologies: ["Flutter", "Dart"],
+      },
+      {
+        id: 6,
+        company: "Orange Digital Center Egypt",
+        position: "Flutter Developer Trainee",
         period: "Jan 2025 - Mar 2025",
         location: "Cairo, Egypt",
         type: "Training",
         description:
-          "Completed 96-hour Flutter training program focusing on cross-platform development and clean architecture.",
+          "Hands-on cross-platform Flutter program covering UI design, state management, and deployment.",
         achievements: [
-          "Mastered advanced state management with Bloc and Provider",
-          "Applied clean architecture for maintainability",
-          "Built multiple training apps and demos",
+          "Practiced Bloc and Provider patterns across sample apps",
+          "Deployed demonstration builds showcasing learning milestones",
+          "Adopted clean architecture principles for scalability",
         ],
         technologies: ["Flutter", "Bloc", "Provider"],
       },
       {
-        id: 4,
-        company: "SlashHub",
-        position: "Flutter Developer Intern",
-        period: "Oct 2024 - Jan 2025",
-        location: "Remote",
+        id: 7,
+        company: "Slash Hub",
+        position: "Mobile Application Developer",
+        period: "Oct 2024 - Dec 2024",
+        location: "Cairo, Egypt (Remote)",
         type: "Internship",
         description:
-          "Contributed to AI-powered e-commerce chatbot using Flutter and REST APIs.",
+          "Contributed to AI-powered e-commerce chatbot features and performance improvements.",
         achievements: [
           "Improved user interaction metrics by 25%",
-          "Reduced load times by 30% with caching",
-          "Collaborated in Agile team to ship features",
+          "Reduced load times by 30% via caching strategies",
+          "Collaborated in Agile team to ship iterative feature releases",
         ],
         technologies: ["Flutter", "REST APIs", "Dio"],
       },
@@ -432,6 +481,13 @@ const content: Content = {
           "Microprocessor-controlled robot system (Zengbary App)",
         ],
       },
+    ],
+    certifications: [
+      "Microsoft - Leverage AI tools and resources for your business",
+      "Microsoft - Build a mobile-optimized app from Power Apps",
+      "Sprints x Banque Misr - Modern Mobile App Development with Kotlin",
+      "Microsoft - Implement Mobile App Management",
+      "Sprints x Microsoft Summer Camp - Mobile Development",
     ],
   },
   contact: {

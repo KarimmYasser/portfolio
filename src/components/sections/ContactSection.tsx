@@ -57,24 +57,63 @@ export default function ContactSection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
     setIsSubmitting(true);
 
     try {
-      // POST to Vercel serverless function
       const resp = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
         body: JSON.stringify(formData),
       });
 
-      if (!resp.ok) {
-        const err = await resp.json().catch(() => ({}));
-        throw new Error(err.error || "Failed to send message");
+      const data = await resp
+        .json()
+        .catch(() => ({ ok: false, error: "Malformed response" }));
+
+      if (!resp.ok || !data?.ok) {
+        const code: string | undefined = data?.code;
+        let userMessage = content.contact.form.errorDesc;
+        switch (code) {
+          case "INVALID_EMAIL":
+            userMessage = "Invalid email address.";
+            break;
+          case "CONTENT_TOO_SHORT":
+            userMessage = "Subject or message is too short.";
+            break;
+          case "CONTENT_TOO_LONG":
+            userMessage = "One or more fields exceed allowed length.";
+            break;
+          case "CONFIG_MISSING":
+            userMessage = "Server email configuration missing.";
+            break;
+          case "DOMAIN_NOT_VERIFIED":
+            userMessage = "Sender domain not verified. Contact owner.";
+            break;
+          case "AUTH_FAILED":
+            userMessage = "Email service authentication failed.";
+            break;
+          case "SERVICE_FAILURE":
+            userMessage = "Email service temporarily unavailable.";
+            break;
+          case "INTERNAL_ERROR":
+            userMessage = "Internal server error.";
+            break;
+        }
+        toast({
+          title: content.contact.form.errorTitle,
+          description: userMessage,
+          variant: "destructive",
+        });
+        return;
       }
 
       toast({
-        title: "Message sent!",
-        description: "Thank you for your message. I'll get back to you soon!",
+        title: content.contact.form.successTitle,
+        description: content.contact.form.successDesc,
       });
       setFormData({
         name: "",
@@ -85,8 +124,8 @@ export default function ContactSection() {
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to send message. Please try again.",
+        title: content.contact.form.errorTitle,
+        description: content.contact.form.errorDesc,
         variant: "destructive",
       });
     } finally {
