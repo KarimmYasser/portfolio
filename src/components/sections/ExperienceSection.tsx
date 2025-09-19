@@ -63,17 +63,17 @@ export default function ExperienceSection() {
                         {exp.type}
                       </Badge>
                       <div className="flex items-center text-sm text-muted-foreground space-x-1 rtl:space-x-reverse">
-                        <CalendarDays className="h-3 w-3" />
+                        <CalendarDays className="h-3 w-3 mx-1" />
                         {exp.period}
                       </div>
                     </div>
                     <h3 className="text-xl font-bold mb-1">{exp.position}</h3>
                     <div className="flex items-center text-cyber-blue font-medium mb-2 space-x-2 rtl:space-x-reverse">
-                      <Building className="h-4 w-4" />
+                      <Building className="h-4 w-4 mx-1" />
                       {exp.company}
                     </div>
                     <div className="flex items-center text-sm text-muted-foreground mb-4 space-x-1 rtl:space-x-reverse">
-                      <MapPin className="h-3 w-3" />
+                      <MapPin className="h-3 w-3 mx-1" />
                       {exp.location}
                     </div>
                   </div>
@@ -150,11 +150,11 @@ export default function ExperienceSection() {
                     }`}
                   >
                     <div className="flex items-center space-x-1 rtl:space-x-reverse">
-                      <CalendarDays className="h-3 w-3" />
+                      <CalendarDays className="h-3 w-3 mx-1" />
                       {edu.period}
                     </div>
                     <div className="flex items-center space-x-1 rtl:space-x-reverse">
-                      <MapPin className="h-3 w-3" />
+                      <MapPin className="h-3 w-3 mx-1" />
                       {edu.location}
                     </div>
                   </div>
