@@ -252,7 +252,7 @@ const es: Content = {
     navHeading: "Navegación",
     contactHeading: "Contacto",
     builtWith: "Construido con React, Three.js y TailwindCSS",
-    rights: "© {year} Karim Yasser. Hecho con ♥ y mucho café",
+    rights: "© {year} Karim Yasser. Hecho con ❤️ y mucho café",
   },
   socials: base.socials,
 };

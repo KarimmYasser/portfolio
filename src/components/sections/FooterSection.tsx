@@ -156,11 +156,8 @@ export default function FooterSection() {
             }`}
           >
             <span>
-              {content.footer.rights
-                .replace("{year}", String(currentYear))
-                .replace("♥", "")}
+              {content.footer.rights.replace("{year}", String(currentYear))}
             </span>
-            <Heart className="h-4 w-4 text-red-500 fill-current" />
           </div>
 
           <div
