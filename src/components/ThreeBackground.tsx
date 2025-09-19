@@ -1,4 +1,4 @@
-import { useRef, useMemo, Suspense, useEffect, useState, memo } from "react";
+import { useRef, useMemo, useEffect, useState, memo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
@@ -6,7 +6,7 @@ import { useSceneSettings } from "@/scene/SceneSettingsContext";
 
 type ParticleFieldProps = {
   size?: number;
-  opacity?: number; // 0..1
+  opacity?: number;
   hueStart?: number;
   hueRange?: number;
   saturation?: number;
@@ -17,37 +17,31 @@ type ParticleFieldProps = {
 const ParticleField = memo(function ParticleField({
   size = 0.02,
   opacity = 1,
-  hueStart = 0.5,
-  hueRange = 0.3,
+  hueStart = 0.55,
+  hueRange = 0.28,
   saturation = 0.75,
   lightness = 0.62,
   blending = THREE.AdditiveBlending,
 }: ParticleFieldProps) {
   const ref = useRef<THREE.Points>(null!);
-
-  // Keep particle buffers stable across theme changes to avoid GC spikes
   const [positions, colors] = useMemo(() => {
-    const COUNT = 2000; // fixed to avoid reallocation on theme switch
+    const COUNT = 2000;
     const positions = new Float32Array(COUNT * 3);
     const colors = new Float32Array(COUNT * 3);
-
     for (let i = 0; i < COUNT; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 20;
       positions[i * 3 + 1] = (Math.random() - 0.5) * 20;
       positions[i * 3 + 2] = (Math.random() - 0.5) * 20;
-
       const color = new THREE.Color();
-      const hue = Math.random() * hueRange + hueStart; // themed hue band
+      const hue = Math.random() * hueRange + hueStart;
       color.setHSL(hue, saturation, lightness);
       colors[i * 3] = color.r;
       colors[i * 3 + 1] = color.g;
       colors[i * 3 + 2] = color.b;
     }
-
     return [positions, colors];
   }, []);
 
-  // Recolor in-place when theme palette changes to avoid reallocating buffers
   useEffect(() => {
     if (!ref.current) return;
     const geom: any = (ref.current as any).geometry;
@@ -87,7 +81,7 @@ const ParticleField = memo(function ParticleField({
         transparent
         vertexColors
         size={size}
-        sizeAttenuation={true}
+        sizeAttenuation
         depthWrite={false}
         opacity={opacity}
         blending={blending}
@@ -96,54 +90,95 @@ const ParticleField = memo(function ParticleField({
   );
 });
 
-const FloatingOrbs = memo(function FloatingOrbs({
+const FloatingSaturns = memo(function FloatingSaturns({
   isDark,
+  lowPower,
 }: {
   isDark: boolean;
+  lowPower: boolean;
 }) {
-  const orbs = useRef<THREE.Group>(null!);
+  const group = useRef<THREE.Group>(null!);
+  // Precompute planet meta (position, colors) once for stable layout between renders
+  const planets = useMemo(() => {
+    // Tailwind-esque theme palette (dark variants slightly deeper)
+    const lightPalette = [
+      "#3B82F6", // blue-500
+      "#6366F1", // indigo-500
+      "#8B5CF6", // violet-500
+      "#06B6D4", // cyan-500
+      "#14B8A6", // teal-500
+      "#A855F7", // purple-500
+    ];
+    const darkPalette = [
+      "#2563EB", // blue-600
+      "#4F46E5", // indigo-600
+      "#6D28D9", // violet-700
+      "#0891B2", // cyan-600
+      "#0D9488", // teal-600
+      "#7E22CE", // purple-700
+    ];
+    const base = (isDark ? darkPalette : lightPalette).slice(0, 9); // 9 planets
+    // Spread them across expanding radii so they appear farther / less clustered in center
+    // Use golden angle to avoid uniform ring
+    const golden = Math.PI * (3 - Math.sqrt(5));
+    return base.map((color, i) => {
+      const radius = 13 + i * 1.6 + Math.random() * 0.8; // 13 -> ~27 range
+      const angle = i * golden + Math.random() * 0.4; // slight randomness
+      const x = Math.cos(angle) * radius;
+      const z = Math.sin(angle) * radius;
+      const yBase = (Math.random() - 0.5) * 2.2; // subtle vertical variance
+      // Slight ring tint (lighter for light mode, more transparent for dark)
+      const ringColor = new THREE.Color(color)
+        .offsetHSL(0, 0, isDark ? -0.05 : 0.08)
+        .getStyle();
+      return { i, color, ringColor, radius, angle, x, yBase, z };
+    });
+  }, [isDark]);
 
   useFrame((state) => {
-    if (orbs.current) {
-      orbs.current.rotation.y += 0.005;
-      orbs.current.children.forEach((child, i) => {
-        const offset = i * 0.5;
-        child.position.y = Math.sin(state.clock.elapsedTime * 0.5 + offset) * 2;
-        child.rotation.x = state.clock.elapsedTime * 0.3 + offset;
-        child.rotation.z = state.clock.elapsedTime * 0.2 + offset;
+    if (lowPower) return; // pause animation in low power mode
+    const t = state.clock.elapsedTime;
+    if (group.current) {
+      // Slow global rotation
+      group.current.rotation.y += 0.0008;
+      group.current.children.forEach((child: any, idx) => {
+        const meta = planets[idx];
+        if (!meta) return;
+        // Individual subtle orbit wobble
+        const wobble = Math.sin(t * 0.18 + idx) * 0.6;
+        child.position.y = meta.yBase + wobble;
+        // Each planet slowly spins its ring
+        child.rotation.y += 0.0006 + idx * 0.00005;
       });
     }
   });
-
   return (
-    <group ref={orbs}>
-      {[...Array(5)].map((_, i) => (
-        <mesh
-          key={i}
-          position={[Math.cos(i * 1.26) * 8, 0, Math.sin(i * 1.26) * 8]}
-        >
-          <octahedronGeometry args={[0.3]} />
-          <meshBasicMaterial
-            color={
-              i % 2 === 0
-                ? isDark
-                  ? "#3B82F6" // blue-500
-                  : "#60A5FA" // blue-400 (lighter on light bg)
-                : isDark
-                ? "#8B5CF6" // purple-500
-                : "#A78BFA" // purple-400
-            }
-            transparent
-            opacity={isDark ? 0.4 : 0.25}
-            wireframe
-          />
-        </mesh>
+    <group ref={group}>
+      {/* 9 themed Saturn-like planets */}
+      {planets.map(({ i, x, z, yBase, color, ringColor }) => (
+        <group key={i} position={[x, yBase, z]}>
+          <mesh>
+            <sphereGeometry args={[0.24, 28, 28]} />
+            <meshBasicMaterial
+              color={color}
+              transparent
+              opacity={isDark ? 0.42 : 0.3}
+            />
+          </mesh>
+          <mesh rotation={[Math.PI / 2, 0, 0]}>
+            <torusGeometry args={[0.4, 0.05, 16, 60]} />
+            <meshBasicMaterial
+              color={ringColor}
+              transparent
+              opacity={isDark ? 0.28 : 0.18}
+            />
+          </mesh>
+        </group>
       ))}
     </group>
   );
 });
 
-// Preload the model to improve first render
 useGLTF.preload("/asphalt_8_airborne__car_ferrari_458_italia.glb");
 
 interface ThreeBackgroundProps {
@@ -152,16 +187,11 @@ interface ThreeBackgroundProps {
 
 export default function ThreeBackground({ className }: ThreeBackgroundProps) {
   const { lowPower, showBackground } = useSceneSettings();
-
-  // Track theme (light vs dark) using document class and themechange event
-  const [isDark, setIsDark] = useState<boolean>(false);
+  const [isDark, setIsDark] = useState(false);
   useEffect(() => {
     const check = () => {
       try {
-        setIsDark(
-          typeof document !== "undefined" &&
-            document.documentElement.classList.contains("dark")
-        );
+        setIsDark(document.documentElement.classList.contains("dark"));
       } catch {}
     };
     check();
@@ -179,7 +209,9 @@ export default function ThreeBackground({ className }: ThreeBackgroundProps) {
 
   if (!showBackground) return null;
   return (
-    <div className={`fixed inset-0 -z-10 pointer-events-none ${className}`}>
+    <div
+      className={`fixed inset-0 -z-10 pointer-events-none ${className || ""}`}
+    >
       <Canvas
         key={isDark ? "dark" : "light"}
         camera={{ position: [0, 0, 10], fov: 60 }}
@@ -187,7 +219,6 @@ export default function ThreeBackground({ className }: ThreeBackgroundProps) {
         gl={{
           powerPreference: "high-performance",
           antialias: false,
-          // In light mode, make the canvas opaque so the background is solid white.
           alpha: isDark,
           toneMapping: isDark
             ? THREE.ACESFilmicToneMapping
@@ -195,17 +226,12 @@ export default function ThreeBackground({ className }: ThreeBackgroundProps) {
           outputColorSpace: THREE.SRGBColorSpace,
         }}
         onCreated={({ gl }) => {
-          // Ensure the clear color matches the style background for light mode
-          if (isDark) {
-            gl.setClearColor(0x000000, 0); // transparent
-          } else {
-            gl.setClearColor(0xffffff, 1); // solid white
-          }
+          if (isDark) gl.setClearColor(0x000000, 0);
+          else gl.setClearColor(0xffffff, 1);
         }}
         dpr={lowPower ? [0.5, 0.75] : [1, 2]}
         frameloop={lowPower ? "demand" : "always"}
       >
-        {/* Lights for better model visibility */}
         <ambientLight intensity={isDark ? 0.1 : 0.05} />
         <hemisphereLight args={[0xffffff, 0x444444, isDark ? 0.6 : 0.4]} />
         <pointLight
@@ -219,15 +245,11 @@ export default function ThreeBackground({ className }: ThreeBackgroundProps) {
           color={isDark ? "#8B5CF6" : "#3a2675"}
         />
         <ParticleField
-          size={isDark ? 0.02 : 0.02}
-          opacity={isDark ? 0.9 : 0.9}
-          hueStart={0.55}
-          hueRange={0.28}
-          saturation={isDark ? 0.75 : 0.7}
-          lightness={isDark ? 0.62 : 0.28}
           blending={isDark ? THREE.AdditiveBlending : THREE.NormalBlending}
+          lightness={isDark ? 0.62 : 0.28}
+          saturation={isDark ? 0.75 : 0.7}
         />
-        <FloatingOrbs isDark={isDark} />
+        <FloatingSaturns isDark={isDark} lowPower={lowPower} />
       </Canvas>
     </div>
   );
