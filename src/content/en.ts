@@ -467,7 +467,7 @@ const content: Content = {
     navHeading: "Navigation",
     contactHeading: "Get in Touch",
     builtWith: "Built with React, Three.js & TailwindCSS",
-    rights: "© {year} Karim Yasser. Made with ♥ and lots of coffee",
+    rights: "© {year} Karim Yasser. Made with ❤️ and lots of coffee",
   },
   socials: [
     {
