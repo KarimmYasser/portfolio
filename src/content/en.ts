@@ -54,6 +54,7 @@ export type Content = {
     tools: { icon: string; name: string; description: string }[]; // icon: 'globe' | 'smartphone' | 'zap' | 'brain'
   };
   projects: {
+    ctaAllGithubLink: string;
     heading: string;
     subheading: string;
     moreHeading: string;
@@ -293,6 +294,7 @@ const content: Content = {
     subheading: "A showcase of my latest work and creative explorations",
     moreHeading: "More Projects",
     ctaAllGithub: "View All on GitHub",
+    ctaAllGithubLink: "https://github.com/KarimmYasser?tab=repositories",
     items: [
       {
         id: 1,

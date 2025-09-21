@@ -123,6 +123,7 @@ const ar: Content = {
     subheading: "عرض لأحدث أعمالي واستكشافاتي الإبداعية",
     moreHeading: "مشاريع أخرى",
     ctaAllGithub: "عرض الكل على GitHub",
+    ctaAllGithubLink: base.projects.ctaAllGithubLink,
     items: base.projects.items.map((p) => ({
       ...p,
       description:

@@ -125,6 +125,7 @@ const es: Content = {
     subheading: "Un escaparate de mi trabajo y exploraciones creativas",
     moreHeading: "Más Proyectos",
     ctaAllGithub: "Ver todo en GitHub",
+    ctaAllGithubLink: base.projects.ctaAllGithubLink,
     items: base.projects.items.map((p) => ({
       ...p,
       // Translate descriptions; keep titles/tags as-is for clarity

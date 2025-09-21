@@ -280,9 +280,20 @@ export default function ProjectsSection() {
           <p className="text-muted-foreground mb-6">
             Want to see more of my work or discuss a project?
           </p>
-          <Button size="lg" className="cyber-glow">
-            <SiGithub className="h-4 w-4 mr-2" />
-            {content.projects.ctaAllGithub}
+          <Button
+            size="lg"
+            className="cyber-glow"
+            asChild
+          >
+            <a
+              href={content.projects.ctaAllGithubLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View all projects on GitHub"
+            >
+              <SiGithub className="h-4 w-4 mr-2" />
+              {content.projects.ctaAllGithub}
+            </a>
           </Button>
         </motion.div>
       </div>
