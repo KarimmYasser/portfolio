@@ -1,4 +1,4 @@
-import { useRef, useMemo, useEffect, useState, memo } from "react";
+import { useRef, useMemo, useEffect, useState, memo, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
@@ -90,7 +90,97 @@ const ParticleField = memo(function ParticleField({
   );
 });
 
-const FloatingSaturns = memo(function FloatingSaturns({
+// Planet assets to replace procedural Saturns
+const PLANET_ASSETS = [
+  { path: "/mercury.glb", baseScale: 0.25 },
+  { path: "/kepler-452b.glb", baseScale: 0.03 },
+  { path: "/alien_planet.glb", baseScale: 0.25 },
+  { path: "/green_star.glb", baseScale: 0.25 },
+  { path: "/planet_on_the_move.glb", baseScale: 0.25 },
+  { path: "/horizon_world.glb", baseScale: 0.05 },
+];
+
+PLANET_ASSETS.forEach((a) => useGLTF.preload(a.path));
+
+interface PlanetModelProps {
+  asset: { path: string; baseScale: number };
+  index: number;
+  isDark: boolean;
+  lowPower: boolean;
+  position: [number, number, number];
+}
+
+const PlanetModel = memo(function PlanetModel({
+  asset,
+  index,
+  isDark,
+  lowPower,
+  position,
+}: PlanetModelProps) {
+  const { scene } = useGLTF(asset.path) as any;
+  const ref = useRef<THREE.Group>(null!);
+
+  // Clone to avoid mutating original scene graph
+  const cloned = useMemo(() => scene.clone(true), [scene]);
+
+  // Adjust materials (slightly emissive in dark mode)
+  useEffect(() => {
+    cloned.traverse((child: any) => {
+      if (child.isMesh && child.material) {
+        const mat = child.material;
+        // Preserve texture maps
+        if (mat.map) {
+          // Use new colorSpace API (r152+)
+          if (mat.map.colorSpace !== THREE.SRGBColorSpace) {
+            mat.map.colorSpace = THREE.SRGBColorSpace;
+            mat.map.needsUpdate = true;
+          }
+        }
+        if (mat.emissive && !mat.emissiveIntensity) mat.emissiveIntensity = 1;
+        mat.transparent = false;
+        mat.opacity = 1;
+        mat.depthWrite = true;
+        mat.side = THREE.FrontSide;
+        // Normalize PBR params if available
+        if (mat.isMeshStandardMaterial || mat.isMeshPhysicalMaterial) {
+          if (typeof mat.metalness === "number")
+            mat.metalness = Math.min(0.4, mat.metalness);
+          if (typeof mat.roughness === "number")
+            mat.roughness = Math.max(0.4, mat.roughness);
+          if (isDark) {
+            if (mat.emissive) {
+              mat.emissive = (mat.emissive as THREE.Color)
+                .clone()
+                .multiplyScalar(0.25);
+              mat.emissiveIntensity = 0.9;
+            }
+          } else {
+            if (mat.emissive) mat.emissiveIntensity = 0.3;
+          }
+        }
+        mat.needsUpdate = true;
+      }
+    });
+  }, [cloned, isDark]);
+
+  useFrame((state) => {
+    if (lowPower) return;
+    const t = state.clock.elapsedTime;
+    if (ref.current) {
+      ref.current.rotation.y += 0.0006 + index * 0.00005;
+      // Subtle bobbing
+      ref.current.position.y = position[1] + Math.sin(t * 0.4 + index) * 0.4;
+    }
+  });
+
+  return (
+    <group ref={ref} position={position} scale={asset.baseScale}>
+      <primitive object={cloned} />
+    </group>
+  );
+});
+
+const PlanetField = memo(function PlanetField({
   isDark,
   lowPower,
 }: {
@@ -98,82 +188,37 @@ const FloatingSaturns = memo(function FloatingSaturns({
   lowPower: boolean;
 }) {
   const group = useRef<THREE.Group>(null!);
-  // Precompute planet meta (position, colors) once for stable layout between renders
-  const planets = useMemo(() => {
-    // Tailwind-esque theme palette (dark variants slightly deeper)
-    const lightPalette = [
-      "#3B82F6", // blue-500
-      "#6366F1", // indigo-500
-      "#8B5CF6", // violet-500
-      "#06B6D4", // cyan-500
-      "#14B8A6", // teal-500
-      "#A855F7", // purple-500
-    ];
-    const darkPalette = [
-      "#2563EB", // blue-600
-      "#4F46E5", // indigo-600
-      "#6D28D9", // violet-700
-      "#0891B2", // cyan-600
-      "#0D9488", // teal-600
-      "#7E22CE", // purple-700
-    ];
-    const base = (isDark ? darkPalette : lightPalette).slice(0, 9); // 9 planets
-    // Spread them across expanding radii so they appear farther / less clustered in center
-    // Use golden angle to avoid uniform ring
+  const layout = useMemo(() => {
     const golden = Math.PI * (3 - Math.sqrt(5));
-    return base.map((color, i) => {
-      const radius = 13 + i * 1.6 + Math.random() * 0.8; // 13 -> ~27 range
-      const angle = i * golden + Math.random() * 0.4; // slight randomness
+    return PLANET_ASSETS.map((a, i) => {
+      const radius = 30 + i * 10 + Math.random() * 16;
+      const angle = i * golden + Math.random() * 0.5;
       const x = Math.cos(angle) * radius;
       const z = Math.sin(angle) * radius;
-      const yBase = (Math.random() - 0.5) * 2.2; // subtle vertical variance
-      // Slight ring tint (lighter for light mode, more transparent for dark)
-      const ringColor = new THREE.Color(color)
-        .offsetHSL(0, 0, isDark ? -0.05 : 0.08)
-        .getStyle();
-      return { i, color, ringColor, radius, angle, x, yBase, z };
+      const y = (Math.random() - 0.5) * 12; // larger vertical variance in far field
+      return {
+        asset: { ...a, baseScale: a.baseScale * 0.85 },
+        position: [x, y, z] as [number, number, number],
+      };
     });
-  }, [isDark]);
+  }, [isDark]); // (theme could influence future layout decisions)
 
-  useFrame((state) => {
-    if (lowPower) return; // pause animation in low power mode
-    const t = state.clock.elapsedTime;
-    if (group.current) {
-      // Slow global rotation
-      group.current.rotation.y += 0.0008;
-      group.current.children.forEach((child: any, idx) => {
-        const meta = planets[idx];
-        if (!meta) return;
-        // Individual subtle orbit wobble
-        const wobble = Math.sin(t * 0.18 + idx) * 0.6;
-        child.position.y = meta.yBase + wobble;
-        // Each planet slowly spins its ring
-        child.rotation.y += 0.0006 + idx * 0.00005;
-      });
-    }
+  useFrame(() => {
+    if (lowPower) return;
+    if (group.current) group.current.rotation.y += 0.0006; // slow global spin
   });
+
   return (
     <group ref={group}>
-      {/* 9 themed Saturn-like planets */}
-      {planets.map(({ i, x, z, yBase, color, ringColor }) => (
-        <group key={i} position={[x, yBase, z]}>
-          <mesh>
-            <sphereGeometry args={[0.24, 28, 28]} />
-            <meshBasicMaterial
-              color={color}
-              transparent
-              opacity={isDark ? 0.42 : 0.3}
-            />
-          </mesh>
-          <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <torusGeometry args={[0.4, 0.05, 16, 60]} />
-            <meshBasicMaterial
-              color={ringColor}
-              transparent
-              opacity={isDark ? 0.28 : 0.18}
-            />
-          </mesh>
-        </group>
+      {layout.map((p, idx) => (
+        <PlanetModel
+          key={p.asset.path}
+          asset={p.asset}
+          index={idx}
+          isDark={isDark}
+          lowPower={lowPower}
+          position={p.position}
+        />
       ))}
     </group>
   );
@@ -222,34 +267,46 @@ export default function ThreeBackground({ className }: ThreeBackgroundProps) {
           alpha: isDark,
           toneMapping: isDark
             ? THREE.ACESFilmicToneMapping
-            : THREE.NoToneMapping,
+            : THREE.ACESFilmicToneMapping,
           outputColorSpace: THREE.SRGBColorSpace,
         }}
-        onCreated={({ gl }) => {
+        onCreated={({ gl, scene }) => {
           if (isDark) gl.setClearColor(0x000000, 0);
           else gl.setClearColor(0xffffff, 1);
+          (gl as any).toneMappingExposure = isDark ? 1.2 : 1.05;
         }}
-        dpr={lowPower ? [0.5, 0.75] : [1, 2]}
+        dpr={1} //{lowPower ? [0.5, 0.75] : [1, 2]}
         frameloop={lowPower ? "demand" : "always"}
       >
-        <ambientLight intensity={isDark ? 0.1 : 0.05} />
-        <hemisphereLight args={[0xffffff, 0x444444, isDark ? 0.6 : 0.4]} />
+        <ambientLight intensity={isDark ? 0.35 : 0.22} />
+        <hemisphereLight args={[0xffffff, 0x222233, isDark ? 0.9 : 0.6]} />
         <pointLight
-          position={[10, 10, 10]}
-          intensity={isDark ? 0.3 : 0.2}
-          color={isDark ? "#3B82F6" : "#3a2675"}
+          position={[14, 16, 18]}
+          intensity={isDark ? 1.2 : 0.9}
+          color={isDark ? "#5EA8FF" : "#6a4bff"}
+          distance={180}
+          decay={1.3}
         />
         <pointLight
-          position={[-10, -10, -10]}
-          intensity={isDark ? 0.3 : 0.2}
-          color={isDark ? "#8B5CF6" : "#3a2675"}
+          position={[-18, -14, -16]}
+          intensity={isDark ? 0.9 : 0.7}
+          color={isDark ? "#B497FF" : "#6a4bff"}
+          distance={160}
+          decay={1.2}
+        />
+        <directionalLight
+          position={[-30, 25, 15]}
+          intensity={isDark ? 0.8 : 0.55}
+          color={isDark ? "#ffffff" : "#ffffff"}
         />
         <ParticleField
           blending={isDark ? THREE.AdditiveBlending : THREE.NormalBlending}
           lightness={isDark ? 0.62 : 0.28}
           saturation={isDark ? 0.75 : 0.7}
         />
-        <FloatingSaturns isDark={isDark} lowPower={lowPower} />
+        <Suspense fallback={null}>
+          <PlanetField isDark={isDark} lowPower={lowPower} />
+        </Suspense>
       </Canvas>
     </div>
   );
