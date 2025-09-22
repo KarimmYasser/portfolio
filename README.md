@@ -2,7 +2,9 @@
 
 Modern, animated developer portfolio built with React, Vite, TypeScript, Tailwind CSS, shadcn/ui (Radix), Framer Motion, and a theme-aware Three.js background using React Three Fiber.
 
-This project includes ready-to-edit sections (Hero, About, Skills, Projects, Experience, Contact) with theme toggling, smooth scrolling, localization, and a polished UI kit.
+The 3D layer now uses real GLB planet assets (replacing earlier procedural Saturn-like spheres) placed in a far orbit with adaptive lighting, exposure control, and performance toggles.
+
+This project includes ready-to-edit sections (Hero, About, Skills, Projects, Experience, Contact) with theme toggling, smooth scrolling, localization (EN / ES / AR), and a polished UI kit.
 
 ## Features
 
@@ -21,6 +23,8 @@ This project includes ready-to-edit sections (Hero, About, Skills, Projects, Exp
 - Localization with runtime language switch (EN, ES, AR) and full RTL/LTR support
 - Built-in Terminal overlay with helpful commands
 - Projects grid: equal-height cards; content-driven Demo visibility via `hasDemo`
+  - `hasGithubRepo` flag hides Code button when false
+  - `hidden` flag keeps localized data but excludes from render
 
 ## Live Demo
 
@@ -44,8 +48,15 @@ _(Replace with your actual Vercel / custom domain once deployed. If you add a cu
 ```
 .
 ├─ public/
-│  ├─ asphalt_8_airborne__car_ferrari_458_italia.glb
-│  ├─ favicon.ico
+│  ├─ asphalt_8_airborne__car_ferrari_458_italia.glb (car model)
+│  ├─ mercury.glb
+│  ├─ kepler-452b.glb
+│  ├─ alien_planet.glb
+│  ├─ green_star.glb
+│  ├─ planet_on_the_move.glb
+│  ├─ horizon_world.glb
+│  ├─ resume.pdf
+│  ├─ favicon-dark.ico / favicon-light.ico
 │  ├─ robots.txt
 │  └─ placeholder.svg
 ├─ src/
