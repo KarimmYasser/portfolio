@@ -205,7 +205,7 @@ const PlanetField = memo(function PlanetField({
 
   useFrame(() => {
     if (lowPower) return;
-    if (group.current) group.current.rotation.y += 0.0006; // slow global spin
+    if (group.current) group.current.rotation.y += 0.001; // slow global spin
   });
 
   return (
