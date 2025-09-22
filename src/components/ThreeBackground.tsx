@@ -94,7 +94,7 @@ const ParticleField = memo(function ParticleField({
 const PLANET_ASSETS = [
   { path: "/mercury.glb", baseScale: 0.25 },
   { path: "/kepler-452b.glb", baseScale: 0.03 },
-  { path: "/alien_planet.glb", baseScale: 0.25 },
+  { path: "/alien_planet.glb", baseScale: 4.6 },
   { path: "/green_star.glb", baseScale: 0.25 },
   { path: "/planet_on_the_move.glb", baseScale: 0.25 },
   { path: "/horizon_world.glb", baseScale: 0.05 },
@@ -191,7 +191,7 @@ const PlanetField = memo(function PlanetField({
   const layout = useMemo(() => {
     const golden = Math.PI * (3 - Math.sqrt(5));
     return PLANET_ASSETS.map((a, i) => {
-      const radius = 30 + i * 10 + Math.random() * 16;
+      const radius = 40 + i * 10 + Math.random() * 16;
       const angle = i * golden + Math.random() * 0.5;
       const x = Math.cos(angle) * radius;
       const z = Math.sin(angle) * radius;
