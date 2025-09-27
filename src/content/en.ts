@@ -331,7 +331,7 @@ const content: Content = {
         title: "Fashion Assistant",
         description:
           "AI-powered Flutter e-commerce chatbot and recommendation system using Gemini API, Bloc state management, and custom animations.",
-        image: "/placeholder.svg",
+        image: "/fashion_assistant.jpg",
         tags: ["Flutter", "Gemini API", "Bloc", "AI Integration"],
         featured: false,
         links: {
