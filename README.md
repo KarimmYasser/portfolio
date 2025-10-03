@@ -1,5 +1,7 @@
 ## Portfolio Website (React · Vite · TypeScript)
 
+![Portfolio Cover]("/public/home.png")
+
 Modern, animated developer portfolio built with React, Vite, TypeScript, Tailwind CSS, shadcn/ui (Radix), Framer Motion, and a theme-aware Three.js background using React Three Fiber.
 
 The 3D layer now uses real GLB planet assets (replacing earlier procedural Saturn-like spheres) placed in a far orbit with adaptive lighting, exposure control, and performance toggles.
