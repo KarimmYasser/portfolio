@@ -1,6 +1,6 @@
 ## Portfolio Website (React · Vite · TypeScript)
 
-![Portfolio Cover]("public/home.png")
+![Portfolio Cover](/public/home.png)
 
 Modern, animated developer portfolio built with React, Vite, TypeScript, Tailwind CSS, shadcn/ui (Radix), Framer Motion, and a theme-aware Three.js background using React Three Fiber.
 
