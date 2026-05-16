@@ -54,7 +54,7 @@ export default function HeroSection() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.3 }}
               className={`mb-6 ${locale === "ar" ? "text-right" : ""}`}
             >
               <span className="text-cyber-blue font-mono text-lg">
@@ -66,7 +66,7 @@ export default function HeroSection() {
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
               className="text-4xl md:text-6xl lg:text-8xl font-bold pb-6 gradient-text"
             >
               {content.hero.name}
@@ -76,7 +76,7 @@ export default function HeroSection() {
             <motion.h2
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
               className="text-xl md:text-2xl lg:text-3xl font-light mb-8 text-muted-foreground"
             >
               {content.hero.title}
@@ -86,7 +86,7 @@ export default function HeroSection() {
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
               className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed"
             >
               {content.hero.description}
@@ -96,7 +96,7 @@ export default function HeroSection() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
+              transition={{ duration: 0.4, delay: 0.4 }}
               className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
             >
               <Button
@@ -134,7 +134,7 @@ export default function HeroSection() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.0 }}
+              transition={{ duration: 0.4, delay: 0.5 }}
               className={`flex ${
                 locale === "ar" ? "justify-end" : "justify-start"
               } lg:justify-start space-x-6 ${

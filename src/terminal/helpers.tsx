@@ -88,6 +88,76 @@ export const handleCommand = (
         </div>
       );
     }
+    case "ask": {
+      if (!arg) return <div className="text-red-400">Please provide a query. Usage: ask &lt;topic&gt;</div>;
+      const query = arg.toLowerCase();
+      
+      // Search projects
+      const matchingProjects = content.projects.items.filter(p => 
+        p.title.toLowerCase().includes(query) || 
+        p.description.toLowerCase().includes(query) ||
+        p.tags.some(t => t.toLowerCase().includes(query))
+      );
+      
+      // Search experience
+      const matchingExp = content.experience.timeline.filter(j => 
+        j.position.toLowerCase().includes(query) || 
+        j.company.toLowerCase().includes(query) ||
+        j.description.toLowerCase().includes(query)
+      );
+      
+      // Search skills
+      const matchingSkills = content.skills.categories.flatMap(c => c.skills).filter(s => 
+        s.name.toLowerCase().includes(query)
+      );
+
+      if (matchingProjects.length === 0 && matchingExp.length === 0 && matchingSkills.length === 0) {
+        return <div className="text-slate-400">No information found for "{arg}". Try searching for skills or project names!</div>;
+      }
+
+      return (
+        <div className="flex flex-col gap-3">
+          <h2 className="text-xl font-bold text-cyber-green">AI Search Results for "{arg}":</h2>
+          
+          {matchingSkills.length > 0 && (
+            <div>
+              <div className="font-semibold text-cyber-blue">Skills:</div>
+              <div className="flex flex-wrap gap-2 mt-1">
+                {matchingSkills.map((s, i) => (
+                  <span key={i} className="px-2 py-1 rounded border border-border text-cyber-green">{s.name}</span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {matchingProjects.length > 0 && (
+            <div>
+              <div className="font-semibold text-cyber-blue">Projects:</div>
+              <ul className="list-disc list-inside mt-1">
+                {matchingProjects.map((p, i) => (
+                  <li key={i} className="text-slate-300">
+                    <span className="font-medium text-white">{p.title}</span>: {p.description}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {matchingExp.length > 0 && (
+            <div>
+              <div className="font-semibold text-cyber-blue">Experience:</div>
+              <ul className="list-disc list-inside mt-1">
+                {matchingExp.map((j, i) => (
+                  <li key={i} className="text-slate-300">
+                    <span className="font-medium text-white">{j.position} @ {j.company}</span>: {j.description}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      );
+    }
     case "about":
       return (
         <div className="flex flex-col gap-2 text-slate-300 ">

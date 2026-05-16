@@ -13,6 +13,7 @@
   "open": "Focus a project card: open <project-id>",
   "bg": "Toggle 3D background: bg [on|off]",
   "power": "Low power mode for 3D: power [on|off]",
+  "ask": "Ask AI about my skills or projects: ask <query>",
   "clear": "To clear the console",
   "cls": "To clear the console",
   "exit": "To exit the console"

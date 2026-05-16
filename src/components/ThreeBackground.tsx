@@ -25,7 +25,7 @@ const ParticleField = memo(function ParticleField({
 }: ParticleFieldProps) {
   const ref = useRef<THREE.Points>(null!);
   const [positions, colors] = useMemo(() => {
-    const COUNT = 2000;
+    const COUNT = 1000;
     const positions = new Float32Array(COUNT * 3);
     const colors = new Float32Array(COUNT * 3);
     for (let i = 0; i < COUNT; i++) {
@@ -275,7 +275,7 @@ export default function ThreeBackground({ className }: ThreeBackgroundProps) {
           else gl.setClearColor(0xffffff, 1);
           (gl as any).toneMappingExposure = isDark ? 1.2 : 1.05;
         }}
-        dpr={1} //{lowPower ? [0.5, 0.75] : [1, 2]}
+        dpr={lowPower ? 0.75 : 1}
         frameloop={lowPower ? "demand" : "always"}
       >
         <ambientLight intensity={isDark ? 0.35 : 0.22} />

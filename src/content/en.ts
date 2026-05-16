@@ -170,7 +170,7 @@ const content: Content = {
     avatarInitials: "KY",
     name: "Karim Yasser",
     role: "Software Developer & Computer Engineer",
-    bio1: "Junior computer engineer at Cairo University creating user‑focused mobile and data‑driven solutions. I learn through hands‑on projects, refine reliable software that solves real problems, and keep expanding my skills beyond the classroom.",
+    bio1: "Computer Engineer with 2+ years of experience developing mobile and web applications using Flutter, Android, and modern development frameworks. Proven track record in full-stack development, machine learning integration, and agile development methodologies. Strong problem solving skills with experience in data structures, algorithms, and software architecture. Experience leading technical teams and delivering scalable solutions for real-world business challenges.",
     bio2: "I focus on Flutter, Kotlin, data structures, algorithms, clean architecture, and emerging cross‑platform paradigms like Kotlin Multiplatform while actively training in Data Science (Python, SQL, MLflow, ML fundamentals) and exploring practical ML applications.",
     values: [
       {
@@ -223,9 +223,9 @@ const content: Content = {
         color: "cyber-blue",
         skills: [
           { name: "Flutter/Dart", level: 95 },
-          { name: "Kotlin", level: 68 },
+          { name: "Kotlin", level: 75 },
           { name: "KMP (Kotlin Multiplatform)", level: 72 },
-          { name: "React Native", level: 50 },
+          { name: "React Native", level: 60 },
         ],
       },
       {
@@ -245,9 +245,9 @@ const content: Content = {
         color: "cyber-green",
         skills: [
           { name: "C++ (DS & Algorithms)", level: 95 },
-          { name: "Python", level: 77 },
+          { name: "Python", level: 85 },
           { name: "Clean Architecture", level: 88 },
-          { name: "Problem Solving", level: 85 },
+          { name: "Data Structures", level: 90 },
         ],
       },
       {
@@ -255,10 +255,10 @@ const content: Content = {
         title: "Systems & Tools",
         color: "cyber-pink",
         skills: [
-          { name: "Assembly", level: 70 },
-          { name: "Operating System Algorithms", level: 75 },
           { name: "Git/GitHub", level: 85 },
-          { name: "VS Code / Android Studio", level: 90 },
+          { name: "Docker", level: 75 },
+          { name: "FastAPI", level: 70 },
+          { name: "PyTorch", level: 70 },
         ],
       },
     ],
@@ -298,12 +298,72 @@ const content: Content = {
     items: [
       {
         id: 1,
+        title: "Autonomous Wall-Following Robot",
+        description:
+          "Engineered a high-performance autonomous robot bridging Webots Digital Twin simulation and hardware. Developed professional-grade bare-metal C firmware for ATmega328P.",
+        image: "/placeholder.svg",
+        tags: ["Bare-Metal C", "ATmega328P", "Webots", "PID Controller"],
+        featured: true,
+        links: {
+          demo: "#",
+          github: "https://github.com/KarimmYasser/robot-wall-follower",
+        },
+        hasDemo: false,
+        hasGithubRepo: true,
+      },
+      {
+        id: 2,
+        title: "Aladdin: Nasira's Revenge - C++ Game Engine",
+        description:
+          "Developed a high-performance 3D engine using C++17 and OpenGL 3.3 featuring a data-driven Entity Component System (ECS).",
+        image: "/placeholder.svg",
+        tags: ["C++17", "OpenGL", "ECS", "Game Engine"],
+        featured: false,
+        links: {
+          demo: "#",
+          github: "https://github.com/KarimmYasser/aladdin-nasiras-revenge",
+        },
+        hasDemo: false,
+        hasGithubRepo: true,
+      },
+      {
+        id: 3,
+        title: "Industrial Machine Sound Classification",
+        description:
+          "Architected a Dual-Track AI pipeline for predictive maintenance of pumps, fans, and motors. Achieved 95.61% accuracy.",
+        image: "/placeholder.svg",
+        tags: ["XGBoost", "EfficientAT", "Rust", "Docker"],
+        featured: false,
+        links: {
+          demo: "#",
+          github: "https://github.com/KarimmYasser/machine-sound-classification",
+        },
+        hasDemo: false,
+        hasGithubRepo: true,
+      },
+      {
+        id: 4,
+        title: "BioMedIAMBZ - Brain Tumor Segmentation",
+        description:
+          "Won 1st place in the ODC x INSTANT AI Hackathon by developing a 3D brain tumor segmentation pipeline using MedNeXt.",
+        image: "/placeholder.svg",
+        tags: ["PyTorch", "MONAI", "MedNeXt", "FastAPI"],
+        featured: true,
+        links: {
+          demo: "#",
+          github: "https://github.com/KarimmYasser/braTs-ai-hackathon-ODCxINSTANT",
+        },
+        hasDemo: false,
+        hasGithubRepo: true,
+      },
+      {
+        id: 5,
         title: "i'Supply POS App",
         description:
           "Cross-platform POS system built with Flutter and Supabase. Features inventory search, cart management, and offline-first synchronization with Hive.",
         image: "/pos.png",
         tags: ["Flutter", "Supabase", "Hive", "Clean Architecture"],
-        featured: true,
+        featured: false,
         links: {
           demo: "#",
           github: "https://github.com/KarimmYasser/isupply_app",
@@ -312,7 +372,7 @@ const content: Content = {
         hasGithubRepo: true,
       },
       {
-        id: 2,
+        id: 6,
         title: "Zengbary App",
         description:
           "Flutter app controlling a microprocessor-based robot in real-time over HTTP.",
@@ -327,7 +387,7 @@ const content: Content = {
         hasGithubRepo: true,
       },
       {
-        id: 3,
+        id: 7,
         title: "Fashion Assistant",
         description:
           "AI-powered Flutter e-commerce chatbot and recommendation system using Gemini API, Bloc state management, and custom animations.",
@@ -342,7 +402,7 @@ const content: Content = {
         hasGithubRepo: true,
       },
       {
-        id: 4,
+        id: 8,
         title: "Cooking Up App",
         description:
           "Recipe app with filtering, offline persistence using Hive, and interactive cooking timers for a smooth UX.",
@@ -358,7 +418,7 @@ const content: Content = {
         hidden: true,
       },
       {
-        id: 5,
+        id: 9,
         title: "Bricks Breaker - Assembly Game",
         description:
           "Multiplayer brick breaker game in Assembly with real-time networking over Wi-Fi and efficient graphics rendering.",
@@ -373,19 +433,79 @@ const content: Content = {
         hasGithubRepo: true,
       },
       {
-        id: 6,
+        id: 10,
         title: "3D Portfolio Website",
         description:
           "Interactive developer portfolio built with React, TypeScript, Three.js (react-three-fiber) and TailwindCSS featuring multilingual support, dynamic stars and planet background, and a terminal-style interface.",
         image: "/home.png",
         tags: ["React", "TypeScript", "Three.js", "TailwindCSS", "i18n"],
-        featured: true,
+        featured: false,
         links: {
-          demo: "https://karim-yasser.vercel.app/", // TODO: replace with actual deployed URL
+          demo: "https://karim-yasser.vercel.app/",
           github: "#",
         },
         hasDemo: true,
         hasGithubRepo: false,
+      },
+      {
+        id: 11,
+        title: "5-Stage Pipelined Processor",
+        description:
+          "Designed a 32-bit 5-stage pipelined processor in VHDL with Von Neumann architecture, hazard handling via data forwarding, and a custom Python assembler.",
+        image: "/placeholder.svg",
+        tags: ["VHDL", "Computer Architecture", "Python", "Assembler"],
+        featured: false,
+        links: {
+          demo: "#",
+          github: "https://github.com/KarimmYasser/stall_3alda2ery",
+        },
+        hasDemo: false,
+        hasGithubRepo: true,
+      },
+      {
+        id: 12,
+        title: "Yapper - X Clone Mobile App",
+        description:
+          "Built a cross-platform React Native social media app with Expo, featuring real-time WebSocket messaging, push notifications, and AI-powered tweet summarization.",
+        image: "/placeholder.svg",
+        tags: ["React Native", "WebSockets", "AI", "CI/CD"],
+        featured: false,
+        links: {
+          demo: "#",
+          github: "https://github.com/KarimmYasser/yapper-mobile",
+        },
+        hasDemo: false,
+        hasGithubRepo: true,
+      },
+      {
+        id: 13,
+        title: "Walmart Sales Forecasting",
+        description:
+          "Developed an end-to-end ML pipeline for sales forecasting with 99.96% accuracy, deployed via FastAPI and Streamlit with MLflow tracking.",
+        image: "/placeholder.svg",
+        tags: ["Python", "Machine Learning", "FastAPI", "MLflow"],
+        featured: false,
+        links: {
+          demo: "#",
+          github: "https://github.com/KarimmYasser/Walmart-Sales-Forecasting-ML",
+        },
+        hasDemo: false,
+        hasGithubRepo: true,
+      },
+      {
+        id: 14,
+        title: "VLSI Convolution Systolic Accelerator",
+        description:
+          "High-performance 2D convolution accelerator in Verilog using an 8x8 systolic array and full RTL-to-GDSII flow via OpenLane.",
+        image: "/placeholder.svg",
+        tags: ["Verilog", "VLSI", "OpenLane", "Hardware"],
+        featured: false,
+        links: {
+          demo: "#",
+          github: "https://github.com/KarimmYasser/VLSI-Convolution-Systolic-Accelerator",
+        },
+        hasDemo: false,
+        hasGithubRepo: true,
       },
     ],
   },
@@ -396,9 +516,57 @@ const content: Content = {
     timeline: [
       {
         id: 1,
+        company: "Orange Digital Center Egypt",
+        position: "Agentic AI Trainee",
+        period: "Feb 2026 - Apr 2026",
+        location: "Cairo, Egypt",
+        type: "Training",
+        description:
+          "Gained hands-on experience building AI agents using LLMs and the LangChain ecosystem.",
+        achievements: [
+          "Gained hands-on experience building AI agents using LLMs and the LangChain ecosystem, working with memory and context management, knowledge integration, multi-agent collaboration, and API-based automation.",
+          "Built and evaluated agent-driven applications and deployed them with a web interface.",
+          "Evaluated local versus remote LLMs for application integration, optimizing operational costs by strategically limiting API requests based on business and technical requirements.",
+        ],
+        technologies: ["LLMs", "LangChain", "AI Agents", "API Automation"],
+      },
+      {
+        id: 2,
+        company: "Udacity (Digital Egypt Cubs Initiative - DECI)",
+        position: "Session Lead",
+        period: "Nov 2025 - Mar 2026",
+        location: "Remote",
+        type: "Part-time",
+        description:
+          "Lead weekly sessions for student cohorts, delivering core computer fundamentals.",
+        achievements: [
+          "Lead weekly sessions for student cohorts, delivering core computer fundamentals in alignment with Udacity's learning standards.",
+          "Support learners through guided explanations, practical examples, and structured discussions to ensure high-quality learning outcomes.",
+          "Collaborate with Udacity's instructional team to monitor student progress and maintain an engaging remote learning environment.",
+        ],
+        technologies: ["Computer Fundamentals", "Mentoring", "Remote Teaching"],
+      },
+      {
+        id: 3,
+        company: "Enactus Cairo University",
+        position: "Resource Management Team Member",
+        period: "Dec 2025 - Feb 2026",
+        location: "Cairo, Egypt",
+        type: "Volunteer",
+        description:
+          "Contributed as a member of the Resource Management Team, supporting planning and preparation activities.",
+        achievements: [
+          "Contributed as a member of the Resource Management Team, supporting planning and preparation activities for the annual Enactus cycle.",
+          "Participated in the Innovation Campus program, applying structured ideation and validation methodologies across teams.",
+          "Engaged in problem validation processes including survey design, market research, and expert consultations.",
+        ],
+        technologies: ["Resource Management", "Market Research", "Ideation"],
+      },
+      {
+        id: 4,
         company: "i'SUPPLY",
-        position: "Flutter Developer",
-        period: "Jul 2025 - Present",
+        position: "Software Developer",
+        period: "Jul 2025 - Dec 2025",
         location: "Qesm El Maadi, Cairo, Egypt",
         type: "Internship",
         description:
@@ -411,14 +579,14 @@ const content: Content = {
         technologies: ["Flutter", "Supabase", "Hive", "Dart"],
       },
       {
-        id: 2,
+        id: 5,
         company: "Digital Egypt Pioneers Initiative (DEPI)",
         position: "Data Science Trainee",
-        period: "Jun 2025 - Present",
+        period: "Jun 2025 - Dec 2025",
         location: "Giza, Egypt",
         type: "Training",
         description:
-          "IBM Data Scientist track gaining hands-on exposure to Python, SQL, data analysis, machine learning, and MLOps tools (MLflow, Hugging Face).",
+          "IBM Data Scientist track gaining hands-on exposure to Python, SQL, data analysis, machine learning, and MLOps tools.",
         achievements: [
           "Progressed through Python, visualization, and prompt engineering modules",
           "Applied ML techniques in a capstone project setting",
@@ -427,9 +595,9 @@ const content: Content = {
         technologies: ["Python", "SQL", "Pandas", "Scikit-learn", "MLflow"],
       },
       {
-        id: 3,
+        id: 6,
         company: "Banque Misr",
-        position: "Android Developer (Kotlin)",
+        position: "Android Developer Intern",
         period: "Jul 2025 - Sep 2025",
         location: "New Cairo, Cairo, Egypt",
         type: "Training",
@@ -443,9 +611,9 @@ const content: Content = {
         technologies: ["Kotlin", "Room", "Jetpack", "Android"],
       },
       {
-        id: 4,
+        id: 7,
         company: "Informatique",
-        position: "Flutter Developer (ML)",
+        position: "Mobile Development Intern (Flutter & ML)",
         period: "Jul 2025 - Aug 2025",
         location: "Nasr City, Egypt",
         type: "Internship",
@@ -459,7 +627,7 @@ const content: Content = {
         technologies: ["Flutter", "Dart", "Machine Learning"],
       },
       {
-        id: 5,
+        id: 8,
         company: "IEEE Cairo University SB",
         position: "Flutter Instructor",
         period: "Feb 2025 - May 2025",
@@ -475,7 +643,7 @@ const content: Content = {
         technologies: ["Flutter", "Dart"],
       },
       {
-        id: 6,
+        id: 9,
         company: "Orange Digital Center Egypt",
         position: "Flutter Developer Trainee",
         period: "Jan 2025 - Mar 2025",
@@ -491,7 +659,7 @@ const content: Content = {
         technologies: ["Flutter", "Bloc", "Provider"],
       },
       {
-        id: 7,
+        id: 10,
         company: "Slash Hub",
         position: "Mobile Application Developer",
         period: "Oct 2024 - Dec 2024",
