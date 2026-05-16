@@ -99,8 +99,8 @@ const es: Content = {
         skills: base.skills.categories[4].skills,
       },
       {
-        icon: "globe",
-        title: "Desarrollo Web",
+        icon: "terminal",
+        title: "Herramientas",
         color: "cyber-blue",
         skills: base.skills.categories[5].skills,
       },

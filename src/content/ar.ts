@@ -97,8 +97,8 @@ const ar: Content = {
         skills: base.skills.categories[4].skills,
       },
       {
-        icon: "globe",
-        title: "تطوير الويب",
+        icon: "terminal",
+        title: "أدوات التطوير",
         color: "cyber-blue",
         skills: base.skills.categories[5].skills,
       },
