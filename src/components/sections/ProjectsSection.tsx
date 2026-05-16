@@ -62,6 +62,7 @@ export default function ProjectsSection() {
   const scroll = (direction: "left" | "right") => {
     setIsAutoPlaying(false);
     if (containerRef.current) {
+      const isRTL = locale === "ar";
       const { scrollLeft, clientWidth } = containerRef.current;
       const firstChild = containerRef.current.firstElementChild as HTMLElement;
       const cardWidth = firstChild ? firstChild.offsetWidth + 24 : clientWidth;
@@ -69,7 +70,7 @@ export default function ProjectsSection() {
       const maxRealScroll = cardWidth * otherProjects.length;
 
       if (direction === "right") {
-        const nextScroll = scrollLeft + cardWidth;
+        const nextScroll = isRTL ? scrollLeft - cardWidth : scrollLeft + cardWidth;
 
         animate(scrollLeft, nextScroll, {
           duration: 0.4,
@@ -82,34 +83,65 @@ export default function ProjectsSection() {
           onComplete: () => {
             if (containerRef.current) {
               const currentScroll = containerRef.current.scrollLeft;
-              if (currentScroll >= maxRealScroll - 10) {
-                containerRef.current.scrollLeft = currentScroll - maxRealScroll;
+              if (isRTL) {
+                if (currentScroll <= -maxRealScroll + 10) {
+                  containerRef.current.scrollLeft = currentScroll + maxRealScroll;
+                }
+              } else {
+                if (currentScroll >= maxRealScroll - 10) {
+                  containerRef.current.scrollLeft = currentScroll - maxRealScroll;
+                }
               }
             }
           },
         });
       } else {
-        if (scrollLeft <= 10) {
-          containerRef.current.scrollLeft = maxRealScroll;
-          animate(maxRealScroll, maxRealScroll - cardWidth, {
-            duration: 0.4,
-            ease: "easeInOut",
-            onUpdate: (latest) => {
-              if (containerRef.current) {
-                containerRef.current.scrollLeft = latest;
-              }
-            },
-          });
+        if (isRTL) {
+          if (scrollLeft >= -10) {
+            containerRef.current.scrollLeft = -maxRealScroll;
+            animate(-maxRealScroll, -maxRealScroll + cardWidth, {
+              duration: 0.4,
+              ease: "easeInOut",
+              onUpdate: (latest) => {
+                if (containerRef.current) {
+                  containerRef.current.scrollLeft = latest;
+                }
+              },
+            });
+          } else {
+            animate(scrollLeft, scrollLeft + cardWidth, {
+              duration: 0.4,
+              ease: "easeInOut",
+              onUpdate: (latest) => {
+                if (containerRef.current) {
+                  containerRef.current.scrollLeft = latest;
+                }
+              },
+            });
+          }
         } else {
-          animate(scrollLeft, scrollLeft - cardWidth, {
-            duration: 0.4,
-            ease: "easeInOut",
-            onUpdate: (latest) => {
-              if (containerRef.current) {
-                containerRef.current.scrollLeft = latest;
-              }
-            },
-          });
+          if (scrollLeft <= 10) {
+            containerRef.current.scrollLeft = maxRealScroll;
+            animate(maxRealScroll, maxRealScroll - cardWidth, {
+              duration: 0.4,
+              ease: "easeInOut",
+              onUpdate: (latest) => {
+                if (containerRef.current) {
+                  containerRef.current.scrollLeft = latest;
+                }
+              },
+            });
+          } else {
+            animate(scrollLeft, scrollLeft - cardWidth, {
+              duration: 0.4,
+              ease: "easeInOut",
+              onUpdate: (latest) => {
+                if (containerRef.current) {
+                  containerRef.current.scrollLeft = latest;
+                }
+              },
+            });
+          }
         }
       }
     }

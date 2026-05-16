@@ -87,10 +87,16 @@ const es: Content = {
         skills: base.skills.categories[2].skills,
       },
       {
-        icon: "cpu",
-        title: "Sistemas y Herramientas",
+        icon: "brain",
+        title: "Ciencia de Datos e IA",
         color: "cyber-pink",
         skills: base.skills.categories[3].skills,
+      },
+      {
+        icon: "cpu",
+        title: "Sistemas y Especialidades",
+        color: "cyber-purple",
+        skills: base.skills.categories[4].skills,
       },
     ],
     toolsHeading: "Qué puedo hacer por ti",
@@ -158,6 +164,12 @@ const es: Content = {
           ? "Pipeline de ML de extremo a extremo para el pronóstico de ventas con 99.96% de precisión, desplegado mediante FastAPI y Streamlit con seguimiento de MLflow."
           : p.id === 14
           ? "Acelerador de convolución 2D de alto rendimiento en Verilog utilizando una matriz sistólica de 8x8 y flujo completo RTL-a-GDSII a través de OpenLane."
+          : p.id === 15
+          ? "Evaluó 10 arquitecturas distintas de hash criptográfico (BLAKE, Keccak, Skein, etc.). Desarrolló un conjunto de pruebas personalizado para simular criptoanálisis avanzado y diseñó una implementación de BLAKE-256 de alto rendimiento desde cero."
+          : p.id === 16
+          ? "Diseñó una plataforma de evaluación impulsada por investigación para IA multimodal y flujos de trabajo agénticos. Implementó una taxonomía de calidad de cinco niveles y un marco de métrica dual para analizar la fidelidad del modelo."
+          : p.id === 17
+          ? "Diseñó una extensión de alta concurrencia para el motor de búsqueda Sherlook en Rust utilizando Tokio. Integró Qdrant para búsqueda vectorial semántica y Neo4j para procesamiento de PageRank basado en grafos."
           : p.description,
     })),
   },
@@ -165,168 +177,42 @@ const es: Content = {
     heading: "Experiencia",
     subheading: "Mi trayectoria profesional y el impacto logrado",
     educationHeading: "Educación",
-    timeline: [
-      {
-        id: 1,
-        company: "Orange Digital Center Egypt",
-        position: "Trainee de IA Agéntica",
-        period: "Feb 2026 - Abr 2026",
-        location: "Egipto",
-        type: "Formación",
-        description:
-          "Experiencia práctica en la creación de agentes de IA utilizando LLMs y el ecosistema LangChain.",
-        achievements: [
-          "Adquirió experiencia práctica en la creación de agentes de IA utilizando LLMs y el ecosistema LangChain.",
-          "Construyó y evaluó aplicaciones basadas en agentes y las desplegó con una interfaz web.",
-          "Evaluó LLMs locales versus remotos para la integración de aplicaciones.",
-        ],
-        technologies: ["LLMs", "LangChain", "AI Agents", "API Automation"],
-      },
-      {
-        id: 2,
-        company: "Udacity (Digital Egypt Cubs Initiative - DECI)",
-        position: "Líder de Sesión",
-        period: "Nov 2025 - Mar 2026",
-        location: "Remoto",
-        type: "Tiempo parcial",
-        description:
-          "Liderar sesiones semanales para cohortes de estudiantes, impartiendo fundamentos básicos de informática.",
-        achievements: [
-          "Lideró sesiones semanales para cohortes de estudiantes, impartiendo fundamentos de informática.",
-          "Apoyó a los estudiantes mediante explicaciones guiadas y ejemplos prácticos.",
-          "Colaboró con el equipo instructivo de Udacity.",
-        ],
-        technologies: ["Computer Fundamentals", "Mentoring", "Remote Teaching"],
-      },
-      {
-        id: 3,
-        company: "Enactus Cairo University",
-        position: "Miembro del Equipo de Gestión de Recursos",
-        period: "Dic 2025 - Feb 2026",
-        location: "El Cairo, Egipto",
-        type: "Voluntariado",
-        description:
-          "Contribuyó como miembro del Equipo de Gestión de Recursos, apoyando las actividades de planificación y preparación.",
-        achievements: [
-          "Contribuyó como miembro del Equipo de Gestión de Recursos.",
-          "Participó en el programa Innovation Campus.",
-          "Participó en procesos de validación de problemas.",
-        ],
-        technologies: ["Resource Management", "Market Research", "Ideation"],
-      },
-      {
-        id: 4,
-        company: "i'SUPPLY",
-        position: "Desarrollador Flutter",
-        period: "Jul 2025 - Dic 2025",
-        location: "Maadi, El Cairo, Egipto",
-        type: "Prácticas",
-        description:
-          "Incorporado tras ganar el primer lugar en un hackathon interno; contribuyendo a un sistema POS en Flutter junto a backend y QA.",
-        achievements: [
-          "1.º lugar entre 30+ equipos en hackathon interno",
-          "Implementación de funcionalidades POS con arquitectura limpia y sincronización offline",
-          "Colaboración multidisciplinaria para rendimiento y UX",
-        ],
-        technologies: ["Flutter", "Supabase", "Hive", "Dart"],
-      },
-      {
-        id: 5,
-        company: "Iniciativa Pioneros Digital Egypt (DEPI)",
-        position: "Trainee de Ciencia de Datos",
-        period: "Jun 2025 - Dic 2025",
-        location: "Giza, Egipto",
-        type: "Formación",
-        description:
-          "Ruta IBM Data Scientist con experiencia práctica en Python, SQL, análisis de datos, machine learning y herramientas MLOps (MLflow, Hugging Face).",
-        achievements: [
-          "Avance en módulos de Python, visualización e ingeniería de prompts",
-          "Aplicación de técnicas de ML en proyecto capstone",
-          "Integración de herramientas MLOps para seguimiento de experimentos",
-        ],
-        technologies: ["Python", "SQL", "Pandas", "Scikit-learn", "MLflow"],
-      },
-      {
-        id: 6,
-        company: "Banque Misr",
-        position: "Desarrollador Android (Kotlin)",
-        period: "Jul 2025 - Sep 2025",
-        location: "Nuevo Cairo, Egipto",
-        type: "Formación",
-        description:
-          "Programa avanzado de desarrollo Android centrado en Jetpack, Room Database y arquitectura escalable.",
-        achievements: [
-          "Módulos creados usando componentes Jetpack",
-          "Capa de persistencia con Room y estrategias offline",
-          "Patrones modernos de Kotlin para mantenibilidad",
-        ],
-        technologies: ["Kotlin", "Room", "Jetpack", "Android"],
-      },
-      {
-        id: 7,
-        company: "Informatique",
-        position: "Desarrollador Flutter (ML)",
-        period: "Jul 2025 - Ago 2025",
-        location: "Nasr City, Egipto",
-        type: "Prácticas",
-        description:
-          "Prácticas combinando Flutter con machine learning para prototipos funcionales.",
-        achievements: [
-          "Integración de funciones impulsadas por ML en flujos Flutter",
-          "Mejora de precisión mediante iteraciones",
-          "Prototipos entregados en sprints cortos",
-        ],
-        technologies: ["Flutter", "Dart", "Machine Learning"],
-      },
-      {
-        id: 8,
-        company: "IEEE Cairo University SB",
-        position: "Instructor de Flutter",
-        period: "Feb 2025 - May 2025",
-        location: "El Cairo, Egipto",
-        type: "Voluntariado",
-        description:
-          "Primera fase de formación Flutter cubriendo fundamentos de Dart, POO y widgets introductorios para 30+ estudiantes.",
-        achievements: [
-          "3 sesiones base con feedback muy positivo",
-          "Actividades prácticas que facilitaron el avance de principiantes",
-          "Ayudó a establecer confianza para continuar el aprendizaje",
-        ],
-        technologies: ["Flutter", "Dart"],
-      },
-      {
-        id: 9,
-        company: "Orange Digital Center Egypt",
-        position: "Trainee Desarrollador Flutter",
-        period: "Jan 2025 - Mar 2025",
-        location: "El Cairo, Egipto",
-        type: "Formación",
-        description:
-          "Programa práctico de Flutter cubriendo diseño UI, gestión de estado y despliegue.",
-        achievements: [
-          "Patrones Bloc y Provider aplicados en apps de ejemplo",
-          "Despliegue de builds demostrativas mostrando hitos",
-          "Principios de arquitectura limpia para escalabilidad",
-        ],
-        technologies: ["Flutter", "Bloc", "Provider"],
-      },
-      {
-        id: 10,
-        company: "Slash Hub",
-        position: "Desarrollador de Aplicaciones Móviles",
-        period: "Oct 2024 - Dec 2024",
-        location: "El Cairo, Egipto (Remoto)",
-        type: "Prácticas",
-        description:
-          "Contribución a funcionalidades de chatbot e‑commerce con IA y mejoras de rendimiento.",
-        achievements: [
-          "Mejora de interacción de usuarios en 25%",
-          "Reducción de tiempos de carga un 30% mediante caché",
-          "Entrega iterativa de funcionalidades en equipo ágil",
-        ],
-        technologies: ["Flutter", "REST APIs", "Dio"],
-      },
-    ],
+    timeline: base.experience.timeline.map((item) => ({
+      ...item,
+      company: 
+        item.id === 1 ? "Orange Digital Center Egypt" :
+        item.id === 2 ? "Udacity (Digital Egypt Cubs Initiative - DECI)" :
+        item.id === 3 ? "Enactus Cairo University" :
+        item.id === 4 ? "i'SUPPLY" :
+        item.id === 5 ? "Digital Egypt Pioneers Initiative (DEPI)" :
+        item.id === 6 ? "Banque Misr" :
+        item.id === 7 ? "Informatique" :
+        item.id === 8 ? "IEEE Cairo University SB" :
+        item.id === 9 ? "Orange Digital Center Egypt" :
+        item.id === 10 ? "Slash Hub" : item.company,
+      position:
+        item.id === 1 ? "Trainee de IA Agéntica" :
+        item.id === 2 ? "Líder de Sesión" :
+        item.id === 3 ? "Miembro del Equipo de Gestión de Recursos" :
+        item.id === 4 ? "Desarrollador de Software" :
+        item.id === 5 ? "Trainee de Ciencia de Datos" :
+        item.id === 6 ? "Pasante de Desarrollo Android" :
+        item.id === 7 ? "Pasante de Desarrollo Móvil (Flutter & ML)" :
+        item.id === 8 ? "Instructor de Flutter" :
+        item.id === 9 ? "Trainee de Desarrollo Flutter" :
+        item.id === 10 ? "Desarrollador de Aplicaciones Móviles" : item.position,
+      description:
+        item.id === 1 ? "Experiencia práctica en la creación de agentes de IA utilizando LLMs y el ecosistema LangChain." :
+        item.id === 2 ? "Liderar sesiones semanales para cohortes de estudiantes, impartiendo fundamentos básicos de informática." :
+        item.id === 3 ? "Contribuyó como miembro del Equipo de Gestión de Recursos, apoyando las actividades de planificación y preparación." :
+        item.id === 4 ? "Se unió tras ganar el primer lugar en un hackathon de la empresa; contribuyendo a un sistema POS basado en Flutter." :
+        item.id === 5 ? "Track de Científico de Datos de IBM ganando exposición práctica a Python, SQL, análisis de datos, machine learning y herramientas de MLOps." :
+        item.id === 6 ? "Programa avanzado de desarrollo Android centrado en Jetpack, Room Database y arquitectura móvil escalable." :
+        item.id === 7 ? "Pasantía que combina el desarrollo con Flutter y el aprendizaje automático aplicado para prototipos de soluciones prácticas." :
+        item.id === 8 ? "Lideró la fase inicial de capacitación en Flutter cubriendo fundamentos de Dart, OOP y widgets de introducción para más de 30 estudiantes." :
+        item.id === 9 ? "Programa práctico de Flutter multiplataforma que cubre diseño de interfaz de usuario, gestión de estado y despliegue." :
+        item.id === 10 ? "Contribuyó a las características del chatbot de comercio electrónico impulsado por IA y mejoras de rendimiento." : item.description,
+    })),
     education: [
       {
         institution: "Universidad de El Cairo - Facultad de Ingeniería",
