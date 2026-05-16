@@ -96,6 +96,12 @@ const ar: Content = {
         color: "cyber-purple",
         skills: base.skills.categories[4].skills,
       },
+      {
+        icon: "globe",
+        title: "تطوير الويب",
+        color: "cyber-blue",
+        skills: base.skills.categories[5].skills,
+      },
     ],
     toolsHeading: "ماذا أستطيع أن أقدّمه لك",
     tools: [

@@ -272,6 +272,17 @@ const content: Content = {
           { name: "VLSI (Verilog)", level: 75 },
         ],
       },
+      {
+        icon: "globe",
+        title: "Web Development",
+        color: "cyber-blue",
+        skills: [
+          { name: "React", level: 85 },
+          { name: "TypeScript", level: 80 },
+          { name: "TailwindCSS", level: 90 },
+          { name: "Three.js", level: 70 },
+        ],
+      },
     ],
     toolsHeading: "What I Can Do For You",
     tools: [

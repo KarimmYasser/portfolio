@@ -98,6 +98,12 @@ const es: Content = {
         color: "cyber-purple",
         skills: base.skills.categories[4].skills,
       },
+      {
+        icon: "globe",
+        title: "Desarrollo Web",
+        color: "cyber-blue",
+        skills: base.skills.categories[5].skills,
+      },
     ],
     toolsHeading: "Qué puedo hacer por ti",
     tools: [
